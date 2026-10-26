@@ -1,0 +1,86 @@
+# Сервисы инструмента Liquibase Forge. Файл подключается из docker-compose.yml kit'а секцией
+# include: с project_directory — корнем проекта, поэтому относительные пути ниже (контекст сборки,
+# монтирование проекта) и подстановки из .env отсчитываются от корня, а не от этого каталога.
+# Сервис агента `claude` объявлен в файле kit'а, сервисы инструмента — здесь.
+#
+# На хост публикуется только целевая БД lbfr-db — порт FORGE_DB_HOST_PORT из диапазона проекта
+# (DOCK-008), для подключения клиентом с хоста. Агент и Liquibase по-прежнему обращаются к БД
+# по сети Compose (FORGE_DB_HOST, FORGE_DB_PORT); сервер тестов lbfr-db-test не публикуется.
+#
+# Имя контейнера уникально на весь Docker-хост, а этот файл одинаков во всех проектах с forge,
+# поэтому container_name несёт префикс проекта LBFR_CONTAINER_PREFIX из .env (его выводит
+# make forge-env-sync). Имена сервисов префикса не несут: по ним агент и шлюз адресуют БД внутри
+# сети Compose, а скрипты — сервисы в командах docker compose.
+
+services:
+  lbfr-db:
+    image: ${LBFR_POSTGRES_IMAGE}
+    container_name: ${LBFR_CONTAINER_PREFIX}-lbfr-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${FORGE_DB_NAME}
+      POSTGRES_USER: ${FORGE_DB_USER}
+      POSTGRES_PASSWORD: ${FORGE_DB_PASSWORD}
+    volumes:
+      - lbfr-db-data:/var/lib/postgresql/data
+    # Без адреса слева — на всех интерфейсах хоста. Значения по умолчанию нет: пустую переменную
+    # ловит make forge-env-check, а :? прервал бы разбор всей конфигурации, включая сервис claude
+    ports:
+      - "${FORGE_DB_HOST_PORT}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${FORGE_DB_USER} -d ${FORGE_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # default — сеть проекта Compose, в которой работает сервис `claude` из файла kit'а:
+    # подключаемый файл не может переопределить его сети, поэтому в неё выходит сама БД
+    networks:
+      - lbfr-net
+      - default
+
+  lbfr-db-test:
+    image: ${LBFR_POSTGRES_IMAGE}
+    container_name: ${LBFR_CONTAINER_PREFIX}-lbfr-db-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${FORGE_TEST_DB_NAME}
+      POSTGRES_USER: ${FORGE_TEST_DB_USER}
+      POSTGRES_PASSWORD: ${FORGE_TEST_DB_PASSWORD}
+    # Каждый тест создаёт свою БД, поэтому сервер хранить нечего: пересоздание контейнера
+    # даёт чистый сервер без отдельной цели очистки
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${FORGE_TEST_DB_USER} -d ${FORGE_TEST_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lbfr-net
+      - default
+
+  lbfr-liquibase:
+    # Liquibase 5.x не содержит драйверов БД: образ собирается с драйвером PostgreSQL.
+    # Имя образа включает обе версии, чтобы после их смены Compose собрал образ заново
+    build:
+      context: docker/liquibase
+      args:
+        LIQUIBASE_BASE_IMAGE: ${LBFR_LIQUIBASE_BASE_IMAGE}
+        POSTGRESQL_DRIVER_VERSION: ${LBFR_LIQUIBASE_POSTGRESQL_DRIVER}
+    image: ${LBFR_LIQUIBASE_IMAGE}
+    container_name: ${LBFR_CONTAINER_PREFIX}-lbfr-liquibase
+    # Одноразовый запуск: шлюз вызывает `docker compose run --rm`, `up` сервис не поднимает
+    profiles: ["tools"]
+    restart: "no"
+    # Штатная точка монтирования образа: точка входа переходит в неё и ставит --search-path=.
+    volumes:
+      - .:/liquibase/changelog:ro
+    networks:
+      - lbfr-net
+
+volumes:
+  lbfr-db-data:
+
+networks:
+  lbfr-net:
+    driver: bridge

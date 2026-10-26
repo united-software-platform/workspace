@@ -1,0 +1,30 @@
+{
+  "kit_version": "1.5.0",
+  "kit_ref": "main",
+  "installed_at": "2026-10-26T16:59:07Z",
+  "files": [
+    {"path": ".claude/skills/project-docs/SKILL.md", "sha256": "4a44331b78ad6bb5efd1f494a69960825cb0f07fa6c60546c15d44490dc09b08"},
+    {"path": ".claude/skills/project-docs/templates/contributing.md", "sha256": "f207d23875f366656979ede400c80a3501d65d3a7184e0ccbc8235fdf6a9b41d"},
+    {"path": ".claude/skills/project-docs/templates/readme.md", "sha256": "3cf034453b2074652e31e2cd08f143649996c047014173f3811b912bedc43287"},
+    {"path": ".claude/skills/project-docs/templates/use-cases.md", "sha256": "e77d9bb273bf94dd9a1b9e626616830afa4fceda44ab50006bcd0dfa9e671fa7"},
+    {"path": ".env.example", "sha256": "dbaece9d1c1d750e2f0740d1c4386bb1fe38364693e8aeaa163ba3fa3ea31f40"},
+    {"path": "AGENTS.md", "sha256": "cfa19c21de1c2d6cc43ab414904266a82c4fe06fda9ff10f570e39370f07f038"},
+    {"path": "CLAUDE.md", "sha256": "3af9a09bd7f77758930a490571c317251e568083c5c125f88e3bbcec585618dd"},
+    {"path": "Makefile", "sha256": "b70cf646dba4212b1e92401679c0042e39f3370fcb71d1d2d83d42f5c5bfacda"},
+    {"path": "docker-compose.yml", "sha256": "613334c59c7e4bcc03179ee9d73b5f89e97617b128099b07197acc70342207fa"},
+    {"path": "rules/clean-architecture.md", "sha256": "286faf3076d78462c4f3ee8d13d44901216e3a5484820b8c5078a418fbb99f39"},
+    {"path": "rules/cqrs.md", "sha256": "372173c0637895ee25e1473062c6275352e99e6f00e6c52a16605a1871c0129b"},
+    {"path": "rules/ddd.md", "sha256": "704466167ce21371c5ca16ad4f8fe25356426327bbedf870f48b80f61b71795f"},
+    {"path": "rules/docker.md", "sha256": "cd592eeacde48551c742c69cf02909fe9312d0e17dde8a8cd7d4489fd8c6c778"},
+    {"path": "rules/documentation-rules.md", "sha256": "968f95053249bf08833be73abb7277316aefbdeb6dccd4d18950fefb916adbf9"},
+    {"path": "rules/git-rules.md", "sha256": "ea5dea46ff2de5779650513a8dd1d50f8b0502f8933ff9101e444d9b693f5ac5"},
+    {"path": "rules/makefile-rules.md", "sha256": "e2d3679ff72c04bf9a9e73b440e0f495103655970040fbde2142f188150e7003"},
+    {"path": "rules/project-docs-rules.md", "sha256": "1047b499e0627b7f80f5bca04e065164b200b8ec9ecb0be652638fa3212378d4"},
+    {"path": "rules/reading-rules.md", "sha256": "65eea522b0b9b37983ea480014d048139dc3fbfbe11dfd60e3ebb8f21dd1bc9e"},
+    {"path": "rules/terminology.md", "sha256": "96ce5ca93fd722adb088c88d46571559b3076e0a4125e7b2e2493b4df5f1e95a"},
+    {"path": "tools/host-runner/README.md", "sha256": "8f888709b6d2e14cee1efccd9e5c5c1dc3baed5afd49b7a9f4b7d3bcf120ca88"},
+    {"path": "tools/host-runner/call.sh", "sha256": "028bb72ac5d94f6bcf6035d042a80c2b6313d88a4ec2296c6b9125e6776ae245"},
+    {"path": "tools/host-runner/runner.py", "sha256": "49a38d7e72f49d3d8bd5b9e4f999ff7e4c0c46cd80e8ef1ee60283c2388d1fc4"},
+    {"path": "tools/make-lint/check.sh", "sha256": "fad664680d2f32c4f1b27475d2a92f0ed461913c0b79e832429d676950ee9398"}
+  ]
+}

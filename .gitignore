@@ -1,0 +1,10 @@
+# Секреты: значения окружения, ключи доступа и профили аккаунтов (BOOT-006)
+.env
+.ssh/
+.claude-accounts/
+
+# >>> liquibase-forge
+# Liquibase Forge: файлы обмена со шлюзом и окружение uv подпроекта CLI — локальные
+.forge/
+tools/forge/.venv/
+# <<< liquibase-forge

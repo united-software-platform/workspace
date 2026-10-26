@@ -1,0 +1,64 @@
+[project]
+name = "liquibase-forge"
+dynamic = ["version"]
+description = "CLI forge: модель данных по намерению LLM, changelog Liquibase, накат, сверка и откат"
+requires-python = ">=3.12"
+dependencies = [
+    "PyYAML>=6.0",
+    "psycopg[binary]>=3.2",
+]
+
+[project.scripts]
+forge = "forge.cli.main:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.11",
+    "pytest>=8.3",
+    "ruff>=0.6",
+    "types-PyYAML>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+# Номер версии хранится только в VERSION: релизный коммит меняет один файл (GIT-021), а uv.lock
+# номера проекта не держит. Шаблон нужен потому, что по умолчанию hatchling ищет __version__
+[tool.hatch.version]
+path = "VERSION"
+pattern = "(?P<version>\\d+\\.\\d+\\.\\d+)"
+
+# uv пересобирает проект по изменению перечисленных файлов; без VERSION смена номера
+# не доходила бы до метаданных пакета, пока не изменится pyproject.toml
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { file = "VERSION" }]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/forge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = [
+    "integration: тест обращается к PostgreSQL lbfr-db-test или к раннеру на хосте",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests", "tools"]
+# Раннер — файл поставки kit'а: его стиль задаёт kit, а не этот проект. Фрагменты блоков
+# install/blocks/ — куски чужих файлов, а не модули: вне своего файла они не разбираются.
+# Фикстуры runner.py в tests/delivery/fixtures/ — копии файла kit'а и его форм у владельцев
+extend-exclude = ["tools/host-runner", "install/blocks", "tests/delivery/fixtures"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "BLE", "SIM", "RUF"]
+# Тексты, комментарии и docstring пишутся на русском (DOC-001): кириллица — норма, а не опечатка
+ignore = ["RUF001", "RUF002", "RUF003"]
