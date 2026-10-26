@@ -43,7 +43,7 @@ services:
       # команды запуска сессии. Значение по умолчанию намеренно указывает на несуществующий
       # подкаталог: без профиля путь схлопнулся бы в каталог всех аккаунтов и агент увидел бы
       # чужие профили — вместо этого он получает пустой каталог конфигурации
-      - ${CLAUDE_ACCOUNTS_DIR:-.claude-accounts}/${CLAUDE_PROFILE:-__no_profile__}:${CLAUDE_CONFIG_DIR:-/home/claude/.claude}
+      - ${CLAUDE_ACCOUNTS_DIR:-.claude-accounts}/${CLAUDE_PROFILE:-personal}:${CLAUDE_CONFIG_DIR:-/home/claude/.claude}
       - ${PROJECT_DIR:-/app}/${CLAUDE_ACCOUNTS_DIR:-.claude-accounts}      # анонимный том прячет чужие профили внутри контейнера
       - ${SSH_DIR:-.ssh}:${CONTAINER_SSH_DIR:-/home/claude/.ssh}           # ключи для работы с репозиторием
       # Файл секретов скрыт от агента: значения приезжают через env_file,

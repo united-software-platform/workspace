@@ -1,0 +1,7 @@
+{
+  "model": "backlog/forge-model/20261024-181007/attempt-1/model.yaml",
+  "changelog": "backlog/forge-model/20261024-181007/attempt-1/changelog.yaml",
+  "database": "lbfr-db:5432/forge",
+  "verdict": "success",
+  "discrepancies": []
+}

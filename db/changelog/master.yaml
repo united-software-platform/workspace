@@ -1,0 +1,5 @@
+# Принятые changelog операций по порядку принятия: ведёт forge close
+databaseChangeLog:
+- include:
+    file: 20261024-181007.yaml
+    relativeToChangelogFile: true
