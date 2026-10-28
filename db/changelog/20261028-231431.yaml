@@ -1,0 +1,923 @@
+# Changelog операции 20261028-231431: построен forge generate, вручную не правится
+databaseChangeLog:
+- changeSet:
+    id: 20261028-231431-01
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: model_history
+        constraintName: fk_model_history_a77064e8
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: model_history
+        baseColumnNames: model
+        referencedTableName: model_meta
+        referencedColumnNames: model
+        constraintName: fk_model_history_a77064e8
+- changeSet:
+    id: 20261028-231431-02
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: organization
+        constraintName: fk_organization_753db6f7
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: organization
+        baseColumnNames: replaced_by_id
+        referencedTableName: organization
+        referencedColumnNames: id
+        constraintName: fk_organization_753db6f7
+- changeSet:
+    id: 20261028-231431-03
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: organization_synonym
+        constraintName: fk_organization_synonym_416c5895
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: organization_synonym
+        baseColumnNames: organization_id
+        referencedTableName: organization
+        referencedColumnNames: id
+        constraintName: fk_organization_synonym_416c5895
+- changeSet:
+    id: 20261028-231431-04
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_group
+        constraintName: fk_project_group_1e4b7f5f
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_group
+        baseColumnNames: replaced_by_id
+        referencedTableName: project_group
+        referencedColumnNames: id
+        constraintName: fk_project_group_1e4b7f5f
+- changeSet:
+    id: 20261028-231431-05
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_group_synonym
+        constraintName: fk_project_group_synonym_1d94b4f7
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_group_synonym
+        baseColumnNames: project_group_id
+        referencedTableName: project_group
+        referencedColumnNames: id
+        constraintName: fk_project_group_synonym_1d94b4f7
+- changeSet:
+    id: 20261028-231431-06
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: technology
+        constraintName: fk_technology_a0f27238
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: technology
+        baseColumnNames: kind_id
+        referencedTableName: technology_kind
+        referencedColumnNames: id
+        constraintName: fk_technology_a0f27238
+- changeSet:
+    id: 20261028-231431-07
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: technology
+        constraintName: fk_technology_d4a02a0c
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: technology
+        baseColumnNames: replaced_by_id
+        referencedTableName: technology
+        referencedColumnNames: id
+        constraintName: fk_technology_d4a02a0c
+- changeSet:
+    id: 20261028-231431-08
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: technology_synonym
+        constraintName: fk_technology_synonym_6432666b
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: technology_synonym
+        baseColumnNames: technology_id
+        referencedTableName: technology
+        referencedColumnNames: id
+        constraintName: fk_technology_synonym_6432666b
+- changeSet:
+    id: 20261028-231431-09
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: domain
+        constraintName: fk_domain_bb47d086
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: domain
+        baseColumnNames: replaced_by_id
+        referencedTableName: domain
+        referencedColumnNames: id
+        constraintName: fk_domain_bb47d086
+- changeSet:
+    id: 20261028-231431-10
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: domain_synonym
+        constraintName: fk_domain_synonym_41670639
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: domain_synonym
+        baseColumnNames: domain_id
+        referencedTableName: domain
+        referencedColumnNames: id
+        constraintName: fk_domain_synonym_41670639
+- changeSet:
+    id: 20261028-231431-11
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: role
+        constraintName: fk_role_89cd555f
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: role
+        baseColumnNames: replaced_by_id
+        referencedTableName: role
+        referencedColumnNames: id
+        constraintName: fk_role_89cd555f
+- changeSet:
+    id: 20261028-231431-12
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: role_synonym
+        constraintName: fk_role_synonym_34df51d0
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: role_synonym
+        baseColumnNames: role_id
+        referencedTableName: role
+        referencedColumnNames: id
+        constraintName: fk_role_synonym_34df51d0
+- changeSet:
+    id: 20261028-231431-13
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project
+        constraintName: fk_project_897c4668
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: origin_id
+        referencedTableName: origin
+        referencedColumnNames: id
+        constraintName: fk_project_897c4668
+- changeSet:
+    id: 20261028-231431-14
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project
+        constraintName: fk_project_fc0dd2da
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: organization_id
+        referencedTableName: organization
+        referencedColumnNames: id
+        constraintName: fk_project_fc0dd2da
+- changeSet:
+    id: 20261028-231431-15
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project
+        constraintName: fk_project_d47372ee
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: group_id
+        referencedTableName: project_group
+        referencedColumnNames: id
+        constraintName: fk_project_d47372ee
+- changeSet:
+    id: 20261028-231431-16
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project
+        constraintName: fk_project_6085a55a
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: customer_id
+        referencedTableName: organization
+        referencedColumnNames: id
+        constraintName: fk_project_6085a55a
+- changeSet:
+    id: 20261028-231431-17
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project
+        constraintName: fk_project_8d9b313e
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: status_id
+        referencedTableName: project_status
+        referencedColumnNames: id
+        constraintName: fk_project_8d9b313e
+- changeSet:
+    id: 20261028-231431-18
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_technology
+        constraintName: fk_project_technology_8826d5fa
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_technology
+        baseColumnNames: project_name
+        referencedTableName: project
+        referencedColumnNames: name
+        constraintName: fk_project_technology_8826d5fa
+- changeSet:
+    id: 20261028-231431-19
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_technology
+        constraintName: fk_project_technology_f68a53e5
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_technology
+        baseColumnNames: technology_id
+        referencedTableName: technology
+        referencedColumnNames: id
+        constraintName: fk_project_technology_f68a53e5
+- changeSet:
+    id: 20261028-231431-20
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_domain
+        constraintName: fk_project_domain_d18d2ef3
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_domain
+        baseColumnNames: project_name
+        referencedTableName: project
+        referencedColumnNames: name
+        constraintName: fk_project_domain_d18d2ef3
+- changeSet:
+    id: 20261028-231431-21
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_domain
+        constraintName: fk_project_domain_0456444f
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_domain
+        baseColumnNames: domain_id
+        referencedTableName: domain
+        referencedColumnNames: id
+        constraintName: fk_project_domain_0456444f
+- changeSet:
+    id: 20261028-231431-22
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_role
+        constraintName: fk_project_role_4d3eb7cf
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_role
+        baseColumnNames: project_name
+        referencedTableName: project
+        referencedColumnNames: name
+        constraintName: fk_project_role_4d3eb7cf
+- changeSet:
+    id: 20261028-231431-23
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: project_role
+        constraintName: fk_project_role_47f415a8
+    rollback:
+    - addForeignKeyConstraint:
+        baseTableName: project_role
+        baseColumnNames: role_id
+        referencedTableName: role
+        referencedColumnNames: id
+        constraintName: fk_project_role_47f415a8
+- changeSet:
+    id: 20261028-231431-24
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: model_meta
+    rollback:
+    - createTable:
+        tableName: model_meta
+        columns:
+        - column:
+            name: model
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: version
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: model_meta
+        columnNames: model
+        constraintName: pk_model_meta
+- changeSet:
+    id: 20261028-231431-25
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: model_history
+    rollback:
+    - createTable:
+        tableName: model_history
+        columns:
+        - column:
+            name: model
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: version
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+        - column:
+            name: date
+            type: DATE
+            constraints:
+              nullable: false
+        - column:
+            name: source
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: summary
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: model_history
+        columnNames: model, version
+        constraintName: pk_model_history
+- changeSet:
+    id: 20261028-231431-26
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: organization
+    rollback:
+    - createTable:
+        tableName: organization
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: deprecated
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: replaced_by_id
+            type: VARCHAR(128)
+        - column:
+            name: owned
+            type: BOOLEAN
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: organization
+        columnNames: id
+        constraintName: pk_organization
+- changeSet:
+    id: 20261028-231431-27
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: organization_synonym
+    rollback:
+    - createTable:
+        tableName: organization_synonym
+        columns:
+        - column:
+            name: organization_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: synonym
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: organization_synonym
+        columnNames: organization_id, synonym
+        constraintName: pk_organization_synonym
+- changeSet:
+    id: 20261028-231431-28
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project_group
+    rollback:
+    - createTable:
+        tableName: project_group
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: deprecated
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: replaced_by_id
+            type: VARCHAR(128)
+    - addPrimaryKey:
+        tableName: project_group
+        columnNames: id
+        constraintName: pk_project_group
+- changeSet:
+    id: 20261028-231431-29
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project_group_synonym
+    rollback:
+    - createTable:
+        tableName: project_group_synonym
+        columns:
+        - column:
+            name: project_group_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: synonym
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_group_synonym
+        columnNames: project_group_id, synonym
+        constraintName: pk_project_group_synonym
+- changeSet:
+    id: 20261028-231431-30
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: technology_kind
+    rollback:
+    - createTable:
+        tableName: technology_kind
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: technology_kind
+        columnNames: id
+        constraintName: pk_technology_kind
+- changeSet:
+    id: 20261028-231431-31
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: technology
+    rollback:
+    - createTable:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: kind_id
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+        - column:
+            name: deprecated
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: replaced_by_id
+            type: VARCHAR(128)
+    - addPrimaryKey:
+        tableName: technology
+        columnNames: id
+        constraintName: pk_technology
+- changeSet:
+    id: 20261028-231431-32
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: technology_synonym
+    rollback:
+    - createTable:
+        tableName: technology_synonym
+        columns:
+        - column:
+            name: technology_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: synonym
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: technology_synonym
+        columnNames: technology_id, synonym
+        constraintName: pk_technology_synonym
+- changeSet:
+    id: 20261028-231431-33
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: domain
+    rollback:
+    - createTable:
+        tableName: domain
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: deprecated
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: replaced_by_id
+            type: VARCHAR(128)
+    - addPrimaryKey:
+        tableName: domain
+        columnNames: id
+        constraintName: pk_domain
+- changeSet:
+    id: 20261028-231431-34
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: domain_synonym
+    rollback:
+    - createTable:
+        tableName: domain_synonym
+        columns:
+        - column:
+            name: domain_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: synonym
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: domain_synonym
+        columnNames: domain_id, synonym
+        constraintName: pk_domain_synonym
+- changeSet:
+    id: 20261028-231431-35
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: role
+    rollback:
+    - createTable:
+        tableName: role
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: deprecated
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: replaced_by_id
+            type: VARCHAR(128)
+    - addPrimaryKey:
+        tableName: role
+        columnNames: id
+        constraintName: pk_role
+- changeSet:
+    id: 20261028-231431-36
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: role_synonym
+    rollback:
+    - createTable:
+        tableName: role_synonym
+        columns:
+        - column:
+            name: role_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: synonym
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: role_synonym
+        columnNames: role_id, synonym
+        constraintName: pk_role_synonym
+- changeSet:
+    id: 20261028-231431-37
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: origin
+    rollback:
+    - createTable:
+        tableName: origin
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: origin
+        columnNames: id
+        constraintName: pk_origin
+- changeSet:
+    id: 20261028-231431-38
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project_status
+    rollback:
+    - createTable:
+        tableName: project_status
+        columns:
+        - column:
+            name: id
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: TEXT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_status
+        columnNames: id
+        constraintName: pk_project_status
+- changeSet:
+    id: 20261028-231431-39
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project
+    rollback:
+    - createTable:
+        tableName: project
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: path
+            type: TEXT
+        - column:
+            name: purpose
+            type: TEXT
+            constraints:
+              nullable: false
+        - column:
+            name: origin_id
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+        - column:
+            name: organization_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+        - column:
+            name: group_id
+            type: VARCHAR(128)
+        - column:
+            name: customer_id
+            type: VARCHAR(128)
+        - column:
+            name: period_from
+            type: INTEGER
+            constraints:
+              nullable: false
+        - column:
+            name: period_to
+            type: INTEGER
+        - column:
+            name: status_id
+            type: VARCHAR(32)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project
+        columnNames: name
+        constraintName: pk_project
+    - addUniqueConstraint:
+        tableName: project
+        columnNames: path
+        constraintName: uq_project_47881247
+- changeSet:
+    id: 20261028-231431-40
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project_technology
+    rollback:
+    - createTable:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_name
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: technology_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_technology
+        columnNames: project_name, technology_id
+        constraintName: pk_project_technology
+- changeSet:
+    id: 20261028-231431-41
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project_domain
+    rollback:
+    - createTable:
+        tableName: project_domain
+        columns:
+        - column:
+            name: project_name
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: domain_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_domain
+        columnNames: project_name, domain_id
+        constraintName: pk_project_domain
+- changeSet:
+    id: 20261028-231431-42
+    author: forge
+    logicalFilePath: db/changelog/20261028-231431.yaml
+    changes:
+    - dropTable:
+        tableName: project_role
+    rollback:
+    - createTable:
+        tableName: project_role
+        columns:
+        - column:
+            name: project_name
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: role_id
+            type: VARCHAR(128)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_role
+        columnNames: project_name, role_id
+        constraintName: pk_project_role
