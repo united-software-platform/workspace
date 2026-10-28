@@ -11,6 +11,11 @@
 # поэтому container_name несёт префикс проекта LBFR_CONTAINER_PREFIX из .env (его выводит
 # make forge-env-sync). Имена сервисов префикса не несут: по ним агент и шлюз адресуют БД внутри
 # сети Compose, а скрипты — сервисы в командах docker compose.
+#
+# Данные целевой БД lbfr-db лежат в каталоге проекта data/lbfr-db, а не в именованном томе: они
+# привязаны к проекту, а не к имени Compose-проекта. Каталог создаёт make forge-env-up до запуска
+# БД; его содержимое принадлежит пользователю postgres контейнера, поэтому удаляют и копируют его
+# одноразовым контейнером образа БД (docs/use-cases.md).
 
 services:
   lbfr-db:
@@ -22,7 +27,7 @@ services:
       POSTGRES_USER: ${FORGE_DB_USER}
       POSTGRES_PASSWORD: ${FORGE_DB_PASSWORD}
     volumes:
-      - lbfr-db-data:/var/lib/postgresql/data
+      - ./data/lbfr-db:/var/lib/postgresql/data
     # Без адреса слева — на всех интерфейсах хоста. Значения по умолчанию нет: пустую переменную
     # ловит make forge-env-check, а :? прервал бы разбор всей конфигурации, включая сервис claude
     ports:
@@ -77,9 +82,6 @@ services:
       - .:/liquibase/changelog:ro
     networks:
       - lbfr-net
-
-volumes:
-  lbfr-db-data:
 
 networks:
   lbfr-net:

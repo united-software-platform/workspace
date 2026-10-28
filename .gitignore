@@ -7,4 +7,6 @@
 # Liquibase Forge: файлы обмена со шлюзом и окружение uv подпроекта CLI — локальные
 .forge/
 tools/forge/.venv/
+# Данные целевой БД lbfr-db: каталог создаёт make forge-env-up, остальной data/ — файлы проекта
+/data/lbfr-db/
 # <<< liquibase-forge
