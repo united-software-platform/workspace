@@ -30,7 +30,10 @@ KINDS = {
     "unseeded_reference_table": "foreign_key_violated_by_seed",
     "reference_cycle": "foreign_key_violated_by_seed",
     "duplicate_unique": "unique_violated_by_seed",
+    "check_violated": "check_violated_by_seed",
 }
+# Нарушения значения колонки: конфликт называет колонку
+_COLUMN_CODES = frozenset({"null_value", "check_violated"})
 _TABLE = re.compile(r"^tables\[(\d+)\]")
 _COLUMN = re.compile(r"^tables\[\d+\]\.rows\[\d+\]\.(\w+)$")
 
@@ -85,7 +88,7 @@ def _without(draft: SeedDraft, dropped: frozenset[tuple[str, str]]) -> SeedDraft
 
 def _conflict(violation: Violation, names: dict[int, str]) -> SeedConflict:
     table = _TABLE.match(violation.path)
-    column = _COLUMN.match(violation.path) if violation.code == "null_value" else None
+    column = _COLUMN.match(violation.path) if violation.code in _COLUMN_CODES else None
     return SeedConflict(
         kind=KINDS.get(violation.code, violation.code),
         table=names.get(int(table.group(1)), "") if table else "",

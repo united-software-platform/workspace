@@ -14,7 +14,7 @@ from forge.shared.infrastructure.postgres import PostgresConnector
 MAINTENANCE_DATABASE = "postgres"
 
 # Вид ограничения сводки changelog → `pg_constraint.contype`
-_CONTYPES = {"foreign_key": "f", "unique": "u"}
+_CONTYPES = {"foreign_key": "f", "unique": "u", "check": "c"}
 
 
 class PsycopgJournalReader:

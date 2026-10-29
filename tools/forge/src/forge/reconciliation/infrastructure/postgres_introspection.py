@@ -11,12 +11,16 @@ import re
 
 from forge.modeling.domain.column_type import ColumnType, TypeKind
 from forge.reconciliation.domain.actual_schema import (
+    IDENTITY,
+    IDENTITY_ALWAYS,
+    ActualCheck,
     ActualColumn,
     ActualForeignKey,
     ActualSchema,
     ActualTable,
 )
 from forge.reconciliation.domain.journal_check import JournalRecord
+from forge.reconciliation.infrastructure.check_definition import parse_check
 from forge.shared.domain.target_database import TargetDatabase
 from forge.shared.infrastructure.postgres import PostgresConnector
 
@@ -36,7 +40,7 @@ _VARCHAR = re.compile(r"character varying\((\d+)\)")
 _NUMERIC = re.compile(r"numeric\((\d+),(\d+)\)")
 
 _COLUMNS = """
-SELECT c.relname, a.attname, format_type(a.atttypid, a.atttypmod), a.attnotnull
+SELECT c.relname, a.attname, format_type(a.atttypid, a.atttypmod), a.attnotnull, a.attidentity
 FROM pg_class c
 JOIN pg_namespace n ON n.oid = c.relnamespace
 JOIN pg_attribute a ON a.attrelid = c.oid AND a.attnum > 0 AND NOT a.attisdropped
@@ -82,6 +86,24 @@ ORDER BY c.relname, con.conname
 """
 
 
+# Ограничения CHECK: колонки `conkey` по порядку и определение в нормализованной записи
+_CHECKS = """
+SELECT c.relname,
+  ARRAY(
+    SELECT a.attname FROM unnest(con.conkey) WITH ORDINALITY AS k(attnum, ordinality)
+    JOIN pg_attribute a ON a.attrelid = con.conrelid AND a.attnum = k.attnum
+    ORDER BY k.ordinality
+  ),
+  pg_get_constraintdef(con.oid)
+FROM pg_constraint con
+JOIN pg_class c ON c.oid = con.conrelid
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE n.nspname = 'public' AND con.contype = 'c' AND NOT (c.relname = ANY(%s))
+ORDER BY c.relname, con.conname
+"""
+_GENERATED = {"d": IDENTITY, "a": IDENTITY_ALWAYS}
+
+
 def model_type(database_type: str) -> ColumnType | None:
     """Тип модели по записи `format_type`; `None`, если формат такого типа не знает."""
     if database_type in _PLAIN:
@@ -106,11 +128,21 @@ class PsycopgSchemaIntrospector:
             columns = connection.execute(_COLUMNS, (excluded,)).fetchall()
             keys = {row[0]: tuple(row[1]) for row in connection.execute(_KEYS).fetchall()}
             constraints = connection.execute(_CONSTRAINTS, (excluded,)).fetchall()
+            check_rows = connection.execute(_CHECKS, (excluded,)).fetchall()
         by_table: dict[str, list[ActualColumn]] = {name: [] for name in names}
-        for table, name, database_type, not_null in columns:
+        for table, name, database_type, not_null, identity in columns:
             by_table[table].append(
-                ActualColumn(name, model_type(database_type), database_type, not not_null)
+                ActualColumn(
+                    name,
+                    model_type(database_type),
+                    database_type,
+                    not not_null,
+                    _GENERATED.get(identity),
+                )
             )
+        checks: dict[str, list[ActualCheck]] = {name: [] for name in names}
+        for table, own, definition in check_rows:
+            checks[table].append(parse_check(str(definition), tuple(own)))
         unique: dict[str, list[tuple[str, ...]]] = {name: [] for name in names}
         foreign_keys: dict[str, list[ActualForeignKey]] = {name: [] for name in names}
         for table, kind, own, target, target_columns in constraints:
@@ -128,6 +160,7 @@ class PsycopgSchemaIntrospector:
                     keys.get(name),
                     tuple(unique[name]),
                     tuple(foreign_keys[name]),
+                    tuple(checks[name]),
                 )
                 for name in names
             )

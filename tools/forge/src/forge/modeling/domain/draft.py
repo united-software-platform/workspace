@@ -8,10 +8,16 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from forge.modeling.domain.value_list import ListValue
+
 
 @dataclass(frozen=True)
 class ColumnDraft:
-    """Колонка как объявлена: `None` у параметра или `nullable` — поле не задано."""
+    """Колонка как объявлена: `None` у параметра, `nullable`, `generated` или `check` — поле
+    не задано.
+
+    Значения `check` — скаляры YAML как записаны: их вид проверяет колонка по своему типу.
+    """
 
     name: str
     type: str
@@ -19,6 +25,8 @@ class ColumnDraft:
     length: int | None = None
     precision: int | None = None
     scale: int | None = None
+    generated: str | None = None
+    check: tuple[ListValue, ...] | None = None
 
 
 @dataclass(frozen=True)

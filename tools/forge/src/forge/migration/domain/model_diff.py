@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from forge.migration.domain.changes import (
+    AddCheck,
     AddColumn,
     AddForeignKey,
     AddUnique,
     CreateTable,
+    DropCheck,
     DropColumn,
     DropForeignKey,
     DropTable,
@@ -15,27 +17,34 @@ from forge.migration.domain.changes import (
     UnsupportedChange,
     UnsupportedChangeError,
 )
+from forge.modeling.domain.column import Column
 from forge.modeling.domain.data_model import DataModel
+from forge.modeling.domain.identifier import ColumnName
 from forge.modeling.domain.table import Table
+from forge.modeling.domain.value_list import ValueList
 
 
 class ModelDiff:
     """Доменный сервис: изменения схемы от принятой модели к модели попытки.
 
     Разрешены новая и удалённая таблица, новая и удалённая колонка существующей таблицы,
-    новый и удалённый набор уникальности и внешний ключ. Удаление колонки первичного ключа
-    не даёт `DropColumn`: смена ключа уже отклоняется. Смена типа, итоговой допустимости NULL
-    и первичного ключа — неподдерживаемые изменения; они собираются все и бросаются одним
-    исключением. Переименование неотличимо от удаления и добавления и выражается ими.
+    новый и удалённый набор уникальности, перечень значений и внешний ключ. Удаление колонки
+    первичного ключа не даёт `DropColumn`: смена ключа уже отклоняется. Смена типа, итоговой
+    допустимости NULL, генерации значения и первичного ключа — неподдерживаемые изменения;
+    они собираются все и бросаются одним исключением. Смена NULL, вызванная только сменой
+    генерации, отдельно не сообщается. Переименование неотличимо от удаления и добавления
+    и выражается ими.
 
-    Ограничения отождествляются по содержимому: набор — по составу колонок, внешний ключ —
-    по целевой таблице и парам колонок; изменение ограничения — удаление и добавление.
-    Внешние ключи удаляемой таблицы и ключи на неё удаляются отдельно, а наборы удаляемой
-    таблицы — нет: их снимает удаление таблицы и восстанавливает его откат.
+    Ограничения отождествляются по содержимому: набор — по составу колонок, перечень —
+    по колонке и множеству значений, внешний ключ — по целевой таблице и парам колонок;
+    изменение ограничения — удаление и добавление. Внешние ключи удаляемой таблицы и ключи
+    на неё удаляются отдельно, а наборы и перечни удаляемой таблицы — нет: их снимает удаление
+    таблицы и восстанавливает его откат.
 
-    Порядок групп: удаление внешних ключей, удаление наборов, удаление таблиц, удаление
-    колонок, создание таблиц, добавление колонок, добавление наборов, добавление внешних
-    ключей. Удаления идут в порядке принятой модели, добавления — модели попытки.
+    Порядок групп: удаление внешних ключей, удаление наборов, удаление перечней, удаление
+    таблиц, удаление колонок, создание таблиц, добавление колонок, добавление наборов,
+    добавление перечней, добавление внешних ключей. Удаления идут в порядке принятой модели,
+    добавления — модели попытки.
     """
 
     def between(self, accepted: DataModel, attempt: DataModel) -> tuple[SchemaChange, ...]:
@@ -60,6 +69,14 @@ class ModelDiff:
                     for unique in table.unique
                     if unique not in kept_sets
                 ]
+        for table in accepted.tables:
+            if attempt.has_table(table.name):
+                kept_checks = set(_checks(attempt.table(table.name)))
+                changes += [
+                    DropCheck(table.name, column, values)
+                    for column, values in _checks(table)
+                    if (column, values) not in kept_checks
+                ]
         changes += [
             DropTable(table) for table in accepted.tables if not attempt.has_table(table.name)
         ]
@@ -83,6 +100,15 @@ class ModelDiff:
                 AddUnique(table.name, unique) for unique in table.unique if unique not in before
             ]
         for table in attempt.tables:
+            before_checks = set(
+                _checks(accepted.table(table.name)) if accepted.has_table(table.name) else ()
+            )
+            changes += [
+                AddCheck(table.name, column, values)
+                for column, values in _checks(table)
+                if (column, values) not in before_checks
+            ]
+        for table in attempt.tables:
             known_keys = (
                 accepted.table(table.name).foreign_keys if accepted.has_table(table.name) else ()
             )
@@ -92,6 +118,11 @@ class ModelDiff:
                 if key not in known_keys
             ]
         return tuple(changes)
+
+
+def _checks(table: Table) -> list[tuple[ColumnName, ValueList]]:
+    """Перечни значений таблицы в порядке колонок."""
+    return [(column.name, column.check) for column in table.columns if column.check is not None]
 
 
 def _dropped_columns(accepted: Table, attempt: Table) -> list[SchemaChange]:
@@ -121,8 +152,18 @@ def _table_changes(accepted: Table, attempt: Table) -> list[UnsupportedChange]:
                     f"тип колонки {table}.{name} изменён: {column.type} → {changed.type}",
                 )
             )
+        if changed.generated != column.generated:
+            rejected.append(
+                UnsupportedChange(
+                    "column_generated_changed",
+                    table,
+                    name,
+                    f"генерация значения колонки {table}.{name} изменена: "
+                    f"{_generated(column)} → {_generated(changed)}",
+                )
+            )
         before, after = accepted.is_nullable(column.name), attempt.is_nullable(column.name)
-        if before != after:
+        if before != after and changed.generated == column.generated:
             rejected.append(
                 UnsupportedChange(
                     "column_nullable_changed",
@@ -142,6 +183,10 @@ def _table_changes(accepted: Table, attempt: Table) -> list[UnsupportedChange]:
             )
         )
     return rejected
+
+
+def _generated(column: Column) -> str:
+    return column.generated.value if column.generated is not None else "нет"
 
 
 def _nullable(nullable: bool) -> str:

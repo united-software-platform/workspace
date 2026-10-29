@@ -100,6 +100,9 @@ class SeedFactory:
             elif value.is_null() and not table.is_nullable(column.name):
                 violations.append(_null_value(table, column, column_path, "указан null"))
                 complete = False
+            elif (violation := _check_violation(column, value)) is not None:
+                violations.append(violation.under(column_path))
+                complete = False
             else:
                 values[column.name] = value
         for column in table.columns:
@@ -120,6 +123,20 @@ def _model_table(model: DataModel, name: str) -> Table | None:
 
 def _column(table: Table, name: str) -> Column | None:
     return next((column for column in table.columns if column.name.value == name), None)
+
+
+def _check_violation(column: Column, value: SeedValue) -> Violation | None:
+    """Нарушение перечня значений колонки; NULL и колонка без перечня перечню не подчинены."""
+    if column.check is None or value.is_null():
+        return None
+    if (type(value.value), value.value) in column.check.composition():
+        return None
+    allowed = ", ".join(str(item) for item in column.check.sorted_values())
+    return Violation(
+        "",
+        "check_violated",
+        f"значение {value} колонки {column.name} не входит в перечень: {allowed}",
+    )
 
 
 def _null_value(table: Table, column: Column, path: str, reason: str) -> Violation:

@@ -7,9 +7,10 @@ from dataclasses import dataclass
 
 from forge.modeling.domain.column import Column
 from forge.modeling.domain.foreign_key import ForeignKey
-from forge.modeling.domain.identifier import TableName
+from forge.modeling.domain.identifier import ColumnName, TableName
 from forge.modeling.domain.table import Table
 from forge.modeling.domain.unique_set import UniqueSet
+from forge.modeling.domain.value_list import ValueList
 
 
 @dataclass(frozen=True)
@@ -30,7 +31,8 @@ class AddColumn:
 
 @dataclass(frozen=True)
 class DropTable:
-    """Удаляемая таблица; принятое определение с наборами уникальности нужно для отката.
+    """Удаляемая таблица; принятое определение с наборами уникальности и перечнями значений
+    нужно для отката.
 
     Внешние ключи таблицы и внешние ключи на неё удаляются отдельными изменениями.
     """
@@ -64,6 +66,24 @@ class DropUnique:
 
 
 @dataclass(frozen=True)
+class AddCheck:
+    """Новый перечень значений колонки."""
+
+    table: TableName
+    column: ColumnName
+    values: ValueList
+
+
+@dataclass(frozen=True)
+class DropCheck:
+    """Удаляемый перечень значений колонки принятой модели; перечень нужен для отката."""
+
+    table: TableName
+    column: ColumnName
+    values: ValueList
+
+
+@dataclass(frozen=True)
 class AddForeignKey:
     """Новый внешний ключ таблицы."""
 
@@ -86,6 +106,8 @@ SchemaChange = (
     | DropColumn
     | AddUnique
     | DropUnique
+    | AddCheck
+    | DropCheck
     | AddForeignKey
     | DropForeignKey
 )
@@ -93,7 +115,8 @@ SchemaChange = (
 
 @dataclass(frozen=True)
 class UnsupportedChange:
-    """Изменение модели, которое changelog не выражает: смена типа, NULL или первичного ключа."""
+    """Изменение модели, которое changelog не выражает: смена типа, NULL, генерации значения
+    или первичного ключа."""
 
     code: str
     table: str

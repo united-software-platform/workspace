@@ -226,7 +226,9 @@ class RollbackAttemptUseCase:
 
 
 def _constraint_detail(constraint: ConstraintRef) -> str:
-    kind = "внешний ключ" if constraint.kind == "foreign_key" else "набор уникальности"
+    kind = {"foreign_key": "внешний ключ", "check": "перечень значений"}.get(
+        constraint.kind, "набор уникальности"
+    )
     return f"{kind} {constraint.table}.{constraint.name}"
 
 

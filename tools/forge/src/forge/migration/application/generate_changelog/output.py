@@ -7,8 +7,9 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class ChangeSetView:
-    """Changeset в ответе: `id`, вид, таблица, колонка для `add_column` и `drop_column`
-    и имя ограничения для видов набора уникальности и внешнего ключа."""
+    """Changeset в ответе: `id`, вид, таблица, колонка для `add_column`, `drop_column`
+    и видов перечня значений и имя ограничения для видов набора уникальности, перечня
+    значений и внешнего ключа."""
 
     id: str
     kind: str

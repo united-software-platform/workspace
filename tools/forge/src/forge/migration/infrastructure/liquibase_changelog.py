@@ -8,6 +8,8 @@ changelog даёт побайтово тот же файл.
 from __future__ import annotations
 
 import hashlib
+import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -21,10 +23,12 @@ from forge.migration.application.changelog_storage import (
 )
 from forge.migration.domain.changelog import Changelog, ChangeSet
 from forge.migration.domain.changes import (
+    AddCheck,
     AddColumn,
     AddForeignKey,
     AddUnique,
     CreateTable,
+    DropCheck,
     DropColumn,
     DropForeignKey,
     DropTable,
@@ -34,13 +38,15 @@ from forge.migration.domain.changes import (
 from forge.modeling.domain.column import Column
 from forge.modeling.domain.column_type import ColumnType, TypeKind
 from forge.modeling.domain.foreign_key import ForeignKey
+from forge.modeling.domain.generation import Generation
 from forge.modeling.domain.identifier import ColumnName, TableName
 from forge.modeling.domain.table import Table
 from forge.modeling.domain.unique_set import UniqueSet
+from forge.modeling.domain.value_list import ListValue, ValueList
 
 AUTHOR = "forge"
 
-# Предел идентификатора PostgreSQL — 63 символа: префикс `fk_`/`uq_`, таблица, `_` и hash8
+# Предел идентификатора PostgreSQL — 63 символа: префикс `fk_`/`uq_`/`ck_`, таблица, `_` и hash8
 _CONSTRAINT_TABLE_LENGTH = 51
 _HASH_LENGTH = 8
 
@@ -92,6 +98,16 @@ def foreign_key_name(table: TableName, key: ForeignKey) -> str:
     return _constraint_name("fk", table, f"{table}|{pairs}|{key.target}")
 
 
+def check_name(table: TableName, column: ColumnName, values: ValueList) -> str:
+    """Имя ограничения перечня значений: `ck_<таблица>_<hash8>`.
+
+    Хеш берётся от таблицы, колонки и значений в каноническом порядке, записанных JSON: порядок
+    значений на имя не влияет, а `1` и `"1"` дают разные имена.
+    """
+    content = json.dumps(list(values.sorted_values()), ensure_ascii=False)
+    return _constraint_name("ck", table, f"{table}|{column}|{content}")
+
+
 def _constraint_name(prefix: str, table: TableName, content: str) -> str:
     digest = hashlib.sha256(content.encode("utf-8")).hexdigest()[:_HASH_LENGTH]
     return f"{prefix}_{table.value[:_CONSTRAINT_TABLE_LENGTH]}_{digest}"
@@ -105,6 +121,9 @@ class LiquibaseConstraintNaming:
 
     def foreign_key(self, table: TableName, key: ForeignKey) -> str:
         return foreign_key_name(table, key)
+
+    def check(self, table: TableName, column: ColumnName, values: ValueList) -> str:
+        return check_name(table, column, values)
 
 
 def render_changelog(changelog: Changelog) -> str:
@@ -127,8 +146,12 @@ def _changeset(changelog: Changelog, item: ChangeSet) -> dict[str, Any]:
         "changes": _forward(item.change),
     }
     # Откат создания Liquibase выводит сам; откат удаления задаётся явно по принятой модели
-    if isinstance(item.change, DropTable | DropColumn | DropUnique | DropForeignKey):
+    if isinstance(item.change, DropTable | DropColumn | DropUnique | DropForeignKey | DropCheck):
         changeset["rollback"] = _restore(item.change)
+    # Изменение `sql` Liquibase не откатывает сам: откат добавления перечня задаётся явно
+    if isinstance(item.change, AddCheck):
+        added = item.change
+        changeset["rollback"] = [_drop_check(added.table, added.column, added.values)]
     return {"changeSet": changeset}
 
 
@@ -141,6 +164,10 @@ def _forward(change: SchemaChange) -> list[dict[str, Any]]:
         return [_add_unique(change.table, change.unique)]
     if isinstance(change, AddForeignKey):
         return [_add_foreign_key(change.table, change.key)]
+    if isinstance(change, AddCheck):
+        return [_add_check(change.table, change.column, change.values)]
+    if isinstance(change, DropCheck):
+        return [_drop_check(change.table, change.column, change.values)]
     if isinstance(change, DropTable):
         return [{"dropTable": {"tableName": change.table.name.value}}]
     if isinstance(change, DropUnique):
@@ -171,17 +198,29 @@ def _forward(change: SchemaChange) -> list[dict[str, Any]]:
     ]
 
 
-def _restore(change: DropTable | DropColumn | DropUnique | DropForeignKey) -> list[dict[str, Any]]:
+def _restore(
+    change: DropTable | DropColumn | DropUnique | DropForeignKey | DropCheck,
+) -> list[dict[str, Any]]:
     """Откат удаления: структура объекта по принятой модели, данные не восстанавливаются.
 
-    Откат удаления таблицы восстанавливает и её наборы уникальности; внешние ключи
-    восстанавливает откат их собственных changeset.
+    Откат удаления таблицы восстанавливает и её наборы уникальности и перечни значений;
+    внешние ключи восстанавливает откат их собственных changeset.
     """
     if isinstance(change, DropTable):
         table = change.table
-        return _create_table(table) + [_add_unique(table.name, unique) for unique in table.unique]
+        return (
+            _create_table(table)
+            + [_add_unique(table.name, unique) for unique in table.unique]
+            + [
+                _add_check(table.name, column.name, column.check)
+                for column in table.columns
+                if column.check is not None
+            ]
+        )
     if isinstance(change, DropUnique):
         return [_add_unique(change.table, change.unique)]
+    if isinstance(change, DropCheck):
+        return [_add_check(change.table, change.column, change.values)]
     if isinstance(change, DropForeignKey):
         return [_add_foreign_key(change.table, change.key)]
     return _add_column(change.table, change.column, change.nullable)
@@ -207,6 +246,38 @@ def _add_foreign_key(table: TableName, key: ForeignKey) -> dict[str, Any]:
             "constraintName": foreign_key_name(table, key),
         }
     }
+
+
+# Формы `sql`, которые пишет forge: только по ним сводка узнаёт перечень значений
+_ADD_CHECK = re.compile(
+    r"ALTER TABLE ([a-z][a-z0-9_]*) ADD CONSTRAINT (ck_[a-z0-9_]+) CHECK \(.+\)"
+)
+_DROP_CHECK = re.compile(r"ALTER TABLE ([a-z][a-z0-9_]*) DROP CONSTRAINT (ck_[a-z0-9_]+)")
+
+
+def _add_check(table: TableName, column: ColumnName, values: ValueList) -> dict[str, Any]:
+    literals = ", ".join(_sql_literal(value) for value in values.sorted_values())
+    name = check_name(table, column, values)
+    return {
+        "sql": {
+            "sql": f"ALTER TABLE {table.value} ADD CONSTRAINT {name} "
+            f"CHECK ({column.value} IN ({literals}))"
+        }
+    }
+
+
+def _drop_check(table: TableName, column: ColumnName, values: ValueList) -> dict[str, Any]:
+    name = check_name(table, column, values)
+    return {"sql": {"sql": f"ALTER TABLE {table.value} DROP CONSTRAINT {name}"}}
+
+
+def _sql_literal(value: ListValue) -> str:
+    """Литерал значения перечня: строка в кавычках с удвоенными кавычками, целое — числом."""
+    if isinstance(value, str):
+        return "'" + value.replace("'", "''") + "'"
+    if isinstance(value, int) and not isinstance(value, bool):
+        return str(value)
+    raise TypeError(f"значение перечня {value!r} не строка и не целое число")
 
 
 def _names(columns: tuple[ColumnName, ...]) -> str:
@@ -241,6 +312,11 @@ def _add_column(table: TableName, column: Column, nullable: bool) -> list[dict[s
 
 def _column(column: Column, nullable: bool) -> dict[str, Any]:
     definition: dict[str, Any] = {"name": column.name.value, "type": liquibase_type(column.type)}
+    # Режим задан явно, чтобы не зависеть от умолчания версии Liquibase: BY DEFAULT пропускает
+    # явные значения seed
+    if column.generated is Generation.IDENTITY:
+        definition["autoIncrement"] = True
+        definition["generationType"] = "BY DEFAULT"
     if not nullable:
         definition["constraints"] = {"nullable": False}
     return {"column": definition}
@@ -327,6 +403,16 @@ def _summary(document: Any) -> ChangelogSummary:
             elif "dropForeignKeyConstraint" in change:
                 body = change["dropForeignKeyConstraint"]
                 dropped_constraints.append(_constraint("foreign_key", body, "baseTableName"))
+            elif "sql" in change:
+                text = str(change["sql"]["sql"])
+                if added := _ADD_CHECK.fullmatch(text):
+                    constraints.append(ConstraintRef("check", added[1], added[2]))
+                elif dropped_check := _DROP_CHECK.fullmatch(text):
+                    dropped_constraints.append(
+                        ConstraintRef("check", dropped_check[1], dropped_check[2])
+                    )
+                else:
+                    raise TypeError(f"изменение sql не в формате forge generate: {text!r}")
     if len(paths) > 1:
         raise TypeError(f"у changeset разные logicalFilePath: {sorted(paths)}")
     return ChangelogSummary(

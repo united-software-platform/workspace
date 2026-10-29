@@ -34,7 +34,7 @@ class SchemaProbeInterface(Protocol):
     def column_exists(self, database: TargetDatabase, table: str, column: str) -> bool: ...
 
     def constraint_exists(self, database: TargetDatabase, table: str, name: str, kind: str) -> bool:
-        """Есть ли у таблицы ограничение с таким именем вида `foreign_key` или `unique`."""
+        """Есть ли у таблицы ограничение с таким именем вида `foreign_key`, `unique` или `check`."""
         ...
 
 

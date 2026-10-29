@@ -18,10 +18,12 @@ from forge.migration.application.operation_record import OperationRecordReaderIn
 from forge.migration.application.seed_conflicts import SeedConflictCheckerInterface
 from forge.migration.domain.changelog import Changelog, ChangeSet
 from forge.migration.domain.changes import (
+    AddCheck,
     AddColumn,
     AddForeignKey,
     AddUnique,
     CreateTable,
+    DropCheck,
     DropColumn,
     DropTable,
     DropUnique,
@@ -161,6 +163,10 @@ class GenerateChangelogUseCase:
             kind = "add_unique" if isinstance(change, AddUnique) else "drop_unique"
             name = self._naming.unique(change.table, change.unique)
             return ChangeSetView(item.id, kind, change.table.value, None, name)
+        if isinstance(change, AddCheck | DropCheck):
+            kind = "add_check" if isinstance(change, AddCheck) else "drop_check"
+            name = self._naming.check(change.table, change.column, change.values)
+            return ChangeSetView(item.id, kind, change.table.value, change.column.value, name)
         kind = "add_foreign_key" if isinstance(change, AddForeignKey) else "drop_foreign_key"
         name = self._naming.foreign_key(change.table, change.key)
         return ChangeSetView(item.id, kind, change.table.value, None, name)

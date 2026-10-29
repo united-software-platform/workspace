@@ -21,9 +21,14 @@ from forge.modeling.application.model_reading import (
 )
 from forge.modeling.domain.data_model import FORMAT_VERSION
 from forge.modeling.domain.draft import ColumnDraft, DataModelDraft, ForeignKeyDraft, TableDraft
+from forge.modeling.domain.value_list import ListValue
 from forge.modeling.domain.violation import Violation, join_path
 from forge.shared.infrastructure.yaml_nodes import (
     BOOL_TAG,
+    FLOAT_TAG,
+    INT_TAG,
+    NULL_TAG,
+    STR_TAG,
     YamlSyntaxError,
     describe,
     integer_value,
@@ -39,7 +44,9 @@ _TABLE_OPTIONAL = ("foreign_keys", "unique")
 _FOREIGN_KEY_FIELDS = ("columns", "references")
 _REFERENCES_FIELDS = ("table", "columns")
 _COLUMN_REQUIRED = ("name", "type")
-_COLUMN_OPTIONAL = ("nullable", "length", "precision", "scale")
+_COLUMN_OPTIONAL = ("nullable", "length", "precision", "scale", "generated", "check")
+# Значения перечня — скаляры этих видов; подходит ли вид типу колонки, решает домен
+_LIST_VALUE_TAGS = (STR_TAG, INT_TAG, BOOL_TAG, FLOAT_TAG, NULL_TAG)
 
 
 class YamlModelDraftReader:
@@ -223,9 +230,41 @@ class _Walker:
             self._optional_int(fields.get(field), join_path(path, field))
             for field in ("length", "precision", "scale")
         )
+        generated_node = fields.get("generated")
+        generated = (
+            self._string(generated_node, join_path(path, "generated"))
+            if generated_node is not None
+            else None
+        )
+        check = self._check(fields.get("check"), join_path(path, "check"))
         if len(self._violations) > before or name is None or type_name is None:
             return None
-        return ColumnDraft(name, type_name, nullable, length, precision, scale)
+        return ColumnDraft(name, type_name, nullable, length, precision, scale, generated, check)
+
+    def _check(self, node: Node | None, path: str) -> tuple[ListValue, ...] | None:
+        """Значения перечня как записаны; неподходящий вид отдельного значения решает домен."""
+        if node is None:
+            return None
+        if not isinstance(node, SequenceNode):
+            self._wrong_kind(node, path, "список значений")
+            return None
+        values: list[ListValue] = []
+        valid = True
+        for index, item in enumerate(node.value):
+            item_path = f"{path}[{index}]"
+            if not isinstance(item, ScalarNode) or item.tag not in _LIST_VALUE_TAGS:
+                self._wrong_kind(item, item_path, "строка или целое число")
+                valid = False
+            elif item.tag == INT_TAG:
+                number = self._optional_int(item, item_path)
+                valid = valid and number is not None
+                values.append(number)
+            elif item.tag == STR_TAG:
+                values.append(str(item.value))
+            else:
+                constructed = self._loader.construct_object(item)
+                values.append(constructed if isinstance(constructed, bool | float) else None)
+        return tuple(values) if valid else None
 
     def _names(self, node: Node | None, path: str) -> tuple[str, ...] | None:
         if node is None:

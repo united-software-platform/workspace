@@ -16,8 +16,9 @@ class AcceptedSeedError(Exception):
 class SeedConflict:
     """Конфликт модели попытки с принятым seed.
 
-    `kind` — `seeded_table_dropped`, `not_null_column_added`, `foreign_key_violated_by_seed`
-    или `unique_violated_by_seed`; `column` — у новой колонки NOT NULL, иначе `None`;
+    `kind` — `seeded_table_dropped`, `not_null_column_added`, `foreign_key_violated_by_seed`,
+    `unique_violated_by_seed` или `check_violated_by_seed`; `column` — у новой колонки NOT NULL
+    и у колонки с перечнем, иначе `None`;
     `path` — место в принятом seed, `message` — нарушение, по которому найден конфликт.
     """
 

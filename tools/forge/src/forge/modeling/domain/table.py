@@ -19,7 +19,8 @@ class Table:
     наборы уникальности и внешние ключи.
 
     Инварианты: хотя бы одна колонка, имена колонок уникальны, ключ ссылается на колонки
-    таблицы, у колонок ключа нет явного `nullable: true`; наборы уникальности ссылаются
+    таблицы, у колонок ключа нет явного `nullable: true`, генерация значения — не больше чем
+    у одной колонки; наборы уникальности ссылаются
     на колонки таблицы, не совпадают с ключом и между собой; внешние ключи ссылаются на колонки
     таблицы и не повторяются. Ссылку внешнего ключа на цель проверяет модель: цель — другая
     таблица. Все нарушения таблицы сообщаются сразу, с путями относительно таблицы.
@@ -93,6 +94,17 @@ class Table:
                         f"колонка {column.name} входит в первичный ключ и не может допускать NULL",
                     )
                 )
+        generated = [
+            position for position, column in enumerate(columns) if column.generated is not None
+        ]
+        violations += [
+            Violation(
+                f"columns[{position}].generated",
+                "duplicate_generated",
+                f"генерация значения уже задана колонке columns[{generated[0]}]",
+            )
+            for position in generated[1:]
+        ]
         return violations + _unique_violations(positions, primary_key, unique)
 
     def column(self, name: ColumnName) -> Column:
@@ -112,9 +124,14 @@ class Table:
         return any(columns == unique.composition() for unique in self.unique)
 
     def is_nullable(self, name: ColumnName) -> bool:
-        """Итоговая допустимость NULL: колонки ключа NOT NULL, без `nullable` — NULL допустим."""
+        """Итоговая допустимость NULL: колонки ключа и колонки с генерацией значения NOT NULL,
+        прочие без `nullable` — NULL допустим."""
         column = self.column(name)
-        return name not in self.primary_key and column.nullable is not False
+        return (
+            name not in self.primary_key
+            and column.generated is None
+            and column.nullable is not False
+        )
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, Table) and other.name == self.name

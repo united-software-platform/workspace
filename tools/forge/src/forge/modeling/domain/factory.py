@@ -9,10 +9,12 @@ from forge.modeling.domain.column_type import ColumnType, parse_column_type
 from forge.modeling.domain.data_model import DataModel, unknown_target
 from forge.modeling.domain.draft import ColumnDraft, DataModelDraft, ForeignKeyDraft, TableDraft
 from forge.modeling.domain.foreign_key import ForeignKey, duplicate_foreign_keys
+from forge.modeling.domain.generation import Generation, parse_generation
 from forge.modeling.domain.identifier import ColumnName, TableName
 from forge.modeling.domain.primary_key import PrimaryKey
 from forge.modeling.domain.table import Table
 from forge.modeling.domain.unique_set import UniqueSet
+from forge.modeling.domain.value_list import ValueList
 from forge.modeling.domain.violation import ModelViolationError, Violation
 
 
@@ -170,9 +172,23 @@ class DataModelFactory:
             )
         except ModelViolationError as error:
             violations += error.violations
-        if name is None or column_type is None:
+        generated: Generation | None = None
+        if draft.generated is not None:
+            try:
+                generated = parse_generation(draft.generated)
+            except ModelViolationError as error:
+                violations += error.violations
+        check: ValueList | None = None
+        if draft.check is not None:
+            try:
+                check = ValueList(draft.check)
+            except ModelViolationError as error:
+                violations += error.under("check").violations
+        if column_type is not None:
+            violations += Column.violations_of(column_type, draft.nullable, generated, check)
+        if name is None or column_type is None or violations:
             raise ModelViolationError(violations)
-        return Column(name, column_type, draft.nullable)
+        return Column(name, column_type, draft.nullable, generated, check)
 
     @staticmethod
     def _primary_key(names: tuple[str, ...]) -> tuple[PrimaryKey | None, list[Violation]]:
