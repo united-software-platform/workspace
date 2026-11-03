@@ -29,10 +29,7 @@ from urllib.parse import urlsplit
 #
 # Цели сборки образа здесь нет и быть не может: образ собирает пайплайн репозитория kit'а,
 # а проект получает его из реестра — в Makefile такой цели нет.
-#
-# tldr-scan запускает на хосте контейнеры образа tldr, но проект монтирует им только для чтения:
-# в рабочем дереве цель пишет лишь отчёты в reports/tldr.
-ALLOWED_TARGETS = frozenset({"init", "openspec-init", "help", "tldr-scan"})
+ALLOWED_TARGETS = frozenset({"init", "openspec-init", "help"})
 # >>> liquibase-forge
 # Цели Liquibase Forge. Через цели шлюза агент без Docker и Liquibase исполняет накат
 # и откат changelog: параметров они не принимают — те приходят файлом
@@ -45,6 +42,13 @@ if "TARGET_VARIABLES" in globals():
     TARGET_VARIABLES.update(dict.fromkeys(_FORGE_TARGETS, frozenset()))
 ALLOWED_TARGETS = ALLOWED_TARGETS | frozenset(_FORGE_TARGETS)
 # <<< liquibase-forge
+# >>> tldr-scan
+# Сканирование проекта образом tldr. Блок стоит за определением белого списка любой формы
+# и расширяет его, не трогая литерал: цель tldr-scan запускает на хосте контейнеры образа
+# tldr, но проект монтирует им только для чтения — в рабочем дереве цель пишет лишь отчёты
+# в reports/tldr. Настройка и вызов — tools/tldr/README.md.
+ALLOWED_TARGETS = ALLOWED_TARGETS | frozenset({"tldr-scan"})
+# <<< tldr-scan
 
 # Цели выполняются в корне репозитория: там лежит Makefile окружения
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]

@@ -1,5 +1,5 @@
 .PHONY: help init init-host init-env init-dirs init-gitignore init-ssh-key init-ssh-config \
-	openspec-init tldr-scan
+	openspec-init
 
 .DEFAULT_GOAL := help
 
@@ -141,19 +141,6 @@ openspec-init: ## Развернуть инструменты SDD: openspec init
 	docker compose --profile claude run --rm -T claude \
 		openspec init --tools claude --language ru
 
-# Сканирование проекта образом tldr. Цель вызывается и раннером по запросу агента, а раннер
-# параметров не передаёт: образ, расширение и скрываемые каталоги берутся из окружения или .env,
-# пустое значение оставляет умолчание tools/tldr-scan.sh. Каталоги в TLDR_EXCLUDE перечисляются
-# через запятую — значение с пробелом сломало бы загрузку .env командой «.» при запуске раннера.
-# Отчёты лежат в рабочем дереве, чтобы агент прочитал их из контейнера, и сами скрыты от анализа,
-# иначе повторный прогон учёл бы JSON прошлого; поэтому умолчание vendor,public задано и здесь.
-tldr-scan: ## Сканировать проект образом tldr, отчёты — в reports/tldr
-	@image="$${TLDR_IMAGE:-$(call env_value,TLDR_IMAGE)}"; \
-	ext="$${TLDR_EXT:-$(call env_value,TLDR_EXT)}"; \
-	exclude="$${TLDR_EXCLUDE:-$(call env_value,TLDR_EXCLUDE)}"; \
-	exclude="$$(printf '%s' "$${exclude:-vendor,public}" | tr ',' ' ') reports"; \
-	TLDR_IMAGE="$$image" EXT="$$ext" EXCLUDE="$$exclude" sh tools/tldr-scan.sh . reports/tldr
-
 # >>> liquibase-forge
 .PHONY: liquibase-update liquibase-rollback forge-env-sync forge-env-check forge-env-up
 
@@ -180,3 +167,25 @@ forge-env-check: ## Проверить версию Compose (2.20+) и сост�
 forge-env-up: ## Загрузить и собрать образы, поднять lbfr-db и lbfr-db-test до healthy
 	@sh tools/forge-env/up.sh
 # <<< liquibase-forge
+
+# >>> tldr-scan
+# Значение переменной tldr-сканирования из .env. Собственный разборщик, а не env_value kit'а:
+# блок не зависит от внутренних имён Makefile kit'а и переживёт его обновление. Разбор построчный
+# по той же причине: .env — файл секретов, его содержимое не попадает в пространство имён make.
+tldr_env_value = $$(sed -n 's/^$(1)=//p' .env 2>/dev/null | tail -n 1)
+
+.PHONY: tldr-scan
+
+# Сканирование проекта образом tldr. Цель вызывается и раннером по запросу агента, а раннер
+# параметров не передаёт: образ, расширение и скрываемые каталоги берутся из окружения или .env,
+# пустое значение оставляет умолчание tools/tldr/scan.sh. Каталоги в TLDR_EXCLUDE перечисляются
+# через запятую — значение с пробелом ломало бы загрузку .env командой «.» при запуске раннера.
+# Отчёты лежат в рабочем дереве, чтобы агент прочитал их из контейнера, и сами скрыты от анализа,
+# иначе повторный прогон учёл бы JSON прошлого; поэтому умолчание vendor,public задано и здесь.
+tldr-scan: ## Сканировать проект образом tldr, отчёты — в reports/tldr
+	@image="$${TLDR_IMAGE:-$(tldr_env_value,TLDR_IMAGE)}"; \
+	ext="$${TLDR_EXT:-$(tldr_env_value,TLDR_EXT)}"; \
+	exclude="$${TLDR_EXCLUDE:-$(tldr_env_value,TLDR_EXCLUDE)}"; \
+	exclude="$$(printf '%s' "$${exclude:-vendor,public}" | tr ',' ' ') reports"; \
+	TLDR_IMAGE="$$image" EXT="$$ext" EXCLUDE="$$exclude" sh tools/tldr/scan.sh . reports/tldr
+# <<< tldr-scan

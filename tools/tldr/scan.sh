@@ -5,7 +5,7 @@
 # внутри контейнера, на хосте они не меняются. Каждая команда пишет stdout в свой файл отчёта,
 # stderr — в соседний .err, который удаляется, если пуст. Сбой одной команды не останавливает остальные.
 #
-# Использование: sh scripts/tldr-scan.sh <путь к проекту> [каталог отчётов]
+# Использование: sh tools/tldr/scan.sh <путь к проекту> [каталог отчётов]
 #   каталог отчётов по умолчанию — reports/<имя проекта> в текущем каталоге
 # Переменные окружения:
 #   TLDR_IMAGE — образ, по умолчанию ghcr.io/united-software-platform/tldr-code:latest
@@ -18,7 +18,7 @@ set -u
 
 target="${1:-}"
 if [ -z "$target" ]; then
-    echo "usage: sh scripts/tldr-scan.sh <project-path> [report-dir]" >&2
+    echo "usage: sh tools/tldr/scan.sh <project-path> [report-dir]" >&2
     exit 2
 fi
 if [ ! -d "$target" ]; then
