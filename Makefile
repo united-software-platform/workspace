@@ -1,5 +1,5 @@
 .PHONY: help init init-host init-env init-dirs init-gitignore init-ssh-key init-ssh-config \
-	openspec-init
+	openspec-init tldr-scan
 
 .DEFAULT_GOAL := help
 
@@ -140,6 +140,19 @@ openspec-init: ## Развернуть инструменты SDD: openspec init
 	mkdir -p "$$accounts/$$profile"
 	docker compose --profile claude run --rm -T claude \
 		openspec init --tools claude --language ru
+
+# Сканирование проекта образом tldr. Цель вызывается и раннером по запросу агента, а раннер
+# параметров не передаёт: образ, расширение и скрываемые каталоги берутся из окружения или .env,
+# пустое значение оставляет умолчание tools/tldr-scan.sh. Каталоги в TLDR_EXCLUDE перечисляются
+# через запятую — значение с пробелом сломало бы загрузку .env командой «.» при запуске раннера.
+# Отчёты лежат в рабочем дереве, чтобы агент прочитал их из контейнера, и сами скрыты от анализа,
+# иначе повторный прогон учёл бы JSON прошлого; поэтому умолчание vendor,public задано и здесь.
+tldr-scan: ## Сканировать проект образом tldr, отчёты — в reports/tldr
+	@image="$${TLDR_IMAGE:-$(call env_value,TLDR_IMAGE)}"; \
+	ext="$${TLDR_EXT:-$(call env_value,TLDR_EXT)}"; \
+	exclude="$${TLDR_EXCLUDE:-$(call env_value,TLDR_EXCLUDE)}"; \
+	exclude="$$(printf '%s' "$${exclude:-vendor,public}" | tr ',' ' ') reports"; \
+	TLDR_IMAGE="$$image" EXT="$$ext" EXCLUDE="$$exclude" sh tools/tldr-scan.sh . reports/tldr
 
 # >>> liquibase-forge
 .PHONY: liquibase-update liquibase-rollback forge-env-sync forge-env-check forge-env-up

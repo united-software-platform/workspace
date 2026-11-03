@@ -29,7 +29,10 @@ from urllib.parse import urlsplit
 #
 # Цели сборки образа здесь нет и быть не может: образ собирает пайплайн репозитория kit'а,
 # а проект получает его из реестра — в Makefile такой цели нет.
-ALLOWED_TARGETS = frozenset({"init", "openspec-init", "help"})
+#
+# tldr-scan запускает на хосте контейнеры образа tldr, но проект монтирует им только для чтения:
+# в рабочем дереве цель пишет лишь отчёты в reports/tldr.
+ALLOWED_TARGETS = frozenset({"init", "openspec-init", "help", "tldr-scan"})
 # >>> liquibase-forge
 # Цели Liquibase Forge. Через цели шлюза агент без Docker и Liquibase исполняет накат
 # и откат changelog: параметров они не принимают — те приходят файлом

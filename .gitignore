@@ -3,6 +3,9 @@
 .ssh/
 .claude-accounts/
 
+# Отчёты make tldr-scan — результат прогона, а не исходники
+/reports/tldr/
+
 # >>> liquibase-forge
 # Liquibase Forge: файлы обмена со шлюзом и окружение uv подпроекта CLI — локальные
 .forge/
