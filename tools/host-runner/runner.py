@@ -46,8 +46,13 @@ ALLOWED_TARGETS = ALLOWED_TARGETS | frozenset(_FORGE_TARGETS)
 # Сканирование проекта образом tldr. Блок стоит за определением белого списка любой формы
 # и расширяет его, не трогая литерал: цель tldr-scan запускает на хосте контейнеры образа
 # tldr, но проект монтирует им только для чтения — в рабочем дереве цель пишет лишь отчёты
-# в reports/tldr. Настройка и вызов — tools/tldr/README.md.
-ALLOWED_TARGETS = ALLOWED_TARGETS | frozenset({"tldr-scan"})
+# в reports/tldr. Цель tldr-scan-ext пускает через шлюз сканирование сторонних проектов:
+# шлюз читает файл запроса, проверяет границу TLDR_SCAN_ROOTS и пишет исход в файл результата.
+# Настройка и вызов — tools/tldr/README.md.
+_TLDR_TARGETS = ("tldr-scan", "tldr-scan-ext")
+if "TARGET_VARIABLES" in globals():
+    TARGET_VARIABLES.update(dict.fromkeys(_TLDR_TARGETS, frozenset()))
+ALLOWED_TARGETS = ALLOWED_TARGETS | frozenset(_TLDR_TARGETS)
 # <<< tldr-scan
 
 # Цели выполняются в корне репозитория: там лежит Makefile окружения

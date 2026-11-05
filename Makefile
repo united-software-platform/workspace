@@ -174,7 +174,7 @@ forge-env-up: ## Загрузить и собрать образы, поднят
 # по той же причине: .env — файл секретов, его содержимое не попадает в пространство имён make.
 tldr_env_value = $$(sed -n 's/^$(1)=//p' .env 2>/dev/null | tail -n 1)
 
-.PHONY: tldr-scan
+.PHONY: tldr-scan tldr-scan-ext
 
 # Сканирование проекта образом tldr. Цель вызывается и раннером по запросу агента, а раннер
 # параметров не передаёт: образ, расширение и скрываемые каталоги берутся из окружения или .env,
@@ -188,4 +188,12 @@ tldr-scan: ## Сканировать проект образом tldr, отчё�
 	exclude="$${TLDR_EXCLUDE:-$(tldr_env_value,TLDR_EXCLUDE)}"; \
 	exclude="$$(printf '%s' "$${exclude:-vendor,public}" | tr ',' ' ') reports"; \
 	TLDR_IMAGE="$$image" EXT="$$ext" EXCLUDE="$$exclude" sh tools/tldr/scan.sh . reports/tldr
+
+# Сканирование стороннего проекта по файлу запроса. Цель зовёт шлюз, а не scan.sh напрямую:
+# шлюз проверяет запрос и границу TLDR_SCAN_ROOTS из окружения раннера (корни — абсолютные пути
+# хоста через запятую, пусто — внешние сканирования запрещены) и пишет исход в файл результата —
+# make сводит любую ошибку рецепта к коду 2, и истинный код исхода иначе до агента не дошёл бы.
+# Формат запроса и коды исхода — tools/tldr/README.md.
+tldr-scan-ext: ## Просканировать сторонний проект по .tldr/scan-request.json
+	@python3 tools/tldr/gateway.py
 # <<< tldr-scan

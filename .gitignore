@@ -12,6 +12,8 @@ tools/forge/.venv/
 # <<< liquibase-forge
 
 # >>> tldr-scan
-# Отчёты make tldr-scan — результат прогона, а не исходники
-/reports/tldr/
+# Отчёты сканирований tldr (tldr-scan, tldr-scan-ext) — результат прогона, а не исходники
+/reports/
+# Файлы обмена со шлюзом tldr: запрос и результат сканирования сторонних проектов
+.tldr/
 # <<< tldr-scan
