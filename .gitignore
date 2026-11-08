@@ -2,6 +2,17 @@
 .env
 .ssh/
 .claude-accounts/
+import/
+export/
+
+# Сторонние репозитории, примонтированные в raw/<slug>: чужой код и его секреты
+# в этот репозиторий не попадают
+/raw/
+
+# Служебные файлы IDE и локальные настройки агента
+.idea/
+.claude/settings.local.json
+__pycache__/
 
 # >>> liquibase-forge
 # Liquibase Forge: файлы обмена со шлюзом и окружение uv подпроекта CLI — локальные

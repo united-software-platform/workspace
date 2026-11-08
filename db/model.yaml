@@ -1,2 +1,242 @@
 version: 1
-tables: []
+tables:
+  - name: project_domain
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+
+  - name: technology_category
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+
+  - name: technology
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+      - name: category_id
+        type: bigint
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+    foreign_keys:
+      - columns: [category_id]
+        references:
+          table: technology_category
+          columns: [id]
+
+  - name: company
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+      - name: status
+        type: string
+        length: 16
+        nullable: false
+        check: ["active", "archived"]
+      - name: archived_at
+        type: timestamp_tz
+        nullable: true
+      - name: created_at
+        type: timestamp_tz
+        nullable: false
+      - name: updated_at
+        type: timestamp_tz
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+
+  - name: project_group
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: company_id
+        type: bigint
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+      - name: status
+        type: string
+        length: 16
+        nullable: false
+        check: ["active", "disbanded"]
+      - name: disbanded_at
+        type: timestamp_tz
+        nullable: true
+      - name: created_at
+        type: timestamp_tz
+        nullable: false
+      - name: updated_at
+        type: timestamp_tz
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [company_id, code]
+      - [company_id, id]
+    foreign_keys:
+      - columns: [company_id]
+        references:
+          table: company
+          columns: [id]
+
+  - name: project
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: company_id
+        type: bigint
+        nullable: false
+      - name: group_id
+        type: bigint
+        nullable: true
+      - name: domain_id
+        type: bigint
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+      - name: status
+        type: string
+        length: 16
+        nullable: false
+        check: ["active", "archived"]
+      - name: archived_at
+        type: timestamp_tz
+        nullable: true
+      - name: created_at
+        type: timestamp_tz
+        nullable: false
+      - name: updated_at
+        type: timestamp_tz
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [company_id, code]
+    foreign_keys:
+      - columns: [company_id]
+        references:
+          table: company
+          columns: [id]
+      - columns: [company_id, group_id]
+        references:
+          table: project_group
+          columns: [company_id, id]
+      - columns: [domain_id]
+        references:
+          table: project_domain
+          columns: [id]
+
+  - name: project_technology
+    columns:
+      - name: project_id
+        type: bigint
+        nullable: false
+      - name: technology_id
+        type: bigint
+        nullable: false
+      - name: version
+        type: string
+        length: 64
+        nullable: true
+      - name: source
+        type: string
+        length: 16
+        nullable: false
+        check: ["manual"]
+      - name: created_at
+        type: timestamp_tz
+        nullable: false
+      - name: updated_at
+        type: timestamp_tz
+        nullable: false
+    primary_key: [project_id, technology_id]
+    foreign_keys:
+      - columns: [project_id]
+        references:
+          table: project
+          columns: [id]
+      - columns: [technology_id]
+        references:
+          table: technology
+          columns: [id]

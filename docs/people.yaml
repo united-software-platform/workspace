@@ -1,0 +1,31 @@
+# Шаблон реестра идентичностей
+#
+# Назначение: связывает разработчика (slug, имя) со всеми его email в истории git и командой.
+# Выгрузка работы выбирается по person: <slug> или team: <имя команды>.
+# Подробности формата и правила слияния адресов — docs/work-format.md, раздел «Реестр идентичностей».
+#
+# ВАЖНО: это шаблон с ВЫМЫШЛЕННЫМИ записями. Реальный реестр с настоящими именами и email —
+# локальный файл ВНЕ git (например, /secure/registries/people.yaml); в репозиторий он не попадает.
+
+persons:
+  # Пример: один человек с несколькими email — одна запись со списком адресов
+  - slug: aivanov
+    name: Андрей Иванов
+    emails:
+      - a.ivanov@example.dev
+      - andrey.ivanov@example.org
+    team: backend
+
+  # Пример: запись с одним адресом
+  - slug: mpetrova
+    name: Мария Петрова
+    emails:
+      - m.petrova@example.dev
+    team: backend
+
+  # Пример: другая команда
+  - slug: dkuznetsov
+    name: Дмитрий Кузнецов
+    emails:
+      - d.kuznetsov@example.dev
+    team: frontend

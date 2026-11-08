@@ -1,0 +1,24 @@
+{
+  "attempt": 1,
+  "verdict": null,
+  "action": "none_applied",
+  "rolled_back": 0,
+  "changelog": "backlog/forge-model/20261029-195210/attempt-1/changelog.yaml",
+  "database": "lbfr-db:5432/forge",
+  "gateway": null,
+  "fallback_reason": null,
+  "fallback": null,
+  "checks": [
+    {
+      "check": "journal_clean",
+      "passed": true,
+      "detail": "записей db/changelog/20261029-195210.yaml в журнале: 0"
+    },
+    {
+      "check": "attempt_objects",
+      "passed": true,
+      "detail": "changelog попытки не найден: объекты попытки не проверены, проверен журнал"
+    }
+  ],
+  "verified": true
+}

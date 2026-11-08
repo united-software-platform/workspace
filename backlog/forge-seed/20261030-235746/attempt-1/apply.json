@@ -1,0 +1,12 @@
+{
+  "changelog": "backlog/forge-seed/20261030-235746/attempt-1/changelog.yaml",
+  "database": {
+    "host": "lbfr-db",
+    "port": 5432,
+    "name": "forge"
+  },
+  "request_id": "2846cf48079c41e6a6135a0bf80a9c6d",
+  "exit_code": 0,
+  "stdout": "\nUPDATE SUMMARY\nRun:                          7\nPreviously run:               0\nFiltered out:                 0\n-------------------------------\nTotal change sets:            7\n\n",
+  "stderr": " Container workspace-lbfr-liquibase-run-719798e17032 Creating \n Container workspace-lbfr-liquibase-run-719798e17032 Created \n####################################################\n##   _     _             _ _                      ##\n##  | |   (_)           (_) |                     ##\n##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##\n##  | |   | |/ _` | | | | | '_ \\ / _` / __|/ _ \\  ##\n##  | |___| | (_| | |_| | | |_) | (_| \\__ \\  __/  ##\n##  \\_____/_|\\__, |\\__,_|_|_.__/ \\__,_|___/\\___|  ##\n##              | |                               ##\n##              |_|                               ##\n##                                                ## \n##  Taking Liquibase to production?               ##\n##  liquibase.com/liquibase-secure                ## \n##                                                ##\n####################################################\nStarting Liquibase at 00:09:42 using Java 21.0.11 (version 5.0.4 #11282 built at 2026-08-18 12:10:05 UTC)\nLiquibase Version: 5.0.4\n\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-01::forge\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-02::forge\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-03::forge\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-04::forge\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-05::forge\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-06::forge\nRunning Changeset: db/changelog/20261030-235746.yaml::20261030-235746-07::forge\nLiquibase: Update has been successful. Rows affected: 25\nLiquibase command 'update' was executed successfully.\n"
+}

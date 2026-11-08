@@ -1,0 +1,165 @@
+version: 1
+tables:
+  - name: project_domain
+    rows:
+      - id: 1
+        uuid: "43476628-e6fc-4dca-9a5c-bf75b7fc834b"
+        code: fintech
+        name_ru: Финансовые технологии
+      - id: 2
+        uuid: "04412005-8fd5-474a-9237-44dd06075994"
+        code: ecommerce
+        name_ru: Электронная коммерция
+      - id: 3
+        uuid: "bd6e13b2-e5b4-4cbd-97f0-133de0c12824"
+        code: data-analytics
+        name_ru: Аналитика данных
+  - name: technology_category
+    rows:
+      - id: 1
+        uuid: "43c4063e-ff5b-4eb4-af92-79b651afe977"
+        code: language
+        name_ru: Языки программирования
+      - id: 2
+        uuid: "d9caf70e-7f16-40be-92ab-55dc2921967f"
+        code: database
+        name_ru: Базы данных
+      - id: 3
+        uuid: "671d0552-7378-492a-a783-ab582005a49d"
+        code: framework
+        name_ru: Фреймворки и библиотеки
+  - name: technology
+    rows:
+      - id: 1
+        uuid: "6e23303b-127c-45a8-9fc5-ac0b56543995"
+        code: python
+        name_ru: Python
+        category_id: 1
+      - id: 2
+        uuid: "52205499-703a-4da8-a396-3770e6b31195"
+        code: typescript
+        name_ru: TypeScript
+        category_id: 1
+      - id: 3
+        uuid: "38a4090f-d1cb-4b50-9488-92f831eeb331"
+        code: postgresql
+        name_ru: PostgreSQL
+        category_id: 2
+      - id: 4
+        uuid: "f2027b63-d19b-4d05-b1da-6ec777230183"
+        code: clickhouse
+        name_ru: ClickHouse
+        category_id: 2
+      - id: 5
+        uuid: "e706f111-a342-49c7-988c-a3bb9c487d06"
+        code: django
+        name_ru: Django
+        category_id: 3
+      - id: 6
+        uuid: "dcb89aa5-1f5b-4e58-b7ef-739e10156e9d"
+        code: react
+        name_ru: React
+        category_id: 3
+  - name: company
+    rows:
+      - id: 1
+        uuid: "d4668539-4ab2-47ac-9c82-81f3cac7b9da"
+        code: acme
+        name_ru: Акме Технологии
+        status: active
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+  - name: project_group
+    rows:
+      - id: 1
+        uuid: "a2408e6d-1d34-40b8-9020-9de0e6472794"
+        company_id: 1
+        code: platform
+        name_ru: Платформенные решения
+        status: active
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - id: 2
+        uuid: "522ab48c-24f1-4129-9794-9f6eaaa0f4ff"
+        company_id: 1
+        code: product
+        name_ru: Продуктовая линейка
+        status: active
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+  - name: project
+    rows:
+      - id: 1
+        uuid: "27d65078-2a2f-4eae-a7f2-2d2658337dda"
+        company_id: 1
+        group_id: 1
+        domain_id: 1
+        code: payments
+        name_ru: Сервис платежей
+        status: active
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - id: 2
+        uuid: "de85de9e-eb34-493e-b03d-9dfa981074fb"
+        company_id: 1
+        group_id: 2
+        domain_id: 2
+        code: shopfront
+        name_ru: Витрина магазина
+        status: active
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - id: 3
+        uuid: "86f7837c-034f-478f-9b31-77fc126070e8"
+        company_id: 1
+        group_id: 1
+        domain_id: 3
+        code: analytics
+        name_ru: Аналитика данных
+        status: active
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+  - name: project_technology
+    rows:
+      - project_id: 1
+        technology_id: 1
+        version: "3.12"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - project_id: 1
+        technology_id: 5
+        version: "5.0"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - project_id: 1
+        technology_id: 3
+        version: "16"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - project_id: 2
+        technology_id: 2
+        version: "5.5"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - project_id: 2
+        technology_id: 6
+        version: "18.3"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - project_id: 3
+        technology_id: 1
+        version: "3.12"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"
+      - project_id: 3
+        technology_id: 4
+        version: "24.8"
+        source: manual
+        created_at: "2026-10-31T00:00:00Z"
+        updated_at: "2026-10-31T00:00:00Z"

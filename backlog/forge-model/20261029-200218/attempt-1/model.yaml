@@ -1,0 +1,104 @@
+version: 1
+tables:
+  - name: project_area
+    primary_key: [id]
+    unique: [[uuid], [code]]
+    columns:
+      - name: id
+        type: integer
+        nullable: false
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+
+  - name: technology_category
+    primary_key: [id]
+    unique: [[uuid], [code]]
+    columns:
+      - name: id
+        type: integer
+        nullable: false
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+
+  - name: technology
+    primary_key: [id]
+    unique: [[uuid], [code]]
+    foreign_keys:
+      - columns: [category_id]
+        references:
+          table: technology_category
+          columns: [id]
+    columns:
+      - name: id
+        type: integer
+        nullable: false
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+      - name: category_id
+        type: integer
+        nullable: false
+
+  - name: data_collector
+    primary_key: [id]
+    unique: [[uuid], [code]]
+    columns:
+      - name: id
+        type: integer
+        nullable: false
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+
+  - name: participant_role
+    primary_key: [id]
+    unique: [[uuid], [code]]
+    columns:
+      - name: id
+        type: integer
+        nullable: false
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false

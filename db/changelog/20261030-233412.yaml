@@ -1,0 +1,557 @@
+# Changelog операции 20261030-233412: построен forge generate, вручную не правится
+databaseChangeLog:
+- changeSet:
+    id: 20261030-233412-01
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: project_domain
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_domain
+        columnNames: id
+        constraintName: pk_project_domain
+- changeSet:
+    id: 20261030-233412-02
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: technology_category
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: technology_category
+        columnNames: id
+        constraintName: pk_technology_category
+- changeSet:
+    id: 20261030-233412-03
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: category_id
+            type: BIGINT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: technology
+        columnNames: id
+        constraintName: pk_technology
+- changeSet:
+    id: 20261030-233412-04
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: company
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: status
+            type: VARCHAR(16)
+            constraints:
+              nullable: false
+        - column:
+            name: archived_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: company
+        columnNames: id
+        constraintName: pk_company
+- changeSet:
+    id: 20261030-233412-05
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: project_group
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: company_id
+            type: BIGINT
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: status
+            type: VARCHAR(16)
+            constraints:
+              nullable: false
+        - column:
+            name: disbanded_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_group
+        columnNames: id
+        constraintName: pk_project_group
+- changeSet:
+    id: 20261030-233412-06
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: project
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: company_id
+            type: BIGINT
+            constraints:
+              nullable: false
+        - column:
+            name: group_id
+            type: BIGINT
+        - column:
+            name: domain_id
+            type: BIGINT
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: status
+            type: VARCHAR(16)
+            constraints:
+              nullable: false
+        - column:
+            name: archived_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project
+        columnNames: id
+        constraintName: pk_project
+- changeSet:
+    id: 20261030-233412-07
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - createTable:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            type: BIGINT
+            constraints:
+              nullable: false
+        - column:
+            name: technology_id
+            type: BIGINT
+            constraints:
+              nullable: false
+        - column:
+            name: version
+            type: VARCHAR(64)
+        - column:
+            name: source
+            type: VARCHAR(16)
+            constraints:
+              nullable: false
+        - column:
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: TIMESTAMP WITH TIME ZONE
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_technology
+        columnNames: project_id, technology_id
+        constraintName: pk_project_technology
+- changeSet:
+    id: 20261030-233412-08
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_domain
+        columnNames: uuid
+        constraintName: uq_project_domain_836fd2c6
+- changeSet:
+    id: 20261030-233412-09
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_domain
+        columnNames: code
+        constraintName: uq_project_domain_b829743a
+- changeSet:
+    id: 20261030-233412-10
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology_category
+        columnNames: uuid
+        constraintName: uq_technology_category_62ad71c8
+- changeSet:
+    id: 20261030-233412-11
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology_category
+        columnNames: code
+        constraintName: uq_technology_category_9f0cc750
+- changeSet:
+    id: 20261030-233412-12
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology
+        columnNames: uuid
+        constraintName: uq_technology_38cf67f0
+- changeSet:
+    id: 20261030-233412-13
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology
+        columnNames: code
+        constraintName: uq_technology_269f6e6a
+- changeSet:
+    id: 20261030-233412-14
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: company
+        columnNames: uuid
+        constraintName: uq_company_e7482094
+- changeSet:
+    id: 20261030-233412-15
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: company
+        columnNames: code
+        constraintName: uq_company_d600cf8b
+- changeSet:
+    id: 20261030-233412-16
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_group
+        columnNames: uuid
+        constraintName: uq_project_group_18991422
+- changeSet:
+    id: 20261030-233412-17
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_group
+        columnNames: company_id, code
+        constraintName: uq_project_group_f478a549
+- changeSet:
+    id: 20261030-233412-18
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_group
+        columnNames: company_id, id
+        constraintName: uq_project_group_7a8a89ec
+- changeSet:
+    id: 20261030-233412-19
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project
+        columnNames: uuid
+        constraintName: uq_project_dfc0daba
+- changeSet:
+    id: 20261030-233412-20
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project
+        columnNames: company_id, code
+        constraintName: uq_project_01427695
+- changeSet:
+    id: 20261030-233412-21
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - sql:
+        sql: ALTER TABLE company ADD CONSTRAINT ck_company_456aebbf CHECK (status IN ('active', 'archived'))
+    rollback:
+    - sql:
+        sql: ALTER TABLE company DROP CONSTRAINT ck_company_456aebbf
+- changeSet:
+    id: 20261030-233412-22
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - sql:
+        sql: ALTER TABLE project_group ADD CONSTRAINT ck_project_group_176cb1d2 CHECK (status IN ('active', 'disbanded'))
+    rollback:
+    - sql:
+        sql: ALTER TABLE project_group DROP CONSTRAINT ck_project_group_176cb1d2
+- changeSet:
+    id: 20261030-233412-23
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - sql:
+        sql: ALTER TABLE project ADD CONSTRAINT ck_project_85f5c35d CHECK (status IN ('active', 'archived'))
+    rollback:
+    - sql:
+        sql: ALTER TABLE project DROP CONSTRAINT ck_project_85f5c35d
+- changeSet:
+    id: 20261030-233412-24
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - sql:
+        sql: ALTER TABLE project_technology ADD CONSTRAINT ck_project_technology_b01807ac CHECK (source IN ('manual'))
+    rollback:
+    - sql:
+        sql: ALTER TABLE project_technology DROP CONSTRAINT ck_project_technology_b01807ac
+- changeSet:
+    id: 20261030-233412-25
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: technology
+        baseColumnNames: category_id
+        referencedTableName: technology_category
+        referencedColumnNames: id
+        constraintName: fk_technology_565176be
+- changeSet:
+    id: 20261030-233412-26
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: project_group
+        baseColumnNames: company_id
+        referencedTableName: company
+        referencedColumnNames: id
+        constraintName: fk_project_group_3a471f17
+- changeSet:
+    id: 20261030-233412-27
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: company_id
+        referencedTableName: company
+        referencedColumnNames: id
+        constraintName: fk_project_96497605
+- changeSet:
+    id: 20261030-233412-28
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: company_id, group_id
+        referencedTableName: project_group
+        referencedColumnNames: company_id, id
+        constraintName: fk_project_59fba14d
+- changeSet:
+    id: 20261030-233412-29
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: project
+        baseColumnNames: domain_id
+        referencedTableName: project_domain
+        referencedColumnNames: id
+        constraintName: fk_project_f58f86c7
+- changeSet:
+    id: 20261030-233412-30
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: project_technology
+        baseColumnNames: project_id
+        referencedTableName: project
+        referencedColumnNames: id
+        constraintName: fk_project_technology_cba075b7
+- changeSet:
+    id: 20261030-233412-31
+    author: forge
+    logicalFilePath: db/changelog/20261030-233412.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: project_technology
+        baseColumnNames: technology_id
+        referencedTableName: technology
+        referencedColumnNames: id
+        constraintName: fk_project_technology_f68a53e5

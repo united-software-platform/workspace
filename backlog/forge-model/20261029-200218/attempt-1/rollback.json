@@ -1,0 +1,99 @@
+{
+  "attempt": 1,
+  "verdict": null,
+  "action": "none_applied",
+  "rolled_back": 0,
+  "changelog": "backlog/forge-model/20261029-200218/attempt-1/changelog.yaml",
+  "database": "lbfr-db:5432/forge",
+  "gateway": null,
+  "fallback_reason": null,
+  "fallback": null,
+  "checks": [
+    {
+      "check": "journal_clean",
+      "passed": true,
+      "detail": "записей db/changelog/20261029-200218.yaml в журнале: 0"
+    },
+    {
+      "check": "table_absent",
+      "passed": true,
+      "detail": "таблица project_area"
+    },
+    {
+      "check": "table_absent",
+      "passed": true,
+      "detail": "таблица technology_category"
+    },
+    {
+      "check": "table_absent",
+      "passed": true,
+      "detail": "таблица technology"
+    },
+    {
+      "check": "table_absent",
+      "passed": true,
+      "detail": "таблица data_collector"
+    },
+    {
+      "check": "table_absent",
+      "passed": true,
+      "detail": "таблица participant_role"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности project_area.uq_project_area_1a4f3612"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности project_area.uq_project_area_8e5b6c23"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности technology_category.uq_technology_category_62ad71c8"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности technology_category.uq_technology_category_9f0cc750"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности technology.uq_technology_38cf67f0"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности technology.uq_technology_269f6e6a"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности data_collector.uq_data_collector_b87919bf"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности data_collector.uq_data_collector_562bfeed"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности participant_role.uq_participant_role_02ba778c"
+    },
+    {
+      "check": "unique_absent",
+      "passed": true,
+      "detail": "набор уникальности participant_role.uq_participant_role_cacf178d"
+    },
+    {
+      "check": "foreign_key_absent",
+      "passed": true,
+      "detail": "внешний ключ technology.fk_technology_565176be"
+    }
+  ],
+  "verified": true
+}

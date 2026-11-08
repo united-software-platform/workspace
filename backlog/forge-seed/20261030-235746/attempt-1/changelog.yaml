@@ -1,0 +1,659 @@
+# Changelog данных операции 20261030-235746: построен forge generate-seed, вручную не правится
+databaseChangeLog:
+- changeSet:
+    id: 20261030-235746-01
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: project_domain
+        columns:
+        - column:
+            name: id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'43476628-e6fc-4dca-9a5c-bf75b7fc834b'::UUID"
+        - column:
+            name: code
+            valueComputed: "'fintech'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Финансовые технологии'::VARCHAR(255)"
+    - insert:
+        tableName: project_domain
+        columns:
+        - column:
+            name: id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'04412005-8fd5-474a-9237-44dd06075994'::UUID"
+        - column:
+            name: code
+            valueComputed: "'ecommerce'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Электронная коммерция'::VARCHAR(255)"
+    - insert:
+        tableName: project_domain
+        columns:
+        - column:
+            name: id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'bd6e13b2-e5b4-4cbd-97f0-133de0c12824'::UUID"
+        - column:
+            name: code
+            valueComputed: "'data-analytics'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Аналитика данных'::VARCHAR(255)"
+    rollback:
+    - delete:
+        tableName: project_domain
+        where: "id = '3'::BIGINT"
+    - delete:
+        tableName: project_domain
+        where: "id = '2'::BIGINT"
+    - delete:
+        tableName: project_domain
+        where: "id = '1'::BIGINT"
+- changeSet:
+    id: 20261030-235746-02
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: technology_category
+        columns:
+        - column:
+            name: id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'43c4063e-ff5b-4eb4-af92-79b651afe977'::UUID"
+        - column:
+            name: code
+            valueComputed: "'language'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Языки программирования'::VARCHAR(255)"
+    - insert:
+        tableName: technology_category
+        columns:
+        - column:
+            name: id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'d9caf70e-7f16-40be-92ab-55dc2921967f'::UUID"
+        - column:
+            name: code
+            valueComputed: "'database'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Базы данных'::VARCHAR(255)"
+    - insert:
+        tableName: technology_category
+        columns:
+        - column:
+            name: id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'671d0552-7378-492a-a783-ab582005a49d'::UUID"
+        - column:
+            name: code
+            valueComputed: "'framework'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Фреймворки и библиотеки'::VARCHAR(255)"
+    rollback:
+    - delete:
+        tableName: technology_category
+        where: "id = '3'::BIGINT"
+    - delete:
+        tableName: technology_category
+        where: "id = '2'::BIGINT"
+    - delete:
+        tableName: technology_category
+        where: "id = '1'::BIGINT"
+- changeSet:
+    id: 20261030-235746-03
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'6e23303b-127c-45a8-9fc5-ac0b56543995'::UUID"
+        - column:
+            name: code
+            valueComputed: "'python'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Python'::VARCHAR(255)"
+        - column:
+            name: category_id
+            valueComputed: "'1'::BIGINT"
+    - insert:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'52205499-703a-4da8-a396-3770e6b31195'::UUID"
+        - column:
+            name: code
+            valueComputed: "'typescript'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'TypeScript'::VARCHAR(255)"
+        - column:
+            name: category_id
+            valueComputed: "'1'::BIGINT"
+    - insert:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'38a4090f-d1cb-4b50-9488-92f831eeb331'::UUID"
+        - column:
+            name: code
+            valueComputed: "'postgresql'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'PostgreSQL'::VARCHAR(255)"
+        - column:
+            name: category_id
+            valueComputed: "'2'::BIGINT"
+    - insert:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            valueComputed: "'4'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'f2027b63-d19b-4d05-b1da-6ec777230183'::UUID"
+        - column:
+            name: code
+            valueComputed: "'clickhouse'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'ClickHouse'::VARCHAR(255)"
+        - column:
+            name: category_id
+            valueComputed: "'2'::BIGINT"
+    - insert:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            valueComputed: "'5'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'e706f111-a342-49c7-988c-a3bb9c487d06'::UUID"
+        - column:
+            name: code
+            valueComputed: "'django'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Django'::VARCHAR(255)"
+        - column:
+            name: category_id
+            valueComputed: "'3'::BIGINT"
+    - insert:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            valueComputed: "'6'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'dcb89aa5-1f5b-4e58-b7ef-739e10156e9d'::UUID"
+        - column:
+            name: code
+            valueComputed: "'react'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'React'::VARCHAR(255)"
+        - column:
+            name: category_id
+            valueComputed: "'3'::BIGINT"
+    rollback:
+    - delete:
+        tableName: technology
+        where: "id = '6'::BIGINT"
+    - delete:
+        tableName: technology
+        where: "id = '5'::BIGINT"
+    - delete:
+        tableName: technology
+        where: "id = '4'::BIGINT"
+    - delete:
+        tableName: technology
+        where: "id = '3'::BIGINT"
+    - delete:
+        tableName: technology
+        where: "id = '2'::BIGINT"
+    - delete:
+        tableName: technology
+        where: "id = '1'::BIGINT"
+- changeSet:
+    id: 20261030-235746-04
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: company
+        columns:
+        - column:
+            name: id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'d4668539-4ab2-47ac-9c82-81f3cac7b9da'::UUID"
+        - column:
+            name: code
+            valueComputed: "'acme'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Акме Технологии'::VARCHAR(255)"
+        - column:
+            name: status
+            valueComputed: "'active'::VARCHAR(16)"
+        - column:
+            name: archived_at
+            valueComputed: "NULL"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    rollback:
+    - delete:
+        tableName: company
+        where: "id = '1'::BIGINT"
+- changeSet:
+    id: 20261030-235746-05
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: project_group
+        columns:
+        - column:
+            name: id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'a2408e6d-1d34-40b8-9020-9de0e6472794'::UUID"
+        - column:
+            name: company_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: code
+            valueComputed: "'platform'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Платформенные решения'::VARCHAR(255)"
+        - column:
+            name: status
+            valueComputed: "'active'::VARCHAR(16)"
+        - column:
+            name: disbanded_at
+            valueComputed: "NULL"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_group
+        columns:
+        - column:
+            name: id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'522ab48c-24f1-4129-9794-9f6eaaa0f4ff'::UUID"
+        - column:
+            name: company_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: code
+            valueComputed: "'product'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Продуктовая линейка'::VARCHAR(255)"
+        - column:
+            name: status
+            valueComputed: "'active'::VARCHAR(16)"
+        - column:
+            name: disbanded_at
+            valueComputed: "NULL"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    rollback:
+    - delete:
+        tableName: project_group
+        where: "id = '2'::BIGINT"
+    - delete:
+        tableName: project_group
+        where: "id = '1'::BIGINT"
+- changeSet:
+    id: 20261030-235746-06
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: project
+        columns:
+        - column:
+            name: id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'27d65078-2a2f-4eae-a7f2-2d2658337dda'::UUID"
+        - column:
+            name: company_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: group_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: domain_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: code
+            valueComputed: "'payments'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Сервис платежей'::VARCHAR(255)"
+        - column:
+            name: status
+            valueComputed: "'active'::VARCHAR(16)"
+        - column:
+            name: archived_at
+            valueComputed: "NULL"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project
+        columns:
+        - column:
+            name: id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'de85de9e-eb34-493e-b03d-9dfa981074fb'::UUID"
+        - column:
+            name: company_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: group_id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: domain_id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: code
+            valueComputed: "'shopfront'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Витрина магазина'::VARCHAR(255)"
+        - column:
+            name: status
+            valueComputed: "'active'::VARCHAR(16)"
+        - column:
+            name: archived_at
+            valueComputed: "NULL"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project
+        columns:
+        - column:
+            name: id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: uuid
+            valueComputed: "'86f7837c-034f-478f-9b31-77fc126070e8'::UUID"
+        - column:
+            name: company_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: group_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: domain_id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: code
+            valueComputed: "'analytics'::VARCHAR(64)"
+        - column:
+            name: name_ru
+            valueComputed: "'Аналитика данных'::VARCHAR(255)"
+        - column:
+            name: status
+            valueComputed: "'active'::VARCHAR(16)"
+        - column:
+            name: archived_at
+            valueComputed: "NULL"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    rollback:
+    - delete:
+        tableName: project
+        where: "id = '3'::BIGINT"
+    - delete:
+        tableName: project
+        where: "id = '2'::BIGINT"
+    - delete:
+        tableName: project
+        where: "id = '1'::BIGINT"
+- changeSet:
+    id: 20261030-235746-07
+    author: forge
+    logicalFilePath: db/changelog/20261030-235746.yaml
+    changes:
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'3.12'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'5'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'5.0'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'16'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'5.5'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'2'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'6'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'18.3'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'1'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'3.12'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    - insert:
+        tableName: project_technology
+        columns:
+        - column:
+            name: project_id
+            valueComputed: "'3'::BIGINT"
+        - column:
+            name: technology_id
+            valueComputed: "'4'::BIGINT"
+        - column:
+            name: version
+            valueComputed: "'24.8'::VARCHAR(64)"
+        - column:
+            name: source
+            valueComputed: "'manual'::VARCHAR(16)"
+        - column:
+            name: created_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+        - column:
+            name: updated_at
+            valueComputed: "'2026-10-31T00:00:00Z'::TIMESTAMP WITH TIME ZONE"
+    rollback:
+    - delete:
+        tableName: project_technology
+        where: "project_id = '3'::BIGINT AND technology_id = '4'::BIGINT"
+    - delete:
+        tableName: project_technology
+        where: "project_id = '3'::BIGINT AND technology_id = '1'::BIGINT"
+    - delete:
+        tableName: project_technology
+        where: "project_id = '2'::BIGINT AND technology_id = '6'::BIGINT"
+    - delete:
+        tableName: project_technology
+        where: "project_id = '2'::BIGINT AND technology_id = '2'::BIGINT"
+    - delete:
+        tableName: project_technology
+        where: "project_id = '1'::BIGINT AND technology_id = '3'::BIGINT"
+    - delete:
+        tableName: project_technology
+        where: "project_id = '1'::BIGINT AND technology_id = '5'::BIGINT"
+    - delete:
+        tableName: project_technology
+        where: "project_id = '1'::BIGINT AND technology_id = '1'::BIGINT"

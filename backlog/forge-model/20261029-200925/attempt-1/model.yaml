@@ -1,0 +1,114 @@
+version: 1
+tables:
+  - name: project_domain
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+
+  - name: technology_category
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+
+  - name: technology
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+      - name: category_id
+        type: bigint
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+    foreign_keys:
+      - columns: [category_id]
+        references:
+          table: technology_category
+          columns: [id]
+
+  - name: collector
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]
+
+  - name: member_role
+    columns:
+      - name: id
+        type: bigint
+        generated: identity
+      - name: uuid
+        type: uuid
+        nullable: false
+      - name: code
+        type: string
+        length: 64
+        nullable: false
+      - name: name_ru
+        type: string
+        length: 255
+        nullable: false
+    primary_key: [id]
+    unique:
+      - [uuid]
+      - [code]

@@ -1,0 +1,278 @@
+# Changelog операции 20261029-200925: построен forge generate, вручную не правится
+databaseChangeLog:
+- changeSet:
+    id: 20261029-200925-01
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - createTable:
+        tableName: project_domain
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: project_domain
+        columnNames: id
+        constraintName: pk_project_domain
+- changeSet:
+    id: 20261029-200925-02
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - createTable:
+        tableName: technology_category
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: technology_category
+        columnNames: id
+        constraintName: pk_technology_category
+- changeSet:
+    id: 20261029-200925-03
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - createTable:
+        tableName: technology
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+        - column:
+            name: category_id
+            type: BIGINT
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: technology
+        columnNames: id
+        constraintName: pk_technology
+- changeSet:
+    id: 20261029-200925-04
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - createTable:
+        tableName: collector
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: collector
+        columnNames: id
+        constraintName: pk_collector
+- changeSet:
+    id: 20261029-200925-05
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - createTable:
+        tableName: member_role
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            generationType: BY DEFAULT
+            constraints:
+              nullable: false
+        - column:
+            name: uuid
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: code
+            type: VARCHAR(64)
+            constraints:
+              nullable: false
+        - column:
+            name: name_ru
+            type: VARCHAR(255)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        tableName: member_role
+        columnNames: id
+        constraintName: pk_member_role
+- changeSet:
+    id: 20261029-200925-06
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_domain
+        columnNames: uuid
+        constraintName: uq_project_domain_836fd2c6
+- changeSet:
+    id: 20261029-200925-07
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: project_domain
+        columnNames: code
+        constraintName: uq_project_domain_b829743a
+- changeSet:
+    id: 20261029-200925-08
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology_category
+        columnNames: uuid
+        constraintName: uq_technology_category_62ad71c8
+- changeSet:
+    id: 20261029-200925-09
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology_category
+        columnNames: code
+        constraintName: uq_technology_category_9f0cc750
+- changeSet:
+    id: 20261029-200925-10
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology
+        columnNames: uuid
+        constraintName: uq_technology_38cf67f0
+- changeSet:
+    id: 20261029-200925-11
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: technology
+        columnNames: code
+        constraintName: uq_technology_269f6e6a
+- changeSet:
+    id: 20261029-200925-12
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: collector
+        columnNames: uuid
+        constraintName: uq_collector_f83d0610
+- changeSet:
+    id: 20261029-200925-13
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: collector
+        columnNames: code
+        constraintName: uq_collector_d82ef242
+- changeSet:
+    id: 20261029-200925-14
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: member_role
+        columnNames: uuid
+        constraintName: uq_member_role_6d35f0a3
+- changeSet:
+    id: 20261029-200925-15
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addUniqueConstraint:
+        tableName: member_role
+        columnNames: code
+        constraintName: uq_member_role_4690e86f
+- changeSet:
+    id: 20261029-200925-16
+    author: forge
+    logicalFilePath: db/changelog/20261029-200925.yaml
+    changes:
+    - addForeignKeyConstraint:
+        baseTableName: technology
+        baseColumnNames: category_id
+        referencedTableName: technology_category
+        referencedColumnNames: id
+        constraintName: fk_technology_565176be
