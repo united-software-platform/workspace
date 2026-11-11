@@ -2,6 +2,7 @@
 .env
 .ssh/
 .claude-accounts/
+.codex-accounts/
 import/
 export/
 
