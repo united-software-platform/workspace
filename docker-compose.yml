@@ -49,4 +49,37 @@ services:
       # Файл секретов скрыт от агента: значения приезжают через env_file,
       # сам .env внутри контейнера пустой. compose читает его на хосте — маскировка не мешает
       - /dev/null:${PROJECT_DIR:-/app}/.env:ro
+  codex:
+    # Опубликованный образ окружения Codex: собирает его пайплайн репозитория codex-box.
+    # Имя, тег и digest вынесены в переменные тем же порядком, что и у сервиса claude:
+    # закрепить версию или подставить свою сборку можно в .env, не редактируя этот файл.
+    # Разделитель @ входит в значение CODEX_BOX_IMAGE_DIGEST, а не в эту строку.
+    image: ${CODEX_BOX_IMAGE:-ghcr.io/united-software-platform/codex-box}:${CODEX_BOX_IMAGE_TAG:-latest}${CODEX_BOX_IMAGE_DIGEST:-}
+    # Отдельный compose-профиль: `docker compose up` сервиса Codex не поднимает
+    profiles: ["codex"]
+    # Команда по умолчанию — сам агент; аргумент после имени сервиса её заменяет (bash, git, …)
+    command: codex
+    working_dir: ${PROJECT_DIR:-/app}
+    # Имя хоста для раннера целей make: на Linux host.docker.internal сам не резолвится
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      # Каталог конфигурации Codex (config.toml, auth.json) — смонтированный каталог аккаунта
+      CODEX_HOME: ${CODEX_HOME:-/home/codex/.codex}
+      # Доступ Codex к разрешённым целям раннера на хосте. Значения берутся из .env хоста.
+      AGENT_RUNNER_PORT: ${AGENT_RUNNER_PORT}
+      AGENT_RUNNER_URL: ${AGENT_RUNNER_URL}
+      AGENT_RUNNER_TOKEN: ${AGENT_RUNNER_TOKEN}
 
+    volumes:
+      - .:${PROJECT_DIR:-/app}                                             # рабочее дерево проекта
+      # Профиль задаёт каталог аккаунта Codex. Значение по умолчанию намеренно указывает
+      # на несуществующий подкаталог: без профиля агент получает пустой каталог конфигурации,
+      # а не каталог всех аккаунтов
+      - ${CODEX_ACCOUNTS_DIR:-.codex-accounts}/${CODEX_PROFILE:-__no_profile__}:${CODEX_HOME:-/home/codex/.codex}
+      # Анонимные тома прячут внутри контейнера каталоги аккаунтов — и свои, и Claude Code
+      - ${PROJECT_DIR:-/app}/${CODEX_ACCOUNTS_DIR:-.codex-accounts}
+      - ${PROJECT_DIR:-/app}/${CLAUDE_ACCOUNTS_DIR:-.claude-accounts}
+      - ${SSH_DIR:-.ssh}:/home/codex/.ssh                                  # ключи для работы с репозиторием
+      # Файл секретов скрыт от агента: compose читает его на хосте, внутри контейнера он пустой
+      - /dev/null:${PROJECT_DIR:-/app}/.env:ro
