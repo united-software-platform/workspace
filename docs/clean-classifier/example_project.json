@@ -1,0 +1,134 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "source": "fictional_ecommerce_examples",
+  "record_count": 3,
+  "records": [
+    {
+      "name": "Northstar Market — online store",
+      "fictional": true,
+      "purpose": "A fictional direct-to-consumer online store for home and lifestyle products.",
+      "spcf": {
+        "L1_application_domain": [
+          {
+            "id": "DOM-003",
+            "role": "primary"
+          }
+        ],
+        "L2_activity_subdomain": [
+          {
+            "id": "SUB-004",
+            "role": "primary"
+          },
+          {
+            "id": "SUB-003",
+            "role": "secondary"
+          },
+          {
+            "id": "SUB-034",
+            "role": "secondary"
+          }
+        ],
+        "L3_problem_domain": [
+          {
+            "id": "PRB-002",
+            "role": "primary"
+          },
+          {
+            "id": "PRB-004",
+            "role": "secondary"
+          }
+        ],
+        "L4_solution_archetype": [
+          {
+            "id": "SOL-031",
+            "role": "primary"
+          }
+        ],
+        "confidence": "high",
+        "rationale": "Illustrative example: the project is an online sales platform; the selected problem categories describe process inefficiency and integration needs.",
+        "needs_confirmation": false
+      }
+    },
+    {
+      "name": "Pinecone Goods — catalog hub",
+      "fictional": true,
+      "purpose": "A fictional product information hub that consolidates product descriptions, attributes, and category data from several suppliers.",
+      "spcf": {
+        "L1_application_domain": [
+          {
+            "id": "DOM-003",
+            "role": "primary"
+          }
+        ],
+        "L2_activity_subdomain": [
+          {
+            "id": "SUB-033",
+            "role": "primary"
+          },
+          {
+            "id": "SUB-019",
+            "role": "secondary"
+          }
+        ],
+        "L3_problem_domain": [
+          {
+            "id": "PRB-003",
+            "role": "primary"
+          },
+          {
+            "id": "PRB-004",
+            "role": "secondary"
+          }
+        ],
+        "L4_solution_archetype": [
+          {
+            "id": "SOL-032",
+            "role": "primary"
+          }
+        ],
+        "confidence": "high",
+        "rationale": "Illustrative example: the central need is consistent product information across supplier sources.",
+        "needs_confirmation": false
+      }
+    },
+    {
+      "name": "Moss & Maple — product discovery",
+      "fictional": true,
+      "purpose": "A fictional recommendation service that suggests relevant products based on browsing and purchase context.",
+      "spcf": {
+        "L1_application_domain": [
+          {
+            "id": "DOM-003",
+            "role": "primary"
+          }
+        ],
+        "L2_activity_subdomain": [
+          {
+            "id": "SUB-035",
+            "role": "primary"
+          }
+        ],
+        "L3_problem_domain": [
+          {
+            "id": "PRB-025",
+            "role": "primary"
+          },
+          {
+            "id": "PRB-003",
+            "role": "secondary"
+          }
+        ],
+        "L4_solution_archetype": [
+          {
+            "id": "SOL-033",
+            "role": "primary"
+          }
+        ],
+        "confidence": "high",
+        "rationale": "Illustrative example: the service processes shopper and product signals to select relevant recommendations.",
+        "needs_confirmation": false
+      }
+    }
+  ]
+}

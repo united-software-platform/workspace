@@ -1,0 +1,85 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "source": "SPCF_data_model",
+  "record_count": 6,
+  "records": [
+    {
+      "entity": "L1_application_domains",
+      "description": "Controlled vocabulary for application domains.",
+      "key": "id",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "name_ru",
+        "description",
+        "description_ru"
+      ]
+    },
+    {
+      "entity": "L2_activity_subdomains",
+      "description": "Controlled vocabulary for activity subdomains.",
+      "key": "id",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "name_ru",
+        "description",
+        "description_ru"
+      ]
+    },
+    {
+      "entity": "L3_problem_domains",
+      "description": "Controlled vocabulary for problem domains.",
+      "key": "id",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "name_ru",
+        "description",
+        "description_ru"
+      ]
+    },
+    {
+      "entity": "L4_solution_archetypes",
+      "description": "Controlled vocabulary for solution archetypes.",
+      "key": "id",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "name_ru",
+        "description",
+        "description_ru"
+      ]
+    },
+    {
+      "entity": "technology_patterns",
+      "description": "Independent catalog of implementation patterns, methods, and protocols.",
+      "key": "id",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "name_ru",
+        "kind",
+        "description",
+        "description_ru"
+      ]
+    },
+    {
+      "entity": "example_project",
+      "description": "Fictional project examples with SPCF classification assignments.",
+      "key": "name",
+      "fields": [
+        "name",
+        "fictional",
+        "purpose",
+        "spcf"
+      ]
+    }
+  ]
+}

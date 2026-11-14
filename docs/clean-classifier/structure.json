@@ -1,0 +1,108 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "document_type": "classification_structure",
+  "title": "SPCF 2.0 — Classification Structure",
+  "title_ru": "SPCF 2.0 — Структура классификации",
+  "purpose": "Defines the generic SPCF 2.0 classification structure and its independent catalogs.",
+  "purpose_ru": "Описывает универсальную структуру классификации SPCF 2.0 и независимые справочники.",
+  "core_classification": {
+    "type": "four_level_multidimensional_classification",
+    "cardinality": "many_to_many",
+    "levels": [
+      {
+        "level": "L1",
+        "entity": "application_domains",
+        "name": "Application Domain",
+        "name_ru": "Предметная область",
+        "description": "The broad domain in which the project operates: business, engineering, science, IT, and other areas.",
+        "description_ru": "Широкая предметная область, в которой существует проект: бизнес, инженерия, наука, ИТ и другие области.",
+        "id_prefix": "DOM"
+      },
+      {
+        "level": "L2",
+        "entity": "activity_subdomains",
+        "name": "Activity Subdomain",
+        "name_ru": "Подобласть деятельности",
+        "description": "A function, process, discipline, or area of activity within an application domain.",
+        "description_ru": "Функция, процесс, дисциплина или направление деятельности внутри предметной области.",
+        "id_prefix": "SUB"
+      },
+      {
+        "level": "L3",
+        "entity": "problem_domains",
+        "name": "Problem Domain",
+        "name_ru": "Область проблем",
+        "description": "A problem, constraint, unmet need, or challenge addressed by the project.",
+        "description_ru": "Проблема, ограничение, неудовлетворённая потребность или вызов, на который направлен проект.",
+        "id_prefix": "PRB"
+      },
+      {
+        "level": "L4",
+        "entity": "solution_archetypes",
+        "name": "Solution Archetype",
+        "name_ru": "Архетип решения",
+        "description": "The functional class of the project outcome; may be software, a tool, platform, methodology, standard, research artifact, or another type of result.",
+        "description_ru": "Функциональный класс результата проекта: программная система, инструмент, платформа, методология, стандарт, исследовательский артефакт или иной результат.",
+        "id_prefix": "SOL"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "L1",
+        "to": "L2",
+        "cardinality": "many_to_many",
+        "description": "Conceptual many-to-many relationship; assignments are made according to the classification rules."
+      },
+      {
+        "from": "L2",
+        "to": "L3",
+        "cardinality": "many_to_many",
+        "description": "Conceptual many-to-many relationship; assignments are made according to the classification rules."
+      },
+      {
+        "from": "L3",
+        "to": "L4",
+        "cardinality": "many_to_many",
+        "description": "Conceptual many-to-many relationship; assignments are made according to the classification rules."
+      }
+    ],
+    "project_assignment": {
+      "cardinality": "many_to_many_at_each_level",
+      "primary_secondary": "A project may have multiple values at each level; primary and secondary assignments may be distinguished.",
+      "evidence": "Project assignments are examples only; the taxonomy does not depend on any external project registry."
+    }
+  },
+  "independent_catalogs": [
+    {
+      "entity": "technology_patterns",
+      "file": "technology_patterns.json",
+      "name": "Technology Patterns",
+      "name_ru": "Технологические паттерны",
+      "role": "Implementation patterns, methods, and protocols. Not a classification level; for example, RAG belongs here, not in L4."
+    }
+  ],
+  "project_records": {
+    "entity": "example_project",
+    "file": "example_project.json",
+    "description": "Wholly fictional e-commerce examples for demonstrating classification; no real project registry data is included."
+  },
+  "design_principles": [
+    "L1-L4 classify the meaning and purpose of a project, not its technology stack.",
+    "L2 describes an activity or discipline, not an application, team, or technology.",
+    "L3 describes the problem, not the expected benefit or outcome.",
+    "L4 describes the functional class of the result, not the stack, architecture, or deployment model.",
+    "Technologies and technology patterns remain separate from L1-L4.",
+    "Examples are fictional and demonstrate how the taxonomy can be applied; they are not source data or evidence for taxonomy relationships."
+  ],
+  "related_files": [
+    "l1_application_domains.json",
+    "l2_activity_subdomains.json",
+    "l3_problem_domains.json",
+    "l4_solution_archetypes.json",
+    "technology_patterns.json",
+    "classification_rules.json",
+    "data_model.json",
+    "example_project.json"
+  ]
+}

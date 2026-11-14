@@ -1,0 +1,98 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "source": "technology_patterns",
+  "record_count": 10,
+  "records": [
+    {
+      "id": "PAT-001",
+      "code": "RAG",
+      "name": "Retrieval-Augmented Generation",
+      "name_ru": "Генерация с дополненной выборкой",
+      "kind": "ai-technique",
+      "description_ru": "Извлечение релевантных данных из внешних источников с передачей контекста языковой модели для формирования ответа.",
+      "description": "Retrieves relevant passages from external sources and supplies them to a language model as context for answer generation."
+    },
+    {
+      "id": "PAT-002",
+      "code": "LLM",
+      "name": "Large Language Model",
+      "name_ru": "Большая языковая модель",
+      "kind": "model-class",
+      "description_ru": "Класс языковых моделей для понимания и генерации текста.",
+      "description": "A class of language models designed to understand and generate text."
+    },
+    {
+      "id": "PAT-003",
+      "code": "EMBEDDINGS",
+      "name": "Embeddings",
+      "name_ru": "Векторные представления",
+      "kind": "ai-technique",
+      "description_ru": "Представление объектов в виде векторов для семантического сравнения и поиска.",
+      "description": "Represents objects as vectors for semantic comparison and retrieval."
+    },
+    {
+      "id": "PAT-004",
+      "code": "BM25",
+      "name": "BM25",
+      "name_ru": "BM25",
+      "kind": "search-algorithm",
+      "description_ru": "Алгоритм ранжирования полнотекстового поиска.",
+      "description": "A ranking function used in full-text information retrieval."
+    },
+    {
+      "id": "PAT-005",
+      "code": "AGENTIC",
+      "name": "Agentic Systems",
+      "name_ru": "Агентные системы",
+      "kind": "architecture-pattern",
+      "description_ru": "Системы, в которых модель инициирует действия и использует инструменты для выполнения задач.",
+      "description": "Systems in which models initiate actions and use tools to complete tasks."
+    },
+    {
+      "id": "PAT-006",
+      "code": "MCP",
+      "name": "Model Context Protocol",
+      "name_ru": "Model Context Protocol",
+      "kind": "protocol",
+      "description_ru": "Протокол подключения моделей к внешним инструментам и контексту.",
+      "description": "A protocol for connecting models to external tools and contextual resources."
+    },
+    {
+      "id": "PAT-007",
+      "code": "DDD",
+      "name": "Domain-Driven Design",
+      "name_ru": "Предметно-ориентированное проектирование",
+      "kind": "practice",
+      "description_ru": "Подход к проектированию программных систем вокруг предметной области.",
+      "description": "An approach to software design centered on the business domain."
+    },
+    {
+      "id": "PAT-008",
+      "code": "SDD",
+      "name": "Specification-Driven Development",
+      "name_ru": "Разработка на основе спецификаций",
+      "kind": "practice",
+      "description_ru": "Подход, при котором спецификации служат основой проектирования и реализации.",
+      "description": "An approach in which specifications guide software design and implementation."
+    },
+    {
+      "id": "PAT-009",
+      "code": "TDD",
+      "name": "Test-Driven Development",
+      "name_ru": "Разработка через тестирование",
+      "kind": "practice",
+      "description_ru": "Практика разработки с предварительным формированием проверок.",
+      "description": "A development practice in which tests are written before the corresponding implementation."
+    },
+    {
+      "id": "PAT-010",
+      "code": "STATIC-ANALYSIS",
+      "name": "Static Analysis",
+      "name_ru": "Статический анализ",
+      "kind": "practice",
+      "description_ru": "Анализ программного кода без выполнения программы.",
+      "description": "Analysis of source code without executing the program."
+    }
+  ]
+}

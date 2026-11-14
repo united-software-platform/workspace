@@ -1,0 +1,3 @@
+[tools]
+node = "26"
+"npm:@deepseek-ai/dsh" = { version = "latest", trust_policy_excludes = ["encodeurl@2.0.2"] }
