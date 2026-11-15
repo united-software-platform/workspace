@@ -1,0 +1,208 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "source": "L3_problem_domains",
+  "record_count": 25,
+  "records": [
+    {
+      "id": "PRB-001",
+      "code": "manual-business-processes",
+      "name_ru": "Избыточные ручные операции",
+      "description": "Processes require a substantial amount of manual work.",
+      "name": "Excessive Manual Operations",
+      "description_ru": "Процессы требуют большого объёма ручного выполнения."
+    },
+    {
+      "id": "PRB-002",
+      "code": "process-inefficiency",
+      "name_ru": "Неэффективность процессов",
+      "description": "Processes contain delays, unnecessary steps, or inefficient handoffs.",
+      "name": "Process Inefficiency",
+      "description_ru": "Процессы содержат задержки, лишние шаги или неэффективные переходы."
+    },
+    {
+      "id": "PRB-003",
+      "code": "poor-data-management",
+      "name_ru": "Низкое качество управления данными",
+      "description": "Data is fragmented, poorly structured, or insufficiently governed.",
+      "name": "Poor Data Management",
+      "description_ru": "Данные разрознены, плохо структурированы или недостаточно управляемы."
+    },
+    {
+      "id": "PRB-004",
+      "code": "lack-of-system-integration",
+      "name_ru": "Недостаточная интеграция систем",
+      "description": "Systems and components do not exchange data in a consistent way.",
+      "name": "Insufficient System Integration",
+      "description_ru": "Системы и компоненты не обмениваются данными согласованным способом."
+    },
+    {
+      "id": "PRB-005",
+      "code": "low-developer-productivity",
+      "name_ru": "Низкая производительность разработчиков",
+      "description": "Developers spend a disproportionate amount of time on supporting tasks.",
+      "name": "Low Developer Productivity",
+      "description_ru": "Разработчики тратят непропорционально много времени на вспомогательные операции."
+    },
+    {
+      "id": "PRB-006",
+      "code": "high-development-complexity",
+      "name_ru": "Высокая сложность разработки",
+      "description": "Building and changing software systems requires excessive effort.",
+      "name": "High Development Complexity",
+      "description_ru": "Создание и изменение программных систем требует чрезмерных усилий."
+    },
+    {
+      "id": "PRB-007",
+      "code": "lack-of-requirements-traceability",
+      "name_ru": "Отсутствие трассируемости требований",
+      "description": "Requirements cannot be reliably traced to models, implementation, and verification.",
+      "name": "Lack of Requirements Traceability",
+      "description_ru": "Невозможно надёжно проследить связи требований с моделями, реализацией и проверками."
+    },
+    {
+      "id": "PRB-008",
+      "code": "inconsistent-requirements",
+      "name_ru": "Несогласованность требований",
+      "description": "Requirements conflict, are duplicated, or contain ambiguous statements.",
+      "name": "Inconsistent Requirements",
+      "description_ru": "Требования противоречат друг другу, дублируются или имеют неоднозначные формулировки."
+    },
+    {
+      "id": "PRB-009",
+      "code": "architecture-inconsistency",
+      "name_ru": "Несогласованность архитектуры",
+      "description": "Implementation deviates from architectural principles and constraints.",
+      "name": "Architecture Inconsistency",
+      "description_ru": "Реализация отклоняется от архитектурных принципов и ограничений."
+    },
+    {
+      "id": "PRB-010",
+      "code": "architecture-drift",
+      "name_ru": "Архитектурная деградация",
+      "description": "Architecture gradually loses integrity as the system evolves.",
+      "name": "Architecture Drift",
+      "description_ru": "Архитектура постепенно теряет целостность в ходе развития системы."
+    },
+    {
+      "id": "PRB-011",
+      "code": "poor-code-understandability",
+      "name_ru": "Низкая понятность кода",
+      "description": "The structure, dependencies, and behavior of a codebase are difficult to understand.",
+      "name": "Poor Code Understandability",
+      "description_ru": "Структуру, зависимости и поведение кодовой базы сложно понять."
+    },
+    {
+      "id": "PRB-012",
+      "code": "fragmented-development-environment",
+      "name_ru": "Фрагментированная среда разработки",
+      "description": "Developer tools and environments are fragmented and poorly aligned.",
+      "name": "Fragmented Development Environment",
+      "description_ru": "Инструменты и окружения разработчиков разрознены и плохо согласованы."
+    },
+    {
+      "id": "PRB-013",
+      "code": "manual-development-workflow",
+      "name_ru": "Ручные операции в процессе разработки",
+      "description": "Repeated engineering activities are not automated.",
+      "name": "Manual Development Workflow",
+      "description_ru": "Повторяющиеся инженерные действия не автоматизированы."
+    },
+    {
+      "id": "PRB-014",
+      "code": "lack-of-engineering-standards",
+      "name_ru": "Отсутствие единых инженерных стандартов",
+      "description": "Teams use inconsistent engineering rules and practices.",
+      "name": "Lack of Engineering Standards",
+      "description_ru": "Команды используют несогласованные правила и практики."
+    },
+    {
+      "id": "PRB-015",
+      "code": "poor-data-model-governance",
+      "name_ru": "Недостаточное управление моделями данных",
+      "description": "Changes to data models are poorly controlled and tracked.",
+      "name": "Poor Data Model Governance",
+      "description_ru": "Изменения моделей данных плохо контролируются и отслеживаются."
+    },
+    {
+      "id": "PRB-016",
+      "code": "fragmented-ai-infrastructure",
+      "name_ru": "Фрагментированная AI-инфраструктура",
+      "description": "Access to models and AI services is fragmented.",
+      "name": "Fragmented AI Infrastructure",
+      "description_ru": "Доступ к моделям и AI-сервисам организован разрозненно."
+    },
+    {
+      "id": "PRB-017",
+      "code": "lack-of-agent-orchestration",
+      "name_ru": "Недостаточная оркестрация агентов",
+      "description": "There is no consistent mechanism for coordinating agents, tools, and tasks.",
+      "name": "Insufficient Agent Orchestration",
+      "description_ru": "Нет согласованного механизма координации агентов, инструментов и задач."
+    },
+    {
+      "id": "PRB-018",
+      "code": "poor-knowledge-connectivity",
+      "name_ru": "Недостаточная связанность знаний",
+      "description": "Concepts and information exist in isolation without explicit relationships.",
+      "name": "Poor Knowledge Connectivity",
+      "description_ru": "Понятия и сведения существуют изолированно, без явных связей."
+    },
+    {
+      "id": "PRB-019",
+      "code": "low-knowledge-discoverability",
+      "name_ru": "Низкая обнаруживаемость знаний",
+      "description": "Users have difficulty finding relevant information and knowledge.",
+      "name": "Low Knowledge Discoverability",
+      "description_ru": "Пользователям трудно находить релевантную информацию и знания."
+    },
+    {
+      "id": "PRB-020",
+      "code": "knowledge-loss",
+      "name_ru": "Потеря знаний",
+      "description": "Critical knowledge is not captured and is lost when people or context change.",
+      "name": "Knowledge Loss",
+      "description_ru": "Критичные знания не фиксируются и исчезают при смене людей или контекста."
+    },
+    {
+      "id": "PRB-021",
+      "code": "inconsistent-information",
+      "name_ru": "Противоречивая и устаревшая информация",
+      "description": "Different sources contain conflicting or outdated information.",
+      "name": "Inconsistent and Outdated Information",
+      "description_ru": "Разные источники содержат несогласованные или устаревшие сведения."
+    },
+    {
+      "id": "PRB-022",
+      "code": "complex-environment-configuration",
+      "name_ru": "Сложность конфигурации окружений",
+      "description": "Preparing a reproducible environment requires manual and fragile steps.",
+      "name": "Complex Environment Configuration",
+      "description_ru": "Подготовка воспроизводимой среды требует ручных и хрупких действий."
+    },
+    {
+      "id": "PRB-023",
+      "code": "insufficient-code-intelligence",
+      "name_ru": "Недостаток структурированной информации о коде",
+      "description": "Tools and specialists lack machine-readable context about the codebase.",
+      "name": "Insufficient Code Intelligence",
+      "description_ru": "Инструментам и специалистам не хватает машиночитаемого контекста кодовой базы."
+    },
+    {
+      "id": "PRB-024",
+      "code": "ambiguous-conceptual-models",
+      "name_ru": "Неоднозначность концептуальных моделей",
+      "description": "Concepts and relationships are not defined with sufficient precision.",
+      "name": "Ambiguous Conceptual Models",
+      "description_ru": "Понятия и отношения определены недостаточно строго."
+    },
+    {
+      "id": "PRB-025",
+      "code": "manual-information-processing",
+      "name_ru": "Ручная обработка информации",
+      "description": "Extracting, transforming, or presenting information requires repetitive manual work.",
+      "name": "Manual Information Processing",
+      "description_ru": "Извлечение, преобразование или представление информации требует повторяющейся ручной работы."
+    }
+  ]
+}

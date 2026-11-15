@@ -1,0 +1,67 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "export_type": "clean_classifier",
+  "description": "Standalone SPCF 2.0 classifier with generic taxonomy and fictional e-commerce examples only.",
+  "description_ru": "Самостоятельный классификатор SPCF 2.0 с универсальной таксономией и только вымышленными примерами из e-commerce.",
+  "language_fields": {
+    "name": "English",
+    "name_ru": "Russian",
+    "description": "English",
+    "description_ru": "Russian"
+  },
+  "files": [
+    {
+      "file": "structure.json",
+      "record_count": 1,
+      "source": "classification_structure"
+    },
+    {
+      "file": "classification_rules.json",
+      "record_count": 9,
+      "source": "classification_model"
+    },
+    {
+      "file": "data_model.json",
+      "record_count": 6,
+      "source": "SPCF_data_model"
+    },
+    {
+      "file": "example_project.json",
+      "record_count": 3,
+      "source": "fictional_ecommerce_examples"
+    },
+    {
+      "file": "l1_application_domains.json",
+      "record_count": 16,
+      "source": "L1_application_domains"
+    },
+    {
+      "file": "l2_activity_subdomains.json",
+      "record_count": 36,
+      "source": "L2_activity_subdomains"
+    },
+    {
+      "file": "l3_problem_domains.json",
+      "record_count": 25,
+      "source": "L3_problem_domains"
+    },
+    {
+      "file": "l4_solution_archetypes.json",
+      "record_count": 34,
+      "source": "L4_solution_archetypes"
+    },
+    {
+      "file": "technology_patterns.json",
+      "record_count": 10,
+      "source": "technology_patterns"
+    }
+  ],
+  "notes": [
+    "No real project records, organizations, customers, project paths, or source registry facets are included.",
+    "The taxonomy is independent of the fictional examples.",
+    "L1-L4 classify project purpose, not technology stack.",
+    "Technology patterns are an independent catalog, not a classification level.",
+    "The e-commerce terms added in this export are generic taxonomy entries."
+  ]
+}

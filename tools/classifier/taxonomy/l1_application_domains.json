@@ -1,0 +1,136 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "source": "L1_application_domains",
+  "record_count": 16,
+  "records": [
+    {
+      "id": "DOM-001",
+      "code": "business-management",
+      "name_ru": "Управление бизнесом",
+      "description": "Management of organizations, business functions, and enterprise processes.",
+      "name": "Business Management",
+      "description_ru": "Управление организациями, бизнес-функциями и корпоративными процессами."
+    },
+    {
+      "id": "DOM-002",
+      "code": "government-public-sector",
+      "name_ru": "Государственный сектор",
+      "description": "Governmental and municipal administration and the delivery of public services.",
+      "name": "Government & Public Sector",
+      "description_ru": "Государственное и муниципальное управление и предоставление публичных услуг."
+    },
+    {
+      "id": "DOM-003",
+      "code": "commerce",
+      "name_ru": "Торговля и коммерция",
+      "description": "Retail, wholesale, e-commerce, and commercial operations.",
+      "name": "Commerce & Trade",
+      "description_ru": "Розничная и оптовая торговля, электронная коммерция и коммерческие операции."
+    },
+    {
+      "id": "DOM-004",
+      "code": "finance",
+      "name_ru": "Финансы",
+      "description": "Banking, payments, lending, insurance, and investment activities.",
+      "name": "Finance",
+      "description_ru": "Банковская деятельность, платежи, кредитование, страхование и инвестиции."
+    },
+    {
+      "id": "DOM-005",
+      "code": "healthcare",
+      "name_ru": "Здравоохранение",
+      "description": "Medical activities and the management of healthcare organizations.",
+      "name": "Healthcare",
+      "description_ru": "Медицинская деятельность и управление медицинскими организациями."
+    },
+    {
+      "id": "DOM-006",
+      "code": "manufacturing",
+      "name_ru": "Производство",
+      "description": "Industrial and manufacturing processes.",
+      "name": "Manufacturing",
+      "description_ru": "Производственные и промышленные процессы."
+    },
+    {
+      "id": "DOM-007",
+      "code": "logistics",
+      "name_ru": "Логистика",
+      "description": "Transportation, warehousing, and supply chain management.",
+      "name": "Logistics",
+      "description_ru": "Транспортировка, складирование и управление цепями поставок."
+    },
+    {
+      "id": "DOM-008",
+      "code": "software-engineering",
+      "name_ru": "Разработка программного обеспечения",
+      "description": "The creation, modification, verification, and maintenance of software systems.",
+      "name": "Software Engineering",
+      "description_ru": "Создание, изменение, проверка и сопровождение программных систем."
+    },
+    {
+      "id": "DOM-009",
+      "code": "it-operations",
+      "name_ru": "ИТ-эксплуатация",
+      "description": "Deployment, operation, administration, and availability of IT systems.",
+      "name": "IT Operations",
+      "description_ru": "Развёртывание, эксплуатация, администрирование и обеспечение работоспособности ИТ-систем."
+    },
+    {
+      "id": "DOM-010",
+      "code": "data-engineering",
+      "name_ru": "Инженерия данных",
+      "description": "The collection, transformation, storage, modeling, and delivery of data.",
+      "name": "Data Engineering",
+      "description_ru": "Сбор, преобразование, хранение, моделирование и предоставление данных."
+    },
+    {
+      "id": "DOM-011",
+      "code": "artificial-intelligence",
+      "name_ru": "Искусственный интеллект",
+      "description": "The creation and application of machine learning, language model, and intelligent agent systems.",
+      "name": "Artificial Intelligence",
+      "description_ru": "Создание и применение систем машинного обучения, языковых моделей и интеллектуальных агентов."
+    },
+    {
+      "id": "DOM-012",
+      "code": "knowledge-engineering",
+      "name_ru": "Инженерия знаний",
+      "description": "The formalization, structuring, linking, and use of knowledge.",
+      "name": "Knowledge Engineering",
+      "description_ru": "Формализация, структурирование, связывание и использование знаний."
+    },
+    {
+      "id": "DOM-013",
+      "code": "cybersecurity",
+      "name_ru": "Кибербезопасность",
+      "description": "The protection of information systems, data, and digital assets.",
+      "name": "Cybersecurity",
+      "description_ru": "Защита информационных систем, данных и цифровых активов."
+    },
+    {
+      "id": "DOM-014",
+      "code": "science-research",
+      "name_ru": "Наука и исследования",
+      "description": "Research and experimental activities.",
+      "name": "Science & Research",
+      "description_ru": "Исследовательская и экспериментальная деятельность."
+    },
+    {
+      "id": "DOM-015",
+      "code": "information-management",
+      "name_ru": "Управление информацией",
+      "description": "The management of documents, technical information, knowledge, and standards.",
+      "name": "Information Management",
+      "description_ru": "Управление документами, технической информацией, знаниями и стандартами."
+    },
+    {
+      "id": "DOM-016",
+      "code": "mathematics-formal-methods",
+      "name_ru": "Математика и формальные методы",
+      "description": "Formal logic, mathematical models, and rigorous methods.",
+      "name": "Mathematics & Formal Methods",
+      "description_ru": "Формальная логика, математические модели и методы строгого описания."
+    }
+  ]
+}

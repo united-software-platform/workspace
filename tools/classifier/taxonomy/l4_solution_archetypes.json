@@ -1,0 +1,280 @@
+{
+  "schema_name": "SPCF",
+  "schema_version": "2.0.0",
+  "source": "L4_solution_archetypes",
+  "record_count": 34,
+  "records": [
+    {
+      "id": "SOL-001",
+      "code": "enterprise-resource-planning",
+      "name_ru": "ERP-система",
+      "description": "An integrated system for managing enterprise resources and core business processes.",
+      "name": "Enterprise Resource Planning System",
+      "description_ru": "Интегрированное управление ресурсами и основными процессами организации."
+    },
+    {
+      "id": "SOL-002",
+      "code": "customer-relationship-management",
+      "name_ru": "CRM-система",
+      "description": "A system for managing customers and customer interactions.",
+      "name": "Customer Relationship Management System",
+      "description_ru": "Управление клиентами и взаимодействиями."
+    },
+    {
+      "id": "SOL-003",
+      "code": "business-process-management-system",
+      "name_ru": "Система управления бизнес-процессами",
+      "description": "A system for modeling and executing business processes.",
+      "name": "Business Process Management System",
+      "description_ru": "Моделирование и исполнение процессов."
+    },
+    {
+      "id": "SOL-004",
+      "code": "knowledge-management-system",
+      "name_ru": "Система управления знаниями",
+      "description": "A system for organizing, storing, discovering, and maintaining knowledge.",
+      "name": "Knowledge Management System",
+      "description_ru": "Организация, хранение, поиск и актуализация знаний."
+    },
+    {
+      "id": "SOL-005",
+      "code": "enterprise-search-platform",
+      "name_ru": "Платформа корпоративного поиска",
+      "description": "A platform for searching across distributed information sources.",
+      "name": "Enterprise Search Platform",
+      "description_ru": "Поиск по распределённым информационным источникам."
+    },
+    {
+      "id": "SOL-006",
+      "code": "ai-knowledge-assistant",
+      "name_ru": "ИИ-ассистент по знаниям",
+      "description": "A conversational assistant that answers questions using grounded knowledge sources.",
+      "name": "AI Knowledge Assistant",
+      "description_ru": "Диалоговый доступ к знаниям с опорой на источники."
+    },
+    {
+      "id": "SOL-007",
+      "code": "developer-tool",
+      "name_ru": "Инструмент разработчика",
+      "description": "A tool that performs or automates software engineering tasks.",
+      "name": "Developer Tool",
+      "description_ru": "Инструмент для выполнения или автоматизации инженерных задач."
+    },
+    {
+      "id": "SOL-008",
+      "code": "code-analysis-tool",
+      "name_ru": "Инструмент анализа кода",
+      "description": "A tool that extracts code structure, dependencies, and codebase characteristics.",
+      "name": "Code Analysis Tool",
+      "description_ru": "Извлечение структуры, зависимостей и характеристик кодовой базы."
+    },
+    {
+      "id": "SOL-009",
+      "code": "project-scaffolding-tool",
+      "name_ru": "Генератор структуры проекта",
+      "description": "A tool that generates a project starter structure from a profile or template.",
+      "name": "Project Scaffolding Generator",
+      "description_ru": "Создание стартовой структуры проекта по профилю или шаблону."
+    },
+    {
+      "id": "SOL-010",
+      "code": "requirements-management-system",
+      "name_ru": "Система управления требованиями",
+      "description": "A system for managing requirements, attributes, relationships, and lifecycle.",
+      "name": "Requirements Management System",
+      "description_ru": "Управление требованиями, атрибутами, связями и жизненным циклом."
+    },
+    {
+      "id": "SOL-011",
+      "code": "requirements-visualization-tool",
+      "name_ru": "Инструмент визуализации требований",
+      "description": "A tool for presenting requirements and their relationships as maps or models.",
+      "name": "Requirements Visualization Tool",
+      "description_ru": "Представление требований и связей в виде карт и моделей."
+    },
+    {
+      "id": "SOL-012",
+      "code": "architecture-governance-tool",
+      "name_ru": "Инструмент архитектурного контроля",
+      "description": "A tool that checks implementation against architectural rules.",
+      "name": "Architecture Governance Tool",
+      "description_ru": "Проверка реализации на соответствие архитектурным правилам."
+    },
+    {
+      "id": "SOL-013",
+      "code": "development-workflow-management-system",
+      "name_ru": "Система управления процессом разработки",
+      "description": "A system for managing tasks, backlogs, and engineering workflows.",
+      "name": "Development Workflow Management System",
+      "description_ru": "Управление задачами, бэклогами и инженерными потоками работ."
+    },
+    {
+      "id": "SOL-014",
+      "code": "data-model-management-system",
+      "name_ru": "Система управления моделями данных",
+      "description": "A system for managing data schemas, models, and structural changes.",
+      "name": "Data Model Management System",
+      "description_ru": "Управление схемами, моделями и изменениями структуры данных."
+    },
+    {
+      "id": "SOL-015",
+      "code": "llm-gateway",
+      "name_ru": "Шлюз языковых моделей",
+      "description": "A unified access point and request router for large language models.",
+      "name": "LLM Gateway",
+      "description_ru": "Единая точка доступа и маршрутизации запросов к LLM."
+    },
+    {
+      "id": "SOL-016",
+      "code": "ai-agent-platform",
+      "name_ru": "Платформа ИИ-агентов",
+      "description": "An environment for creating, running, and coordinating AI agents.",
+      "name": "AI Agent Platform",
+      "description_ru": "Среда создания, запуска и координации ИИ-агентов."
+    },
+    {
+      "id": "SOL-017",
+      "code": "development-environment",
+      "name_ru": "Среда разработки или исполнения",
+      "description": "An environment provided for software development or application execution.",
+      "name": "Development or Runtime Environment",
+      "description_ru": "Подготовка и предоставление изолированного окружения для разработки или запуска."
+    },
+    {
+      "id": "SOL-018",
+      "code": "ci-cd-platform",
+      "name_ru": "Платформа CI/CD",
+      "description": "A platform for automating software build, verification, and delivery.",
+      "name": "CI/CD Platform",
+      "description_ru": "Автоматизация сборки, проверки и доставки программного обеспечения."
+    },
+    {
+      "id": "SOL-019",
+      "code": "methodology-framework",
+      "name_ru": "Методологический фреймворк",
+      "description": "A set of methods, rules, artifacts, and procedures for engineering work.",
+      "name": "Methodology Framework",
+      "description_ru": "Набор методов, правил, артефактов и процедур инженерной работы."
+    },
+    {
+      "id": "SOL-020",
+      "code": "documentation-system",
+      "name_ru": "Система технической документации",
+      "description": "A system for creating, storing, and maintaining technical documentation.",
+      "name": "Technical Documentation System",
+      "description_ru": "Создание, хранение и сопровождение документации."
+    },
+    {
+      "id": "SOL-021",
+      "code": "knowledge-graph-platform",
+      "name_ru": "Платформа графов знаний",
+      "description": "A platform for modeling, storing, and processing knowledge graphs.",
+      "name": "Knowledge Graph Platform",
+      "description_ru": "Моделирование, хранение и обработка графов знаний."
+    },
+    {
+      "id": "SOL-022",
+      "code": "speech-recognition-system",
+      "name_ru": "Система распознавания речи",
+      "description": "A system for converting speech into text and performing related operations.",
+      "name": "Speech Recognition System",
+      "description_ru": "Преобразование речи в текст и связанные операции."
+    },
+    {
+      "id": "SOL-023",
+      "code": "cryptographic-integration-service",
+      "name_ru": "Сервис криптографической интеграции",
+      "description": "A unified interface to cryptographic tools and services.",
+      "name": "Cryptographic Integration Service",
+      "description_ru": "Унифицированный интерфейс к криптографическим средствам."
+    },
+    {
+      "id": "SOL-024",
+      "code": "research-artifact",
+      "name_ru": "Исследовательский артефакт",
+      "description": "An output of research, such as a model, study, or experimental validation.",
+      "name": "Research Artifact",
+      "description_ru": "Результат исследования, модели или экспериментальной проверки."
+    },
+    {
+      "id": "SOL-025",
+      "code": "data-platform",
+      "name_ru": "Платформа данных",
+      "description": "A platform for collecting, integrating, storing, and delivering data.",
+      "name": "Data Platform",
+      "description_ru": "Сбор, интеграция, хранение и предоставление данных."
+    },
+    {
+      "id": "SOL-026",
+      "code": "workspace-management-tool",
+      "name_ru": "Инструмент управления рабочим пространством",
+      "description": "A tool for organizing projects, resources, and working materials.",
+      "name": "Workspace Management Tool",
+      "description_ru": "Систематизация проектов, ресурсов и рабочих материалов."
+    },
+    {
+      "id": "SOL-027",
+      "code": "standard-specification",
+      "name_ru": "Стандарт или спецификация",
+      "description": "A formalized set of requirements, rules, and agreements.",
+      "name": "Standard or Specification",
+      "description_ru": "Формализованный набор требований, правил и соглашений."
+    },
+    {
+      "id": "SOL-028",
+      "code": "formal-modeling-tool",
+      "name_ru": "Инструмент формального моделирования",
+      "description": "A tool for formally describing concepts, logic, and relationships.",
+      "name": "Formal Modeling Tool",
+      "description_ru": "Формальное описание понятий, логики и отношений."
+    },
+    {
+      "id": "SOL-029",
+      "code": "platform-component",
+      "name_ru": "Платформенный программный компонент",
+      "description": "A reusable software component that provides a shared infrastructure capability.",
+      "name": "Platform Software Component",
+      "description_ru": "Переиспользуемый компонент, предоставляющий общую инфраструктурную функцию."
+    },
+    {
+      "id": "SOL-030",
+      "code": "transformation-tool",
+      "name_ru": "Инструмент преобразования данных или содержимого",
+      "description": "A tool for automated transformation of content structure, language, or format.",
+      "name": "Content or Data Transformation Tool",
+      "description_ru": "Автоматизированное преобразование структуры, языка или формата материалов."
+    },
+    {
+      "id": "SOL-031",
+      "code": "ecommerce-platform",
+      "name": "E-commerce Platform",
+      "name_ru": "Платформа электронной коммерции",
+      "description": "A digital platform for presenting products, serving shoppers, and conducting online sales.",
+      "description_ru": "Цифровая платформа для представления товаров, обслуживания покупателей и онлайн-продаж."
+    },
+    {
+      "id": "SOL-032",
+      "code": "product-information-management-system",
+      "name": "Product Information Management System",
+      "name_ru": "Система управления товарной информацией",
+      "description": "A system for centralizing, enriching, validating, and distributing product information.",
+      "description_ru": "Система централизованного хранения, обогащения, проверки и распространения товарной информации."
+    },
+    {
+      "id": "SOL-033",
+      "code": "recommendation-engine",
+      "name": "Recommendation Engine",
+      "name_ru": "Механизм рекомендаций",
+      "description": "A software component that ranks or recommends products for individual shoppers or contexts.",
+      "description_ru": "Программный компонент, который ранжирует или рекомендует товары с учётом покупателя и контекста."
+    },
+    {
+      "id": "SOL-034",
+      "code": "information-web-portal",
+      "name": "Information Web Portal",
+      "name_ru": "Информационный веб-портал",
+      "description": "A public website that aggregates and publishes official information: news, documents, events, and organizational structure for an unrestricted audience.",
+      "description_ru": "Публичный сайт агрегирования и публикации официальной информации: новости, документы, события и структура организации для неограниченного круга посетителей."
+    }
+  ]
+}

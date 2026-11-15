@@ -1,0 +1,39 @@
+[project]
+name = "domain-classifier"
+dynamic = ["version"]
+description = "CLI-классификатор проектов по таксономии SPCF 2.0: векторное сопоставление карточки проекта с уровнями L1–L4"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+]
+
+[project.scripts]
+classifier = "classifier.cli.main:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.11",
+    "pytest>=8.3",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+# Номер версии хранится только в VERSION: релизный коммит меняет один файл (GIT-021)
+[tool.hatch.version]
+path = "VERSION"
+pattern = "(?P<version>\\d+\\.\\d+\\.\\d+)"
+
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { file = "VERSION" }]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/classifier"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
