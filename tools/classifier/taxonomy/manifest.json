@@ -38,7 +38,7 @@
     },
     {
       "file": "l2_activity_subdomains.json",
-      "record_count": 35,
+      "record_count": 36,
       "source": "L2_activity_subdomains"
     },
     {
@@ -48,7 +48,7 @@
     },
     {
       "file": "l4_solution_archetypes.json",
-      "record_count": 33,
+      "record_count": 34,
       "source": "L4_solution_archetypes"
     },
     {

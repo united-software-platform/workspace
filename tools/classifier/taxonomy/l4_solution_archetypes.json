@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L4_solution_archetypes",
-  "record_count": 33,
+  "record_count": 34,
   "records": [
     {
       "id": "SOL-001",
@@ -267,6 +267,14 @@
       "name_ru": "Механизм рекомендаций",
       "description": "A software component that ranks or recommends products for individual shoppers or contexts.",
       "description_ru": "Программный компонент, который ранжирует или рекомендует товары с учётом покупателя и контекста."
+    },
+    {
+      "id": "SOL-034",
+      "code": "information-web-portal",
+      "name": "Information Web Portal",
+      "name_ru": "Информационный веб-портал",
+      "description": "A public website that aggregates and publishes official information: news, documents, events, and organizational structure for an unrestricted audience.",
+      "description_ru": "Публичный сайт агрегирования и публикации официальной информации: новости, документы, события и структура организации для неограниченного круга посетителей."
     }
   ]
 }

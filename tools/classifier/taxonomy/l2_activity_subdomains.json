@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L2_activity_subdomains",
-  "record_count": 35,
+  "record_count": 36,
   "records": [
     {
       "id": "SUB-001",
@@ -283,6 +283,14 @@
       "name_ru": "Рекомендации товаров",
       "description": "Selecting and presenting relevant products to shoppers.",
       "description_ru": "Подбор и представление покупателям релевантных товаров."
+    },
+    {
+      "id": "SUB-036",
+      "code": "official-information-publishing",
+      "name": "Official Information Publishing",
+      "name_ru": "Публикация официальной информации",
+      "description": "Informing the audience about an organization's activities: news, documents, and events.",
+      "description_ru": "Информирование аудитории о деятельности организации: новости, документы, события."
     }
   ]
 }
