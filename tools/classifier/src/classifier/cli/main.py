@@ -6,17 +6,30 @@
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
 from classifier.application.classify import ClassificationError, ProjectCard, classify
-from classifier.domain.embeddings import EmbeddingError
+from classifier.domain.embeddings import EmbeddingClient, EmbeddingError
 from classifier.domain.taxonomy import TaxonomyError
 from classifier.infrastructure.http_embeddings import HttpEmbeddingClient
+from classifier.infrastructure.stub_embeddings import StubEmbeddingClient
 from classifier.infrastructure.taxonomy_loader import load_taxonomy
 
 #: Каталог выгрузки таксономии, поставляемой вместе с утилитой.
 _EXPORT_DIR = Path(__file__).resolve().parents[3] / "taxonomy"
+
+
+def _build_client() -> EmbeddingClient:
+    """Собрать клиент embeddings из окружения.
+
+    CLASSIFIER_EMBEDDINGS=stub — детерминированный фейк без сети для интеграционных
+    тестов; отсутствие значения — живой эндпоинт по EMBEDDINGS_*.
+    """
+    if os.environ.get("CLASSIFIER_EMBEDDINGS") == "stub":
+        return StubEmbeddingClient()
+    return HttpEmbeddingClient.from_env()
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -49,7 +62,7 @@ def main(argv: list[str] | None = None) -> int:
         raw = json.loads(Path(args.card).read_text(encoding="utf-8"))
         card = ProjectCard.from_dict(raw)
         taxonomy = load_taxonomy(export_dir)
-        client = HttpEmbeddingClient.from_env()
+        client = _build_client()
         output = classify(card, taxonomy, client, threshold=args.threshold)
     except ClassificationError as exc:
         print(f"ошибка карточки: {exc}", file=sys.stderr)

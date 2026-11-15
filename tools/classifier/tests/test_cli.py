@@ -1,11 +1,14 @@
-"""Интеграционные тесты CLI: успех, needs_confirmation, ошибка входа."""
+"""Интеграционные тесты CLI: успех, needs_confirmation, ошибка входа.
+
+Прогоны идут на CLASSIFIER_EMBEDDINGS=stub — детерминированный фейк, сети нет.
+Порог needs_confirmation в stub-режиме проверяется через высокий порог CLI.
+"""
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
-
-import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -17,16 +20,21 @@ CARD = {
 
 
 def _run(card_file: Path, *extra: str) -> subprocess.CompletedProcess[str]:
+    env = dict(os.environ, CLASSIFIER_EMBEDDINGS="stub")
+    for name in ("EMBEDDINGS_BASE_URL", "EMBEDDINGS_API_KEY", "EMBEDDINGS_MODEL"):
+        env.pop(name, None)
     return subprocess.run(
         [sys.executable, "-m", "classifier.cli.main", str(card_file), *extra],
         capture_output=True,
         text=True,
         cwd=REPO_ROOT,
         check=False,
+        env=env,
     )
 
 
-def test_cli_success_code_zero(tmp_path: Path) -> None:
+def test_cli_success_code_zero_without_env_and_network(tmp_path: Path) -> None:
+    # Переменные EMBEDDINGS_* сняты: CLI работает на stub, сети нет
     card_file = tmp_path / "card.json"
     card_file.write_text(json.dumps(CARD, ensure_ascii=False), encoding="utf-8")
     result = _run(card_file, "--threshold", "0.0")
@@ -59,9 +67,18 @@ def test_cli_missing_card_code_two(tmp_path: Path) -> None:
     assert result.returncode == 2
 
 
-def test_cli_missing_export_code_two(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_cli_missing_export_code_two(tmp_path: Path) -> None:
     card_file = tmp_path / "card.json"
     card_file.write_text(json.dumps(CARD, ensure_ascii=False), encoding="utf-8")
     result = _run(card_file, "--export-dir", str(tmp_path / "нет-выгрузки"))
     assert result.returncode == 2
     assert "выгрузки" in result.stderr
+
+
+def test_cli_stub_is_deterministic(tmp_path: Path) -> None:
+    # Два прогона на stub дают одинаковый контракт
+    card_file = tmp_path / "card.json"
+    card_file.write_text(json.dumps(CARD, ensure_ascii=False), encoding="utf-8")
+    first = _run(card_file, "--threshold", "0.0").stdout
+    second = _run(card_file, "--threshold", "0.0").stdout
+    assert first == second

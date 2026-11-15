@@ -71,3 +71,8 @@ uv run pytest        # тесты (фейковый клиент embeddings, с�
 uv run mypy src      # типы
 uv run ruff check .  # линтер
 ```
+
+Интеграционные тесты CLI идут на `CLASSIFIER_EMBEDDINGS=stub` — детерминированный
+фейк без сети; живой эндпоинт проверяется диагностическим скриптом
+`uv run python scripts/live_run.py` (требует переменных `EMBEDDINGS_*`).
+Тестовый режим `stub` — единственное допустимое значение флага.

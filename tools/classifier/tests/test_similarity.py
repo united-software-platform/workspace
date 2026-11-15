@@ -16,6 +16,11 @@ def test_cosine_orthogonal() -> None:
     assert cosine(E1, E2) == 0.0
 
 
+def test_cosine_negative_clamped_to_zero() -> None:
+    # Антикоррелированные векторы: confidence в контракте не бывает отрицательным
+    assert cosine([1.0, 0.0], [-1.0, 0.0]) == 0.0
+
+
 def test_cosine_zero_vector() -> None:
     assert cosine([0.0, 0.0, 0.0, 0.0], E1) == 0.0
 
@@ -29,11 +34,22 @@ def test_rank_order_and_roles() -> None:
     assert result[0].confidence >= result[1].confidence >= result[2].confidence
 
 
-def test_rank_caps_candidates_at_four() -> None:
+def test_rank_caps_candidates() -> None:
+    # 1 primary + MAX_SECONDARY secondary
     vectors = {f"V{i}": E1 for i in range(10)}
     result = rank(list(vectors), vectors, E1)
     assert len(result) == 4
     assert [c.role for c in result] == ["primary", "secondary", "secondary", "secondary"]
+
+
+def test_rank_missing_vector_raises() -> None:
+    # Запись без вектора — ошибка контракта, не молчаливый пропуск
+    vectors = {"A": E1}
+    try:
+        rank(["A", "B"], vectors, E1)
+        raise AssertionError("ожидался KeyError")
+    except KeyError as exc:
+        assert "B" in str(exc)
 
 
 def test_rank_fewer_than_limit_no_placeholders() -> None:
