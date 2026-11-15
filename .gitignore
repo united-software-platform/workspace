@@ -29,3 +29,13 @@ tools/forge/.venv/
 # Файлы обмена со шлюзом tldr: запрос и результат сканирования сторонних проектов
 .tldr/
 # <<< tldr-scan
+
+# >>> domain-classifier
+# Прогоны операции classify не коммитятся: карточка проекта содержит реальные данные,
+# беклог прогона — их след (WRSP-022)
+/backlog/classify/
+# Окружение uv подпроекта CLI
+tools/classifier/.venv/
+# Локальный корневой pyproject.toml — настройка IDE владельца, не проектный файл
+/pyproject.toml
+# <<< domain-classifier
