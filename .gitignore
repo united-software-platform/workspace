@@ -34,6 +34,7 @@ tools/forge/.venv/
 # Прогоны операции classify не коммитятся: карточка проекта содержит реальные данные,
 # беклог прогона — их след (WRSP-022)
 /backlog/classify/
+/backlog/classify-project/
 # Окружение uv подпроекта CLI
 tools/classifier/.venv/
 # Локальный корневой pyproject.toml — настройка IDE владельца, не проектный файл
