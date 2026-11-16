@@ -38,12 +38,12 @@
     },
     {
       "file": "l2_activity_subdomains.json",
-      "record_count": 36,
+      "record_count": 37,
       "source": "L2_activity_subdomains"
     },
     {
       "file": "l3_problem_domains.json",
-      "record_count": 25,
+      "record_count": 27,
       "source": "L3_problem_domains"
     },
     {
