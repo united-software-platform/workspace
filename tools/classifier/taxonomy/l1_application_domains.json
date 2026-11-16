@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L1_application_domains",
-  "record_count": 17,
+  "record_count": 18,
   "records": [
     {
       "id": "DOM-001",
@@ -139,6 +139,14 @@
       "name_ru": "Аналитика и отчётность",
       "description": "Drawing conclusions from collected data: monitoring indicators, summary and statistical reporting, dashboards, BI analysis, visualization, and analytical materials for decisions.",
       "description_ru": "Подготовка выводов из собранных данных: мониторинг показателей, сводные и статистические отчёты, дашборды, BI-аналитика, визуализация и аналитические материалы для принятия решений."
+    },
+    {
+      "id": "DOM-018",
+      "code": "real-estate",
+      "name": "Real Estate",
+      "name_ru": "Недвижимость",
+      "description": "Operations with real property: buying, selling, and renting premises and land, property listings and brokerage, property management, and transaction support.",
+      "description_ru": "Операции с недвижимым имуществом: покупка, продажа и аренда помещений и земли, объявления о недвижимости и посредничество, управление объектами и сопровождение сделок."
     }
   ]
 }

@@ -18,7 +18,7 @@
     },
     {
       "file": "classification_rules.json",
-      "record_count": 10,
+      "record_count": 11,
       "source": "classification_model"
     },
     {
@@ -33,22 +33,22 @@
     },
     {
       "file": "l1_application_domains.json",
-      "record_count": 17,
+      "record_count": 18,
       "source": "L1_application_domains"
     },
     {
       "file": "l2_activity_subdomains.json",
-      "record_count": 35,
+      "record_count": 37,
       "source": "L2_activity_subdomains"
     },
     {
       "file": "l3_problem_domains.json",
-      "record_count": 24,
+      "record_count": 25,
       "source": "L3_problem_domains"
     },
     {
       "file": "l4_solution_archetypes.json",
-      "record_count": 34,
+      "record_count": 36,
       "source": "L4_solution_archetypes"
     },
     {

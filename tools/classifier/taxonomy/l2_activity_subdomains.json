@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L2_activity_subdomains",
-  "record_count": 35,
+  "record_count": 37,
   "records": [
     {
       "id": "SUB-001",
@@ -289,6 +289,22 @@
       "name_ru": "Закупки и тендеры",
       "description": "Activities of both sides of the procurement process: organizing procurements and tenders by customers, and supplier participation — finding procurements, preparing bids and documents.",
       "description_ru": "Деятельность обеих сторон закупочного процесса: организация закупок и тендеров заказчиком и участие поставщика — поиск закупок, подготовка заявок и документов."
+    },
+    {
+      "id": "SUB-038",
+      "code": "real-estate-rental-sales",
+      "name": "Real Estate Rental & Sales",
+      "name_ru": "Операции с арендой и продажей недвижимости",
+      "description": "Activities of deal parties in real estate: searching for and publishing property listings, matching objects to requirements, and supporting rental and sale transactions.",
+      "description_ru": "Деятельность сторон сделок с недвижимостью: поиск и публикация предложений об объектах, подбор объектов под требования, сопровождение сделок аренды и продажи."
+    },
+    {
+      "id": "SUB-039",
+      "code": "property-management",
+      "name": "Property Management",
+      "name_ru": "Управление объектами недвижимости",
+      "description": "Operation and administration of real property: lease relations, tenants, payments, and maintenance of buildings and premises.",
+      "description_ru": "Эксплуатация и администрирование объектов недвижимости: арендные отношения, арендаторы, платежи и обслуживание зданий и помещений."
     }
   ]
 }
