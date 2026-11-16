@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L3_problem_domains",
-  "record_count": 25,
+  "record_count": 27,
   "records": [
     {
       "id": "PRB-001",
@@ -203,6 +203,22 @@
       "description": "Extracting, transforming, or presenting information requires repetitive manual work.",
       "name": "Manual Information Processing",
       "description_ru": "Извлечение, преобразование или представление информации требует повторяющейся ручной работы."
+    },
+    {
+      "id": "PRB-026",
+      "code": "relevant-information-search-difficulty",
+      "name_ru": "Трудоёмкость поиска релевантной информации",
+      "description": "Finding relevant items of activity — offers, procurements, opportunities — in large volumes of scattered information requires disproportionate effort.",
+      "name": "Relevant Information Search Difficulty",
+      "description_ru": "Поиск предметов деятельности — предложений, закупок, возможностей — в больших объёмах разрозненной информации требует непропорциональных усилий."
+    },
+    {
+      "id": "PRB-027",
+      "code": "manual-document-preparation",
+      "name_ru": "Ручная подготовка документов",
+      "description": "Repeated manual preparation of documents, applications, and submission packages for activities takes disproportionate effort.",
+      "name": "Manual Document Preparation",
+      "description_ru": "Повторяющаяся ручная подготовка документов, заявок и комплектов для участия в деятельности требует непропорциональных усилий."
     }
   ]
 }

@@ -120,3 +120,78 @@ def test_classify_levels_shape() -> None:
         roles = [c.role for c in candidates]
         assert roles[0] == "primary"
         assert all(r == "secondary" for r in roles[1:])
+
+
+def test_margin_gap_below_margin_needs_confirmation() -> None:
+    client = SimilarFakeEmbeddingClient()
+    # Карточка ближе к SUB-004, но оба кандидата L2 почти одинаково близки
+    client.KEYWORDS = {
+        "заказ": 0, "магазин": 0, "commerce": 0, "retail": 0, "store": 0,
+        "sales": 0, "checkout": 0, "orders": 0,
+        "analytics": 0, "reports": 0, "inefficiency": 0, "search": 0,
+        "retrieval": 0, "platform": 0, "service": 0, "process": 0,
+    }
+    card = ProjectCard(
+        name="margin-check",
+        purpose="заказ магазин sales checkout orders analytics reports",
+        facets={},
+    )
+    output = classify(card, _taxonomy(), client, threshold=0.1)
+    l2 = output.spcf["L2_activity_subdomain"]
+    gap = l2[0].confidence - l2[1].confidence
+    assert gap < 0.02, f"отрыв должен быть меньше margin, получен {gap}"
+    assert output.needs_confirmation is True
+    assert any("отрыв" in r and "L2_activity_subdomain" in r for r in output.reasons)
+
+
+def test_margin_gap_above_margin_confirmed() -> None:
+    client = SimilarFakeEmbeddingClient()
+    # Ключевые слова тянут карточку строго к первому кандидату каждого уровня
+    client.KEYWORDS = {
+        "заказ": 0, "магазин": 0, "commerce": 0, "retail": 0, "store": 0,
+        "sales": 0, "inefficiency": 0, "platform": 0, "genomics": 1, "dna": 1,
+        "library": 1, "sdk": 1, "search": 1, "retrieval": 1, "analytics": 1,
+    }
+    card = ProjectCard(
+        name="margin-strong",
+        purpose="заказ магазин commerce retail store sales platform",
+        facets={},
+    )
+    output = classify(card, _taxonomy(), client, threshold=0.1)
+    assert output.needs_confirmation is False
+    assert output.reasons == []
+
+
+def test_margin_single_candidate_no_margin_reason() -> None:
+    client = SimilarFakeEmbeddingClient()
+    taxonomy = _taxonomy()
+    # На уровне L4 остаётся единственная запись — отрыва нет, причин по margin быть не может
+    taxonomy["L4_solution_archetype"] = taxonomy["L4_solution_archetype"][:1]
+    client.KEYWORDS = {
+        "заказ": 0, "магазин": 0, "commerce": 0, "retail": 0, "store": 0,
+        "sales": 0, "inefficiency": 0, "platform": 0, "service": 0,
+    }
+    card = ProjectCard(name="margin-single", purpose="заказ магазин platform", facets={})
+    output = classify(card, taxonomy, client, threshold=0.1)
+    assert all("отрыв" not in r for r in output.reasons)
+
+
+def test_margin_threshold_and_margin_do_not_mix() -> None:
+    client = SimilarFakeEmbeddingClient()
+    # Три слова базы 0 и одно слово базы 1: cosine к первичным записям ≈ 0.95
+    # (порог 0.99 не пройден), отрыв от вторых ≈ 0.63 — велик, причины по отрыву быть не должно
+    client.KEYWORDS = {
+        "commerce": 0, "retail": 0, "store": 0, "sales": 0, "checkout": 0,
+        "orders": 0, "inefficiency": 0, "process": 0, "platform": 0, "service": 0,
+        "genomics": 1, "dna": 1, "analytics": 1, "reports": 1, "search": 1,
+        "retrieval": 1, "library": 1, "sdk": 1,
+    }
+    card = ProjectCard(
+        name="threshold-check",
+        purpose="commerce retail store genomics",
+        facets={},
+    )
+    output = classify(card, _taxonomy(), client, threshold=0.99)
+    assert output.needs_confirmation is True
+    assert any("ниже порога" in r for r in output.reasons)
+    assert all("отрыв" not in r for r in output.reasons)

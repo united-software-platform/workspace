@@ -28,7 +28,7 @@
     },
     {
       "file": "example_project.json",
-      "record_count": 3,
+      "record_count": 4,
       "source": "fictional_ecommerce_examples"
     },
     {
@@ -38,17 +38,17 @@
     },
     {
       "file": "l2_activity_subdomains.json",
-      "record_count": 36,
+      "record_count": 37,
       "source": "L2_activity_subdomains"
     },
     {
       "file": "l3_problem_domains.json",
-      "record_count": 25,
+      "record_count": 27,
       "source": "L3_problem_domains"
     },
     {
       "file": "l4_solution_archetypes.json",
-      "record_count": 34,
+      "record_count": 35,
       "source": "L4_solution_archetypes"
     },
     {

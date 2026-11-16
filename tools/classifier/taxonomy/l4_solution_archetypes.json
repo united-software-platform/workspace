@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L4_solution_archetypes",
-  "record_count": 34,
+  "record_count": 35,
   "records": [
     {
       "id": "SOL-001",
@@ -275,6 +275,14 @@
       "name_ru": "Информационный веб-портал",
       "description": "A public website that aggregates and publishes official information: news, documents, events, and organizational structure for an unrestricted audience.",
       "description_ru": "Публичный сайт агрегирования и публикации официальной информации: новости, документы, события и структура организации для неограниченного круга посетителей."
+    },
+    {
+      "id": "SOL-035",
+      "code": "government-information-system",
+      "name": "Government Information System",
+      "name_ru": "Государственная автоматизированная информационная система",
+      "description": "A government automated information system for regulated reporting, support program accounting, and public registries.",
+      "description_ru": "Государственная информационная система (АИС): приём регламентированной отчётности по утверждённым формам с подписанием ЭЦП, учёт и контроль мер государственной поддержки, ведение реестров (имущество, получатели поддержки), аналитика использования поддержки."
     }
   ]
 }
