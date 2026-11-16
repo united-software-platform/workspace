@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L1_application_domains",
-  "record_count": 16,
+  "record_count": 17,
   "records": [
     {
       "id": "DOM-001",
@@ -131,6 +131,14 @@
       "description": "Formal logic, mathematical models, and rigorous methods.",
       "name": "Mathematics & Formal Methods",
       "description_ru": "Формальная логика, математические модели и методы строгого описания."
+    },
+    {
+      "id": "DOM-017",
+      "code": "analytics-reporting",
+      "name_ru": "Аналитика и отчётность",
+      "description": "Drawing conclusions from collected data: monitoring indicators, summary and statistical reporting, dashboards, BI analysis, visualization, and analytical materials for decisions.",
+      "name": "Analytics & Reporting",
+      "description_ru": "Подготовка выводов из собранных данных: мониторинг показателей, сводные и статистические отчёты, дашборды, BI-аналитика, визуализация и аналитические материалы для принятия решений."
     }
   ]
 }

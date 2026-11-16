@@ -35,6 +35,10 @@ tools/forge/.venv/
 # беклог прогона — их след (WRSP-022)
 /backlog/classify/
 /backlog/classify-project/
+# Прогоны пакетной авто-классификации: карточки и итоговые файлы содержат реальные
+# данные проектов, беклоги элементов — их след (WRSP-026)
+/backlog/classify-project-auto/
+/projects/
 # Окружение uv подпроекта CLI
 tools/classifier/.venv/
 # Локальный корневой pyproject.toml — настройка IDE владельца, не проектный файл

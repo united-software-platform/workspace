@@ -88,6 +88,7 @@ def main(argv: list[str] | None = None) -> int:
         "needs_confirmation": output.needs_confirmation,
         "reasons": output.reasons,
         "rationale": output.rationale,
+        "combined_labels": output.combined_labels,
     }
     json.dump(payload, sys.stdout, ensure_ascii=False, indent=2)
     print()

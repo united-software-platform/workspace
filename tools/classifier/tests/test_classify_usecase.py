@@ -122,9 +122,10 @@ def test_classify_levels_shape() -> None:
         assert all(r == "secondary" for r in roles[1:])
 
 
-def test_margin_gap_below_margin_needs_confirmation() -> None:
+def test_margin_gap_below_margin_combined_label() -> None:
     client = SimilarFakeEmbeddingClient()
-    # Карточка ближе к SUB-004, но оба кандидата L2 почти одинаково близки
+    # Карточка ближе к SUB-004, но оба кандидата L2 почти одинаково близки:
+    # малый отрыв — не отказ, а метка «A & B» пограничного уровня
     client.KEYWORDS = {
         "заказ": 0, "магазин": 0, "commerce": 0, "retail": 0, "store": 0,
         "sales": 0, "checkout": 0, "orders": 0,
@@ -140,8 +141,12 @@ def test_margin_gap_below_margin_needs_confirmation() -> None:
     l2 = output.spcf["L2_activity_subdomain"]
     gap = l2[0].confidence - l2[1].confidence
     assert gap < 0.02, f"отрыв должен быть меньше margin, получен {gap}"
-    assert output.needs_confirmation is True
-    assert any("отрыв" in r and "L2_activity_subdomain" in r for r in output.reasons)
+    assert output.needs_confirmation is False
+    label = output.combined_labels.get("L2_activity_subdomain")
+    assert label is not None
+    assert " & " in label
+    assert not any("отрыв" in r for r in output.reasons)
+    assert "пограничные" in output.rationale.lower() or "Пограничные" in output.rationale
 
 
 def test_margin_gap_above_margin_confirmed() -> None:
