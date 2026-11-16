@@ -11,6 +11,7 @@
       "fields": [
         "id",
         "code",
+        "aliases",
         "name",
         "name_ru",
         "description",
@@ -24,6 +25,7 @@
       "fields": [
         "id",
         "code",
+        "aliases",
         "name",
         "name_ru",
         "description",
@@ -37,6 +39,7 @@
       "fields": [
         "id",
         "code",
+        "aliases",
         "name",
         "name_ru",
         "description",
@@ -50,6 +53,7 @@
       "fields": [
         "id",
         "code",
+        "aliases",
         "name",
         "name_ru",
         "description",
