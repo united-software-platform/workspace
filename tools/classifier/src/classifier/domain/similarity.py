@@ -8,6 +8,10 @@ Vector = list[float]
 #: Число secondary-кандидатов на уровень после primary.
 MAX_SECONDARY = 3
 
+#: Минимальный отрыв primary от второго кандидата уровня: меньший отрыв не подтверждает
+#: первенца, и уровень уходит в needs_confirmation с причиной по отрыву.
+MARGIN = 0.02
+
 
 def cosine(a: Vector, b: Vector) -> float:
     """Косинусная близость двух векторов, зажатая в 0–1.

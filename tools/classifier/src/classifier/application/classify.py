@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 
 from classifier.domain.embeddings import EmbeddingClient, EmbeddingError
-from classifier.domain.similarity import Candidate, rank
+from classifier.domain.similarity import MARGIN, Candidate, rank
 from classifier.domain.taxonomy import LEVELS, TaxonomyRecord
 
 #: Фасеты, входящие в текст сопоставления карточки.
@@ -139,6 +139,15 @@ def classify(
                 f"primary {level} {names[top.record_id]} ниже порога {threshold}: "
                 f"{top.confidence}"
             )
+        # Отрыв primary от второго кандидата: единственный кандидат уровня отрыва не даёт
+        if len(candidates) > 1:
+            margin_gap = candidates[0].confidence - candidates[1].confidence
+            if margin_gap < MARGIN:
+                top = candidates[0]
+                reasons.append(
+                    f"отрыв primary {level} {names[top.record_id]} от второго кандидата "
+                    f"меньше {MARGIN}: {round(margin_gap, 4)}"
+                )
 
     needs_confirmation = bool(reasons)
     if needs_confirmation:
