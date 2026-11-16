@@ -71,6 +71,12 @@
       "cardinality": "many_to_many_at_each_level",
       "primary_secondary": "A project may have multiple values at each level; primary and secondary assignments may be distinguished.",
       "evidence": "Project assignments are examples only; the taxonomy does not depend on any external project registry."
+    },
+    "aliases": {
+      "field": "aliases",
+      "applies_to": "records of L1-L4 level catalogs",
+      "semantics": "Optional list of absorbed identifiers: when semantically identical records of one level are merged, the canonical record keeps the absorbed identifiers in aliases. Resolving an alias yields the canonical record of the level. Aliases are never used as canonical references: taxonomy data and project examples refer to canonical ids only; alias resolution is the responsibility of the consumer.",
+      "semantics_ru": "Необязательный перечень поглощённых идентификаторов: при объединении семантически тождественных записей одного уровня каноническая запись хранит поглощённые идентификаторы в aliases. Обращение по алиасу разрешается в каноническую запись уровня. Алиасы не используются как канонические ссылки: данные таксономии и примеры проектов ссылаются только на канонические идентификаторы; разрешение алиасов — обязанность потребителя."
     }
   },
   "independent_catalogs": [

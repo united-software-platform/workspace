@@ -7,243 +7,247 @@
     {
       "id": "SUB-001",
       "code": "business-process-management",
+      "name": "Business Process Management",
       "name_ru": "Управление бизнес-процессами",
       "description": "Modeling, execution, and optimization of business processes.",
-      "name": "Business Process Management",
       "description_ru": "Моделирование, исполнение и оптимизация бизнес-процессов."
     },
     {
       "id": "SUB-002",
       "code": "customer-management",
+      "name": "Customer Management",
       "name_ru": "Управление клиентами",
       "description": "Management of customer relationships and interactions.",
-      "name": "Customer Management",
       "description_ru": "Управление клиентскими отношениями и взаимодействиями."
     },
     {
       "id": "SUB-003",
       "code": "order-management",
+      "name": "Order Management",
       "name_ru": "Управление заказами",
       "description": "Processing and lifecycle management of orders.",
-      "name": "Order Management",
       "description_ru": "Обработка и сопровождение заказов."
     },
     {
       "id": "SUB-004",
       "code": "ecommerce-management",
+      "name": "E-commerce Management",
       "name_ru": "Управление электронной торговлей",
       "description": "Management of online catalogs, storefronts, and commercial operations.",
-      "name": "E-commerce Management",
       "description_ru": "Управление онлайн-каталогами, витринами и коммерческими операциями."
     },
     {
       "id": "SUB-005",
       "code": "public-service-delivery",
+      "name": "Public Service Delivery",
       "name_ru": "Предоставление государственных услуг",
       "description": "Digitization and support of public services and government processes.",
-      "name": "Public Service Delivery",
       "description_ru": "Цифровизация и сопровождение государственных услуг и публичных процессов."
     },
     {
       "id": "SUB-006",
       "code": "software-development",
+      "name": "Software Development",
       "name_ru": "Разработка ПО",
       "description": "Design, implementation, and maintenance of software.",
-      "name": "Software Development",
       "description_ru": "Проектирование, реализация и сопровождение программного обеспечения."
     },
     {
       "id": "SUB-007",
       "code": "requirements-engineering",
+      "name": "Requirements Engineering",
       "name_ru": "Инженерия требований",
       "description": "Elicitation, specification, management, and verification of requirements.",
-      "name": "Requirements Engineering",
       "description_ru": "Выявление, описание, управление и проверка требований."
     },
     {
       "id": "SUB-008",
       "code": "software-architecture",
+      "name": "Software Architecture",
       "name_ru": "Архитектура ПО",
       "description": "Design and governance of software architecture.",
-      "name": "Software Architecture",
       "description_ru": "Проектирование и контроль архитектуры программных систем."
     },
     {
       "id": "SUB-009",
       "code": "software-quality-engineering",
-      "aliases": ["SUB-013"],
+      "aliases": [
+        "SUB-013"
+      ],
+      "name": "Software Quality & Testing Engineering",
       "name_ru": "Инженерия качества и тестирование ПО",
       "description": "Assurance, verification, testing, and analysis of software product quality and conformance to requirements.",
-      "name": "Software Quality & Testing Engineering",
       "description_ru": "Обеспечение качества, проверка, анализ и тестирование программных продуктов на соответствие требованиям."
     },
     {
       "id": "SUB-010",
       "code": "developer-experience",
+      "name": "Developer Experience",
       "name_ru": "Developer Experience",
       "description": "Improving developer productivity and the usability of development work.",
-      "name": "Developer Experience",
       "description_ru": "Повышение эффективности и удобства работы разработчиков."
     },
     {
       "id": "SUB-011",
       "code": "development-methodology",
+      "name": "Development Methodology",
       "name_ru": "Методология разработки",
       "description": "Methods, processes, rules, and practices for software development.",
-      "name": "Development Methodology",
       "description_ru": "Методы, процессы, правила и практики разработки ПО."
     },
     {
       "id": "SUB-012",
       "code": "software-configuration-management",
+      "name": "Software Configuration Management",
       "name_ru": "Управление конфигурацией ПО",
       "description": "Management of software configurations, versions, and composition.",
-      "name": "Software Configuration Management",
       "description_ru": "Управление конфигурациями, версиями и составом программных систем."
     },
     {
       "id": "SUB-014",
       "code": "code-analysis",
+      "name": "Code Analysis",
       "name_ru": "Анализ кода",
       "description": "Structural and semantic analysis of source code.",
-      "name": "Code Analysis",
       "description_ru": "Структурный и семантический анализ исходного кода."
     },
     {
       "id": "SUB-015",
       "code": "devops",
+      "name": "DevOps",
       "name_ru": "DevOps",
       "description": "Automation of software integration, delivery, and operations.",
-      "name": "DevOps",
       "description_ru": "Автоматизация интеграции, доставки и эксплуатации ПО."
     },
     {
       "id": "SUB-016",
       "code": "infrastructure-management",
+      "name": "Infrastructure Management",
       "name_ru": "Управление инфраструктурой",
       "description": "Management of computing, network, and software infrastructure.",
-      "name": "Infrastructure Management",
       "description_ru": "Управление вычислительной, сетевой и программной инфраструктурой."
     },
     {
       "id": "SUB-017",
       "code": "runtime-environment-management",
+      "name": "Runtime Environment Management",
       "name_ru": "Управление средами исполнения",
       "description": "Preparation and management of application and agent runtime environments.",
-      "name": "Runtime Environment Management",
       "description_ru": "Подготовка и управление средами запуска приложений и агентов."
     },
     {
       "id": "SUB-018",
       "code": "data-modeling",
+      "name": "Data Modeling",
       "name_ru": "Моделирование данных",
       "description": "Definition, management, and evolution of data models and schemas.",
-      "name": "Data Modeling",
       "description_ru": "Определение, управление и эволюция моделей и схем данных."
     },
     {
       "id": "SUB-020",
       "code": "data-processing",
-      "aliases": ["SUB-019"],
+      "aliases": [
+        "SUB-019"
+      ],
+      "name": "Data Processing & Integration",
       "name_ru": "Обработка и интеграция данных",
       "description": "Transformation, orchestration, and processing of data streams and datasets, including integration of data from heterogeneous sources.",
-      "name": "Data Processing & Integration",
       "description_ru": "Преобразование, оркестрация и обработка потоков и наборов данных, включая объединение данных из разнородных источников."
     },
     {
       "id": "SUB-021",
       "code": "database-management",
+      "name": "Database Management",
       "name_ru": "Управление базами данных",
       "description": "Operation and management of database systems.",
-      "name": "Database Management",
       "description_ru": "Эксплуатация и управление системами хранения данных."
     },
     {
       "id": "SUB-022",
       "code": "llm-engineering",
+      "name": "LLM Engineering",
       "name_ru": "LLM Engineering",
       "description": "Development and operation of solutions based on large language models.",
-      "name": "LLM Engineering",
       "description_ru": "Разработка и эксплуатация решений на основе больших языковых моделей."
     },
     {
       "id": "SUB-023",
       "code": "ai-agent-engineering",
+      "name": "AI Agent Engineering",
       "name_ru": "Инженерия ИИ-агентов",
       "description": "Creation, orchestration, and operation of agent-based systems.",
-      "name": "AI Agent Engineering",
       "description_ru": "Создание, оркестрация и эксплуатация агентных систем."
     },
     {
       "id": "SUB-024",
       "code": "machine-learning",
+      "name": "Machine Learning",
       "name_ru": "Машинное обучение",
       "description": "Development and application of machine learning models.",
-      "name": "Machine Learning",
       "description_ru": "Построение и применение моделей машинного обучения."
     },
     {
       "id": "SUB-025",
       "code": "speech-processing",
+      "name": "Speech Processing",
       "name_ru": "Обработка речи",
       "description": "Speech recognition, transcription, and analysis.",
-      "name": "Speech Processing",
       "description_ru": "Распознавание, транскрибация и анализ речи."
     },
     {
       "id": "SUB-026",
       "code": "knowledge-management",
+      "name": "Knowledge Management",
       "name_ru": "Управление знаниями",
       "description": "Creation, organization, discovery, distribution, and reuse of knowledge.",
-      "name": "Knowledge Management",
       "description_ru": "Создание, организация, поиск, распространение и повторное использование знаний."
     },
     {
       "id": "SUB-027",
       "code": "knowledge-graph-engineering",
+      "name": "Knowledge Graph Engineering",
       "name_ru": "Инженерия графов знаний",
       "description": "Modeling and processing of knowledge graphs.",
-      "name": "Knowledge Graph Engineering",
       "description_ru": "Моделирование и обработка графов знаний."
     },
     {
       "id": "SUB-028",
       "code": "ontology-engineering",
+      "name": "Ontology Engineering",
       "name_ru": "Инженерия онтологий",
       "description": "Formalization of concepts, relationships, and domain constraints.",
-      "name": "Ontology Engineering",
       "description_ru": "Формализация понятий, отношений и ограничений предметных областей."
     },
     {
       "id": "SUB-029",
       "code": "technical-documentation",
+      "name": "Technical Documentation",
       "name_ru": "Техническая документация",
       "description": "Creation and maintenance of technical documentation.",
-      "name": "Technical Documentation",
       "description_ru": "Создание и сопровождение технической документации."
     },
     {
       "id": "SUB-030",
       "code": "standards-management",
+      "name": "Standards Management",
       "name_ru": "Управление стандартами",
       "description": "Development, publication, and governance of engineering standards.",
-      "name": "Standards Management",
       "description_ru": "Разработка, публикация и контроль инженерных стандартов."
     },
     {
       "id": "SUB-031",
       "code": "formal-logic",
+      "name": "Formal Logic",
       "name_ru": "Формальная логика",
       "description": "Work with formal systems, concepts, and logical relations.",
-      "name": "Formal Logic",
       "description_ru": "Работа с формальными системами, понятиями и логическими отношениями."
     },
     {
       "id": "SUB-032",
       "code": "cryptographic-services",
+      "name": "Cryptographic Services",
       "name_ru": "Криптографические сервисы",
       "description": "Integration of cryptographic tools and electronic signature services.",
-      "name": "Cryptographic Services",
       "description_ru": "Интеграция криптографических средств и сервисов электронной подписи."
     },
     {
