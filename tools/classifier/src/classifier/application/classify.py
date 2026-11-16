@@ -66,12 +66,18 @@ class ProjectCard:
 
 @dataclass(frozen=True)
 class ClassificationOutput:
-    """Выходной контракт: итог классификации по уровням L1–L4."""
+    """Выходной контракт: итог классификации по уровням L1–L4.
+
+    `combined_labels` — метки «A & B» уровней с малым отрывом: ключ уровня,
+    значение — склейка имён кандидатов в пределах margin. Малый отрыв
+    подтверждения не требует: обе гипотезы уже в списке кандидатов.
+    """
 
     spcf: dict[str, list[Candidate]]
     needs_confirmation: bool
     reasons: list[str]
     rationale: str
+    combined_labels: dict[str, str] = field(default_factory=dict)
 
 
 def _level_names(taxonomy: dict[str, list[TaxonomyRecord]]) -> dict[str, str]:
@@ -129,6 +135,7 @@ def classify(
 
     spcf: dict[str, list[Candidate]] = {}
     reasons: list[str] = []
+    combined_labels: dict[str, str] = {}
     for level in LEVELS:
         level_ids = [r.record_id for r in taxonomy[level]]
         candidates = rank(level_ids, vectors, card_vector)
@@ -139,15 +146,17 @@ def classify(
                 f"primary {level} {names[top.record_id]} ниже порога {threshold}: "
                 f"{top.confidence}"
             )
-        # Отрыв primary от второго кандидата: единственный кандидат уровня отрыва не даёт
+        # Малый отрыв primary от второго — не отказ, а метка «A & B»:
+        # кандидаты в пределах margin соединяются общей меткой уровня.
+        # Единственный кандидат уровня отрыва не даёт.
         if len(candidates) > 1:
             margin_gap = candidates[0].confidence - candidates[1].confidence
             if margin_gap < MARGIN:
-                top = candidates[0]
-                reasons.append(
-                    f"отрыв primary {level} {names[top.record_id]} от второго кандидата "
-                    f"меньше {MARGIN}: {round(margin_gap, 4)}"
-                )
+                within = [c for c in candidates
+                          if candidates[0].confidence - c.confidence < MARGIN]
+                within = within[:3]
+                label = " & ".join(names[c.record_id] for c in within)
+                combined_labels[level] = label
 
     needs_confirmation = bool(reasons)
     if needs_confirmation:
@@ -161,9 +170,13 @@ def classify(
         rationale = (
             f"Сопоставление по purpose и значимым фасетам; лучшие кандидаты уровней: {tops}."
         )
+    if combined_labels:
+        joined = "; ".join(f"{level}: {label}" for level, label in combined_labels.items())
+        rationale += f" Пограничные уровни — объединённые метки: {joined}."
     return ClassificationOutput(
         spcf=spcf,
         needs_confirmation=needs_confirmation,
         reasons=reasons,
         rationale=rationale,
+        combined_labels=combined_labels,
     )

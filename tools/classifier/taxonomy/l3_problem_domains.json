@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L3_problem_domains",
-  "record_count": 27,
+  "record_count": 24,
   "records": [
     {
       "id": "PRB-001",
@@ -23,10 +23,11 @@
     {
       "id": "PRB-003",
       "code": "poor-data-management",
-      "name_ru": "Низкое качество управления данными",
-      "description": "Data is fragmented, poorly structured, or insufficiently governed.",
-      "name": "Poor Data Management",
-      "description_ru": "Данные разрознены, плохо структурированы или недостаточно управляемы."
+      "aliases": ["PRB-015"],
+      "name_ru": "Низкое качество управления данными и их моделями",
+      "description": "Data is fragmented, poorly structured, or insufficiently governed; changes to data models are poorly controlled and tracked.",
+      "name": "Poor Data & Model Management",
+      "description_ru": "Данные разрознены, плохо структурированы или недостаточно управляемы; изменения моделей данных плохо контролируются и отслеживаются."
     },
     {
       "id": "PRB-004",
@@ -87,10 +88,11 @@
     {
       "id": "PRB-011",
       "code": "poor-code-understandability",
-      "name_ru": "Низкая понятность кода",
-      "description": "The structure, dependencies, and behavior of a codebase are difficult to understand.",
-      "name": "Poor Code Understandability",
-      "description_ru": "Структуру, зависимости и поведение кодовой базы сложно понять."
+      "aliases": ["PRB-023"],
+      "name_ru": "Низкая понятность и недостаток информации о коде",
+      "description": "The structure, dependencies, and behavior of a codebase are difficult to understand; tools and specialists lack machine-readable context of the codebase.",
+      "name": "Poor Code Understandability & Intelligence",
+      "description_ru": "Структуру, зависимости и поведение кодовой базы сложно понять; инструментам и специалистам не хватает машиночитаемого контекста кодовой базы."
     },
     {
       "id": "PRB-012",
@@ -115,14 +117,6 @@
       "description": "Teams use inconsistent engineering rules and practices.",
       "name": "Lack of Engineering Standards",
       "description_ru": "Команды используют несогласованные правила и практики."
-    },
-    {
-      "id": "PRB-015",
-      "code": "poor-data-model-governance",
-      "name_ru": "Недостаточное управление моделями данных",
-      "description": "Changes to data models are poorly controlled and tracked.",
-      "name": "Poor Data Model Governance",
-      "description_ru": "Изменения моделей данных плохо контролируются и отслеживаются."
     },
     {
       "id": "PRB-016",
@@ -181,14 +175,6 @@
       "description_ru": "Подготовка воспроизводимой среды требует ручных и хрупких действий."
     },
     {
-      "id": "PRB-023",
-      "code": "insufficient-code-intelligence",
-      "name_ru": "Недостаток структурированной информации о коде",
-      "description": "Tools and specialists lack machine-readable context about the codebase.",
-      "name": "Insufficient Code Intelligence",
-      "description_ru": "Инструментам и специалистам не хватает машиночитаемого контекста кодовой базы."
-    },
-    {
       "id": "PRB-024",
       "code": "ambiguous-conceptual-models",
       "name_ru": "Неоднозначность концептуальных моделей",
@@ -199,10 +185,11 @@
     {
       "id": "PRB-025",
       "code": "manual-information-processing",
-      "name_ru": "Ручная обработка информации",
-      "description": "Extracting, transforming, or presenting information requires repetitive manual work.",
-      "name": "Manual Information Processing",
-      "description_ru": "Извлечение, преобразование или представление информации требует повторяющейся ручной работы."
+      "aliases": ["PRB-027"],
+      "name_ru": "Ручная обработка информации и подготовка документов",
+      "description": "Extracting, transforming, or presenting information — including repeated manual preparation of documents, applications, and submission packages — takes repetitive manual work and disproportionate effort.",
+      "name": "Manual Information Processing & Document Preparation",
+      "description_ru": "Извлечение, преобразование и представление информации, включая повторяющуюся ручную подготовку документов, заявок и комплектов, требует непропорциональных усилий."
     },
     {
       "id": "PRB-026",
@@ -211,14 +198,6 @@
       "description": "Finding relevant items of activity — offers, procurements, opportunities — in large volumes of scattered information requires disproportionate effort.",
       "name": "Relevant Information Search Difficulty",
       "description_ru": "Поиск предметов деятельности — предложений, закупок, возможностей — в больших объёмах разрозненной информации требует непропорциональных усилий."
-    },
-    {
-      "id": "PRB-027",
-      "code": "manual-document-preparation",
-      "name_ru": "Ручная подготовка документов",
-      "description": "Repeated manual preparation of documents, applications, and submission packages for activities takes disproportionate effort.",
-      "name": "Manual Document Preparation",
-      "description_ru": "Повторяющаяся ручная подготовка документов, заявок и комплектов для участия в деятельности требует непропорциональных усилий."
     }
   ]
 }

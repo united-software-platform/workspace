@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L4_solution_archetypes",
-  "record_count": 35,
+  "record_count": 34,
   "records": [
     {
       "id": "SOL-001",
@@ -79,18 +79,11 @@
     {
       "id": "SOL-010",
       "code": "requirements-management-system",
-      "name_ru": "Система управления требованиями",
-      "description": "A system for managing requirements, attributes, relationships, and lifecycle.",
-      "name": "Requirements Management System",
-      "description_ru": "Управление требованиями, атрибутами, связями и жизненным циклом."
-    },
-    {
-      "id": "SOL-011",
-      "code": "requirements-visualization-tool",
-      "name_ru": "Инструмент визуализации требований",
-      "description": "A tool for presenting requirements and their relationships as maps or models.",
-      "name": "Requirements Visualization Tool",
-      "description_ru": "Представление требований и связей в виде карт и моделей."
+      "aliases": ["SOL-011"],
+      "name_ru": "Система управления и визуализации требований",
+      "description": "A system for managing requirements, attributes, relationships, and lifecycle, presenting requirements and their relationships as maps or models.",
+      "name": "Requirements Management & Visualization System",
+      "description_ru": "Управление требованиями, атрибутами, связями и жизненным циклом с представлением требований и связей в виде карт и моделей."
     },
     {
       "id": "SOL-012",

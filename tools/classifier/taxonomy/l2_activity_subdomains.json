@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L2_activity_subdomains",
-  "record_count": 37,
+  "record_count": 35,
   "records": [
     {
       "id": "SUB-001",
@@ -71,10 +71,11 @@
     {
       "id": "SUB-009",
       "code": "software-quality-engineering",
-      "name_ru": "Инженерия качества ПО",
-      "description": "Assurance, verification, and analysis of software product quality.",
-      "name": "Software Quality Engineering",
-      "description_ru": "Обеспечение качества, проверка и анализ программных продуктов."
+      "aliases": ["SUB-013"],
+      "name_ru": "Инженерия качества и тестирование ПО",
+      "description": "Assurance, verification, testing, and analysis of software product quality and conformance to requirements.",
+      "name": "Software Quality & Testing Engineering",
+      "description_ru": "Обеспечение качества, проверка, анализ и тестирование программных продуктов на соответствие требованиям."
     },
     {
       "id": "SUB-010",
@@ -99,14 +100,6 @@
       "description": "Management of software configurations, versions, and composition.",
       "name": "Software Configuration Management",
       "description_ru": "Управление конфигурациями, версиями и составом программных систем."
-    },
-    {
-      "id": "SUB-013",
-      "code": "software-testing",
-      "name_ru": "Тестирование ПО",
-      "description": "Verification of software behavior and conformance to requirements.",
-      "name": "Software Testing",
-      "description_ru": "Проверка поведения и соответствия программных систем требованиям."
     },
     {
       "id": "SUB-014",
@@ -149,20 +142,13 @@
       "description_ru": "Определение, управление и эволюция моделей и схем данных."
     },
     {
-      "id": "SUB-019",
-      "code": "data-integration",
-      "name_ru": "Интеграция данных",
-      "description": "Integration of data from heterogeneous sources.",
-      "name": "Data Integration",
-      "description_ru": "Объединение данных из разнородных источников."
-    },
-    {
       "id": "SUB-020",
       "code": "data-processing",
-      "name_ru": "Обработка данных",
-      "description": "Transformation, orchestration, and processing of data streams and datasets.",
-      "name": "Data Processing",
-      "description_ru": "Преобразование, оркестрация и обработка потоков и наборов данных."
+      "aliases": ["SUB-019"],
+      "name_ru": "Обработка и интеграция данных",
+      "description": "Transformation, orchestration, and processing of data streams and datasets, including integration of data from heterogeneous sources.",
+      "name": "Data Processing & Integration",
+      "description_ru": "Преобразование, оркестрация и обработка потоков и наборов данных, включая объединение данных из разнородных источников."
     },
     {
       "id": "SUB-021",

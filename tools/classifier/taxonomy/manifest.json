@@ -33,22 +33,22 @@
     },
     {
       "file": "l1_application_domains.json",
-      "record_count": 16,
+      "record_count": 17,
       "source": "L1_application_domains"
     },
     {
       "file": "l2_activity_subdomains.json",
-      "record_count": 37,
+      "record_count": 35,
       "source": "L2_activity_subdomains"
     },
     {
       "file": "l3_problem_domains.json",
-      "record_count": 27,
+      "record_count": 24,
       "source": "L3_problem_domains"
     },
     {
       "file": "l4_solution_archetypes.json",
-      "record_count": 35,
+      "record_count": 34,
       "source": "L4_solution_archetypes"
     },
     {
