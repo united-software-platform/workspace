@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "fictional_ecommerce_examples",
-  "record_count": 3,
+  "record_count": 4,
   "records": [
     {
       "name": "Northstar Market — online store",
@@ -127,6 +127,40 @@
         ],
         "confidence": "high",
         "rationale": "Illustrative example: the service processes shopper and product signals to select relevant recommendations.",
+        "needs_confirmation": false
+      }
+    },
+    {
+      "name": "Region Support Registry — государственная АИС отчётности и реестров",
+      "fictional": true,
+      "purpose": "A fictional government information system: agencies submit regulated support-program reports in approved forms with electronic signature, the system keeps registries of support measures and beneficiaries, and produces analytics on how the support is used.",
+      "spcf": {
+        "L1_application_domain": [
+          {
+            "id": "DOM-002",
+            "role": "primary"
+          }
+        ],
+        "L2_activity_subdomain": [
+          {
+            "id": "SUB-005",
+            "role": "primary"
+          }
+        ],
+        "L3_problem_domain": [
+          {
+            "id": "PRB-003",
+            "role": "primary"
+          }
+        ],
+        "L4_solution_archetype": [
+          {
+            "id": "SOL-035",
+            "role": "primary"
+          }
+        ],
+        "confidence": "high",
+        "rationale": "Illustrative example: the system is an external government reporting and registry circuit, not an enterprise resource planner.",
         "needs_confirmation": false
       }
     }

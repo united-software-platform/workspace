@@ -13,7 +13,7 @@ EXPECTED_COUNTS = {
     "L1_application_domain": 16,
     "L2_activity_subdomain": 36,
     "L3_problem_domain": 25,
-    "L4_solution_archetype": 34,
+    "L4_solution_archetype": 35,
 }
 
 
