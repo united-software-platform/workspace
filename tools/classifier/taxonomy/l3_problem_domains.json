@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L3_problem_domains",
-  "record_count": 24,
+  "record_count": 25,
   "records": [
     {
       "id": "PRB-001",
@@ -204,6 +204,14 @@
       "name_ru": "Трудоёмкость поиска релевантной информации",
       "description": "Finding relevant items of activity — offers, procurements, opportunities — in large volumes of scattered information requires disproportionate effort.",
       "description_ru": "Поиск предметов деятельности — предложений, закупок, возможностей — в больших объёмах разрозненной информации требует непропорциональных усилий."
+    },
+    {
+      "id": "PRB-027",
+      "code": "fragmented-property-listings",
+      "name": "Fragmented Property Listings",
+      "name_ru": "Разрозненные предложения о недвижимости",
+      "description": "Rent and sale property listings are scattered across landlords, brokers, and listing venues; comparing and cross-checking apartments, houses, and commercial premises requires disproportionate effort.",
+      "description_ru": "Объявления об аренде и продаже недвижимости разрознены по собственникам, посредникам и площадкам объявлений; сравнение и сверка квартир, домов и коммерческих помещений требуют непропорциональных усилий."
     }
   ]
 }

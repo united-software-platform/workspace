@@ -10,10 +10,10 @@ from classifier.infrastructure.taxonomy_loader import load_taxonomy
 
 EXPORT_DIR = Path(__file__).resolve().parents[1] / "taxonomy"
 EXPECTED_COUNTS = {
-    "L1_application_domain": 17,
-    "L2_activity_subdomain": 35,
-    "L3_problem_domain": 24,
-    "L4_solution_archetype": 34,
+    "L1_application_domain": 18,
+    "L2_activity_subdomain": 37,
+    "L3_problem_domain": 25,
+    "L4_solution_archetype": 36,
 }
 
 

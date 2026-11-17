@@ -2,7 +2,7 @@
   "schema_name": "SPCF",
   "schema_version": "2.0.0",
   "source": "L4_solution_archetypes",
-  "record_count": 34,
+  "record_count": 36,
   "records": [
     {
       "id": "SOL-001",
@@ -278,6 +278,22 @@
       "name_ru": "Государственная автоматизированная информационная система",
       "description": "A government automated information system for regulated reporting, support program accounting, and public registries: receiving regulated reports in approved forms with electronic signature, maintaining registries of property and support beneficiaries, and analytics on how the support is used.",
       "description_ru": "Государственная информационная система (АИС): приём регламентированной отчётности по утверждённым формам с подписанием ЭЦП, учёт и контроль мер государственной поддержки, ведение реестров (имущество, получатели поддержки), аналитика использования поддержки."
+    },
+    {
+      "id": "SOL-036",
+      "code": "real-estate-listing-platform",
+      "name": "Real Estate Listing Platform",
+      "name_ru": "Платформа объявлений о недвижимости",
+      "description": "A listing platform for real estate offers: a searchable catalog of residential and commercial property — apartments, houses, offices, business centers — with filters, contacts of owners and agents, listing updates and verification.",
+      "description_ru": "Платформа объявлений о недвижимости: поиск по каталогу жилой и коммерческой недвижимости — квартиры, дома, офисы, бизнес-центры — с фильтрами, контактами собственников и агентов, обновлением и проверкой предложений."
+    },
+    {
+      "id": "SOL-037",
+      "code": "property-management-system",
+      "name": "Property Management System",
+      "name_ru": "Система управления недвижимостью",
+      "description": "Management of a real property portfolio: lease relations, tenants, payments, and property maintenance.",
+      "description_ru": "Управление портфелем объектов недвижимости: арендные отношения, арендаторы, платежи и обслуживание объектов."
     }
   ]
 }
