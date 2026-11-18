@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "workspace.fullname" . }}-opensearch
+  labels:
+    {{- include "workspace.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.opensearch.storage }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "workspace.fullname" . }}-opensearch
+  labels:
+    {{- include "workspace.labels" . | nindent 4 }}
+    app.kubernetes.io/component: opensearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "workspace.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: opensearch
+  template:
+    metadata:
+      labels:
+        {{- include "workspace.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: opensearch
+    spec:
+      containers:
+        - name: opensearch
+          image: {{ .Values.opensearch.image }}
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: OPENSEARCH_JAVA_OPTS
+              value: -Xms512m -Xmx512m
+            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+              value: {{ required "opensearch.adminPassword обязателен — mise run k3s-apply читает OPENSEARCH_ADMIN_PASSWORD из .env" .Values.opensearch.adminPassword | quote }}
+          ports:
+            - name: http
+              containerPort: 9200
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/opensearch/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "workspace.fullname" . }}-opensearch
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "workspace.fullname" . }}-opensearch
+  labels:
+    {{- include "workspace.labels" . | nindent 4 }}
+    app.kubernetes.io/component: opensearch
+spec:
+  # Доступ без публикации портов — ENV-003: kubectl port-forward на время обращения
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 9200
+      targetPort: http
+  selector:
+    {{- include "workspace.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: opensearch

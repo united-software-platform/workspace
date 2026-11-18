@@ -9,6 +9,7 @@
 
 - [mise](https://mise.jdx.dev/) — менеджер инструментария;
 - локальный кластер k3s с `kubectl` и `helm` — сервисы и одноразовые прогоны;
+- `vm.max_map_count=262144` на хосте — требует OpenSearch (`sysctl -w vm.max_map_count=262144`);
 - git.
 
 ## Шаг 1. Установить инструментарий

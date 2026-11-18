@@ -1,18 +1,19 @@
-# Зонтичный чарт workspace: сервисы общего набора — ENV-007, rules/environment.md.
-# Неймспейс применения задаётся при установке (mise run k3s-apply, переменная WORKSPACE_NAMESPACE),
+# Зонтичный чарт workspace: общий набор сервисов — ENV-007, rules/environment.md.
+# Неймспейс применения задаётся при установке (mise run k3s-apply, WORKSPACE_NAMESPACE),
 # а не в values: один чарт ставится разным потребителям без правки values.
 #
-# Каждая позиция services ставится парой Deployment + Service (ClusterIP, без публикации портов).
-# Пример:
-#
-# services:
-#   - name: example
-#     image: ghcr.io/united-software-platform/example:1.0.0
-#     replicas: 1
-#     ports:
-#       - name: http
-#         port: 8080
-#     env:
-#       - name: SOME_VAR
-#         value: some-value
-services: []
+# Секреты в values не задаются: их передаёт задача k3s-apply ключами --set из .env
+# (POSTGRES_PASSWORD, OPENSEARCH_ADMIN_PASSWORD, MINIO_ROOT_USER, MINIO_ROOT_PASSWORD).
+
+postgres:
+  image: postgres:17.12
+  user: workspace
+  storage: 10Gi
+
+opensearch:
+  image: opensearchproject/opensearch:3.9.0
+  storage: 10Gi
+
+minio:
+  image: minio/minio:RELEASE.2026-09-19T17-05-25Z
+  storage: 10Gi

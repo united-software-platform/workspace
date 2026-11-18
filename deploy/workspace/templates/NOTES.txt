@@ -1,14 +1,16 @@
 Зонтичный чарт workspace применён в неймспейс {{ .Release.Namespace }}.
 
-{{- if .Values.services }}
-Включённые сервисы общего набора:
-{{- range .Values.services }}
-  - {{ .name }} ({{ .image }})
-{{- end }}
-{{- else }}
-Сервисы общего набора не включены: services в values пуст — кластер остался без новых объектов.
-Включить сервис — добавить позицию в values (пример — values.yaml) и повторить mise run k3s-apply.
-{{- end }}
+Общий набор сервисов:
+  - postgres ({{ .Values.postgres.image }}) — пустой, БД создают потребители
+  - opensearch ({{ .Values.opensearch.image }}) — без индексов, single-node
+  - minio ({{ .Values.minio.image }}) — без бакетов, консоль на порту 9001
 
-Доступ к сервису — без публикации портов, через port-forward:
-  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-<имя-сервиса> <локальный-порт>:<порт-сервиса>
+Доступ — без публикации портов, через port-forward (ENV-003):
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-postgres 5432:5432
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-opensearch 9200:9200
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-minio 9000:9000
+
+Разделение потребителей внутри сервисов (ENV-007): отдельные БД в postgres, отдельные индексы
+в opensearch, отдельные бакеты в minio.
+
+Повторное применение — идемпотентно: mise run k3s-apply

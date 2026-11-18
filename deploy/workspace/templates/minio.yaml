@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "workspace.fullname" . }}-minio
+  labels:
+    {{- include "workspace.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.minio.storage }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "workspace.fullname" . }}-minio
+  labels:
+    {{- include "workspace.labels" . | nindent 4 }}
+    app.kubernetes.io/component: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "workspace.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: minio
+  template:
+    metadata:
+      labels:
+        {{- include "workspace.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: minio
+    spec:
+      containers:
+        - name: minio
+          image: {{ .Values.minio.image }}
+          args:
+            - server
+            - /data
+            - --address
+            - :9000
+            - --console-address
+            - :9001
+          env:
+            - name: MINIO_ROOT_USER
+              value: {{ required "minio.rootUser обязателен — mise run k3s-apply читает MINIO_ROOT_USER из .env" .Values.minio.rootUser | quote }}
+            - name: MINIO_ROOT_PASSWORD
+              value: {{ required "minio.rootPassword обязателен — mise run k3s-apply читает MINIO_ROOT_PASSWORD из .env" .Values.minio.rootPassword | quote }}
+          ports:
+            - name: api
+              containerPort: 9000
+            - name: console
+              containerPort: 9001
+          readinessProbe:
+            tcpSocket:
+              port: api
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "workspace.fullname" . }}-minio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "workspace.fullname" . }}-minio
+  labels:
+    {{- include "workspace.labels" . | nindent 4 }}
+    app.kubernetes.io/component: minio
+spec:
+  # Доступ без публикации портов — ENV-003: kubectl port-forward на время обращения
+  type: ClusterIP
+  ports:
+    - name: api
+      port: 9000
+      targetPort: api
+    - name: console
+      port: 9001
+      targetPort: console
+  selector:
+    {{- include "workspace.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: minio

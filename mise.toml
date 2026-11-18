@@ -84,5 +84,5 @@ description = "Просканировать сторонний проект по
 run = "python3 tools/tldr/gateway.py"
 
 [tasks.k3s-apply]
-description = "Применить зонтичный helm-чарт deploy/workspace в неймспейс WORKSPACE_NAMESPACE (умолчание workspace)"
-run = "helm upgrade --install workspace deploy/workspace -n \"${WORKSPACE_NAMESPACE:-workspace}\" --create-namespace"
+description = "Применить зонтичный helm-чарт deploy/workspace (postgres, opensearch, minio) в неймспейс WORKSPACE_NAMESPACE; креды из .env"
+run = "helm upgrade --install workspace deploy/workspace -n \"${WORKSPACE_NAMESPACE:-workspace}\" --create-namespace --set postgres.password=\"${POSTGRES_PASSWORD:-}\" --set opensearch.adminPassword=\"${OPENSEARCH_ADMIN_PASSWORD:-}\" --set minio.rootUser=\"${MINIO_ROOT_USER:-}\" --set minio.rootPassword=\"${MINIO_ROOT_PASSWORD:-}\""
