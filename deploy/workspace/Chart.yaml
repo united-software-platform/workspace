@@ -1,6 +1,0 @@
-apiVersion: v2
-name: workspace
-description: Зонтичный чарт workspace: поставка сервисов общего набора дочерним проектам в их неймспейс
-type: application
-version: 0.1.0
-appVersion: "0.1.0"
