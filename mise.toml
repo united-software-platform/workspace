@@ -1,3 +1,146 @@
+# Инструментарий окружения: mise — единственный менеджер (rules/environment.md, ENV-001).
+# Харнессы (claude, codex, dsh) намеренно не закреплены: выбор агента остаётся за пользователем.
+# pitchfork — supervisor демонов общего набора сервисов (ENV-002).
 [tools]
 node = "26"
-"npm:@deepseek-ai/dsh" = { version = "latest", trust_policy_excludes = ["encodeurl@2.0.2"] }
+python = "3.15"
+"npm:@fission-ai/openspec" = "2.1.0"
+pitchfork = "2"
+
+# Экспериментальная фича mise daemons принята стандартом (ENV-002); версии mise и pitchfork закреплены.
+[settings]
+experimental = true
+
+# Секреты — в .env (git-ignored, шаблон .env.example); умолчания инструментов здесь не дублируются:
+# значения [env] перекрывают переменные process-окружения, а инструментам нужен приоритет окружения.
+# Координаты общего набора (ENV-003): фиксированные localhost-порты, каскад раздаёт их дочерним проектам.
+[env]
+_.file = ".env"
+PG_PORT = "5432"
+OPENSEARCH_PORT = "9200"
+MINIO_PORT = "9000"
+
+# Общий набор сервисов (ENV-002, ENV-007): один экземпляр каждого, изоляция проектов — логическая.
+# PostgreSQL — нативный пресет демона, контейнерный рантайм не нужен.
+# OpenSearch и MinIO — run-форма docker: серверных бинарей в реестрах mise нет,
+# шаблоны {{ env.* }} подставляют секреты из .env и порты из [env] (рендерятся только в run).
+# Образ minio — собственная сборка форка united-software-platform/minio из исходников
+# upstream-тега: публичные образы MinIO закрыты (см. rules/environment.md, ограничения).
+[daemons.postgres]
+preset = "postgres"
+version = "18"
+port = 5432
+
+[daemons.opensearch]
+run = 'exec docker run --rm --name workspace-opensearch -p "{{ env.OPENSEARCH_PORT }}:9200" -e "discovery.type=single-node" -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD={{ env.OPENSEARCH_ADMIN_PASSWORD }}" -e "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" -v "$PWD/.data/opensearch:/usr/share/opensearch/data" opensearchproject/opensearch:3.10.0'
+ready_port = 9200
+
+[daemons.minio]
+run = 'exec docker run --rm --name workspace-minio --user "$(id -u):$(id -g)" -p "{{ env.MINIO_PORT }}:9000" -p 9001:9001 -e "MINIO_ROOT_USER={{ env.MINIO_ROOT_USER }}" -e "MINIO_ROOT_PASSWORD={{ env.MINIO_ROOT_PASSWORD }}" -v "$PWD/.data/minio:/data" ghcr.io/united-software-platform/minio:RELEASE.2025-10-15T17-29-55Z server /data --console-address ":9001"'
+ready_port = 9000
+
+# Окружение общего набора (ENV-006): подъём/остановка/статус демонов.
+[tasks.env-up]
+description = "Поднять демоны общего набора (postgres, opensearch, minio) с ожиданием готовности"
+run = "mise daemons start"
+
+[tasks.env-down]
+description = "Остановить демоны общего набора"
+run = "mise daemons stop"
+
+[tasks.env-status]
+description = "Состояние демонов общего набора + доступность портов из [env]"
+run = """
+mise daemons status || exit 1
+echo
+echo "Порты подключения ([env]): PG_PORT=$PG_PORT OPENSEARCH_PORT=$OPENSEARCH_PORT MINIO_PORT=$MINIO_PORT"
+python3 -c "
+import os, socket, sys
+ok = True
+for name, port in (('postgres', os.environ['PG_PORT']), ('opensearch', os.environ['OPENSEARCH_PORT']), ('minio', os.environ['MINIO_PORT'])):
+    s = socket.socket()
+    s.settimeout(2)
+    try:
+        s.connect(('127.0.0.1', int(port)))
+        print(f'{name}: localhost:{port} — доступен')
+    except OSError:
+        ok = False
+        print(f'{name}: localhost:{port} — НЕ доступен')
+    finally:
+        s.close()
+sys.exit(0 if ok else 1)
+"
+"""
+
+[tasks.init]
+description = "Полная инициализация локального окружения (все init-* по порядку)"
+depends = ["init-env", "init-dirs", "init-gitignore", "init-ssh-key", "init-ssh-config"]
+
+[tasks.init-env]
+description = "Создать .env из шаблона .env.example; существующий не перезаписывается"
+run = """
+if [ -f .env ]; then
+    echo ".env существует — пропущено"
+else
+    cp .env.example .env && echo ".env создан из .env.example"
+fi
+"""
+
+[tasks.init-dirs]
+description = "Создать каталоги .ssh (права 700) и .claude-accounts"
+run = """
+mkdir -p .ssh && chmod 700 .ssh
+mkdir -p .claude-accounts
+"""
+
+[tasks.init-gitignore]
+description = "Дополнить .gitignore записями .env, .ssh/ и .claude-accounts/ идемпотентно"
+run = """
+for entry in '.env' '.ssh/' '.claude-accounts/'; do
+    grep -qxF "$entry" .gitignore 2>/dev/null || printf '%s\\n' "$entry" >> .gitignore
+done
+"""
+
+[tasks.init-ssh-key]
+description = "Создать SSH-ключ проекта ed25519 без passphrase; существующий не трогается"
+run = """
+command -v ssh-keygen >/dev/null 2>&1 || { echo "ошибка: ssh-keygen не найден в PATH" >&2; exit 2; }
+mkdir -p .ssh && chmod 700 .ssh
+if [ -f .ssh/id_ed25519 ]; then
+    echo "SSH-ключ существует — пропущено"
+else
+    ssh-keygen -t ed25519 -f .ssh/id_ed25519 -N "" -C workspace && echo "SSH-ключ создан: .ssh/id_ed25519"
+fi
+"""
+
+[tasks.init-ssh-config]
+description = "Создать .ssh/config для git-хоста из GIT_HOST/GIT_USER; использование: GIT_SSH_COMMAND='ssh -F .ssh/config'"
+run = """
+if [ -f .ssh/config ]; then echo ".ssh/config существует — пропущено"; exit 0; fi
+host="${GIT_HOST:-}"
+if [ -n "$host" ]; then
+    key="$(pwd)/.ssh/id_ed25519"
+    umask 077
+    {
+        echo "Host $host"
+        echo "    User ${GIT_USER:-git}"
+        echo "    IdentityFile $key"
+        echo "    IdentitiesOnly yes"
+    } > .ssh/config
+    echo ".ssh/config создан для $host"
+else
+    echo "GIT_HOST пуст — .ssh/config пропущено; заполните .env и выполните mise run init-ssh-config"
+fi
+"""
+
+[tasks.openspec-init]
+description = "Развернуть инструменты SDD: openspec init"
+run = "openspec init --tools claude --language ru"
+
+[tasks.tldr-scan]
+description = "Сканировать проект образом tldr (одноразовый контейнер docker); отчёты — в reports/tldr"
+run = 'EXCLUDE="$(printf "%s" "${TLDR_EXCLUDE:-vendor,public}" | tr "," " ") reports" EXT="${TLDR_EXT:-}" TLDR_IMAGE="${TLDR_IMAGE:-}" sh tools/tldr/scan.sh . reports/tldr'
+
+[tasks.tldr-scan-ext]
+description = "Просканировать сторонний проект по .tldr/scan-request.json (шлюз, корни TLDR_SCAN_ROOTS)"
+run = "python3 tools/tldr/gateway.py"
