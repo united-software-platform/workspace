@@ -1,5 +1,10 @@
 # Design
 
+> **Примечание (2026-11-19):** стандарт сервисов этого изменения (k3s, helm, port-forward)
+> до архивации superseded решением владельца о переходе на mise daemons — см. change
+> `replace-k3s-with-mise-daemons`. Дельта `specs/environment/` удалена из этого изменения;
+> ниже — исходный дизайн эпохи k3s как запись о проделанной работе.
+
 ## Context
 
 Окружение сегодня целиком docker compose: агентские контейнеры claude/codex (образы sdd-kit,

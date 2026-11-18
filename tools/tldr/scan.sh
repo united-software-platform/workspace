@@ -1,20 +1,23 @@
 #!/bin/sh
 # Сканирование проекта образом tldr по уровням: обзор, безопасность, качество, архитектура.
 #
-# Сканирование исполняется Job'ом в локальном кластере k3s: проект монтируется в /project
-# hostPath'ом только для чтения; каталоги из EXCLUDE перекрываются пустыми tmpfs (emptyDir
-# c medium: Memory) поверх монтирования, на хосте они не меняются. Отчёты пишутся в /reports —
-# hostPath каталога отчётов. Каждая команда пишет stdout в свой файл отчёта, stderr — в соседний
-# .err, удаляемый, если пуст. Сбой одной команды не останавливает остальные.
+# Сканирование исполняется одноразовым контейнером docker run --rm: проект монтируется
+# в /project только для чтения; каталоги из EXCLUDE (и всегда reports) перекрываются
+# пустыми временными каталогами поверх монтирования, на хосте они не меняются. Отчёты
+# пишутся в /reports — bind-mount каталога отчётов. Каждая команда пишет stdout в свой
+# файл отчёта, stderr — в соседний .err, удаляемый, если пуст. Сбой одной команды
+# не останавливает остальные.
 #
 # Использование: sh tools/tldr/scan.sh <путь к проекту> [каталог отчётов]
 #   каталог отчётов по умолчанию — reports/<имя проекта> в текущем каталоге
 # Переменные окружения:
 #   TLDR_IMAGE — образ, по умолчанию ghcr.io/united-software-platform/tldr-code:latest
-#   EXCLUDE    — каталоги проекта через пробел, скрываемые от анализа, по умолчанию "vendor public"
+#   EXCLUDE    — каталоги проекта через пробел, скрываемые от анализа, по умолчанию "vendor public";
+#                каталог reports добавляется к скрываемым всегда
 #   EXT        — расширение для дерева файлов вида .php, по умолчанию .php
 # Коды возврата: 0 — все команды отработали, 1 — часть команд завершилась ошибкой,
-#                2 — ошибка вызова или окружения (включая «нет kubectl» и «Job не завершился»).
+#                2 — ошибка вызова или окружения (включая «нет docker» и «контейнер
+#                не завершился за отведённое время»).
 
 set -u
 
@@ -27,18 +30,18 @@ if [ ! -d "$target" ]; then
     echo "error: project directory not found: $target" >&2
     exit 2
 fi
-if ! command -v kubectl >/dev/null 2>&1; then
-    echo "error: kubectl not found in PATH" >&2
+if ! command -v docker >/dev/null 2>&1; then
+    echo "error: docker not found in PATH" >&2
     exit 2
 fi
 
 target=$(cd "$target" && pwd) || exit 2
 out="${2:-reports/$(basename "$target")}"
 image="${TLDR_IMAGE:-ghcr.io/united-software-platform/tldr-code:latest}"
-exclude="${EXCLUDE:-vendor public}"
+exclude="${EXCLUDE:-vendor public} reports"
 ext="${EXT:-.php}"
 
-# EXT вписывается в скрипт Job'а: допускаются только точка и буквоцифры, иначе отказ
+# EXT вписывается в команды контейнера: допускаются только точка и буквоцифры, иначе отказ
 if ! printf '%s' "$ext" | grep -qE '^\.[A-Za-z0-9]+$'; then
     echo "error: EXT must look like .php — dot, letters or digits only, got: $ext" >&2
     exit 2
@@ -49,36 +52,31 @@ out=$(cd "$out" && pwd) || exit 2
 
 uid=$(id -u)
 gid=$(id -g)
-job="tldr-scan-$(date +%s)"
 
 echo "project: $target"
 echo "reports: $out"
 echo "image:   $image"
-echo "job:     $job"
 echo
 
-# Скрываемые каталоги: перекрываются пустыми tmpfs поверх /project. Перекрывается только
-# существующий каталог: точки монтирования поверх отсутствующего hostPath не имеют смысла
-vmounts=""
-volumes=""
+# Скрываемые каталоги: перекрываются пустыми временными каталогами поверх /project.
+# Перекрывается только существующий каталог; reports скрывается всегда
+cleanup=""
+mounts=""
 hide_no=0
 for dir in $exclude; do
     if [ -d "$target/$dir" ]; then
         hide_no=$((hide_no + 1))
-        vmounts="$vmounts
-        - name: hide$hide_no
-          mountPath: \"/project/$dir\""
-        volumes="$volumes
-      - name: hide$hide_no
-        emptyDir:
-          medium: Memory"
+        hide=$(mktemp -d) || exit 2
+        cleanup="$cleanup $hide"
+        mounts="$mounts -v \"$hide:/project/$dir:ro\""
         echo "exclude: $dir"
     else
         echo "exclude: $dir — not found, skipped"
     fi
 done
+trap 'for d in $cleanup; do rmdir "$d" 2>/dev/null || rm -rf "$d"; done' EXIT INT TERM
 
-# Скрипт Job'а: те же команды tldr, отчёты — в /reports; статусные строки идут в stdout Job'а
+# Скрипт контейнера: те же команды tldr, отчёты — в /reports; статусные строки идут в stdout
 pod_script='set -u
 cd /project || exit 2
 total=0
@@ -98,7 +96,7 @@ run() {
     printf "%s %-24s %4ss  tldr %s\n" "$status" "$report" "$(( $(date +%s) - started ))" "$*"
 }
 echo "# 1. Обзор (L1, метрики)"
-run 01-tree.json       tree . -e "'"$ext"'"
+run 01-tree.json       tree . -e "$EXT"
 run 02-loc.json        loc . --by-dir
 run 03-structure.json  structure .
 run 04-health.json     health .
@@ -132,81 +130,32 @@ echo
 echo \"\$((total - failures))/\$total commands succeeded, reports in /reports\"
 [ \"\$failures\" -eq 0 ]"
 
-manifest=$(mktemp) || exit 2
-trap 'rm -f "$manifest"' EXIT INT TERM
+# Контейнер исполняется от uid/gid хоста, чтобы отчёты принадлежали пользователю;
+# предел 1800s страхует от зависших команд сканирования
+status=0
+# shellcheck disable=SC2086
+timeout 1800 docker run --rm \
+    --user "$uid:$gid" \
+    -e "EXT=$ext" \
+    -v "$target:/project:ro" \
+    -v "$out:/reports" \
+    $mounts \
+    "$image" /bin/sh -c "$pod_script" || status=$?
 
-{
-    echo "apiVersion: batch/v1"
-    echo "kind: Job"
-    echo "metadata:"
-    echo "  name: $job"
-    echo "spec:"
-    echo "  activeDeadlineSeconds: 1800"
-    echo "  backoffLimit: 0"
-    echo "  template:"
-    echo "    spec:"
-    echo "      restartPolicy: Never"
-    echo "      securityContext:"
-    echo "        runAsUser: $uid"
-    echo "        runAsGroup: $gid"
-    echo "      containers:"
-    echo "      - name: tldr"
-    echo "        image: \"$image\""
-    echo "        command: [\"/bin/sh\", \"-c\"]"
-    echo "        args:"
-    echo "        - |"
-    printf '%s\n' "$pod_script" | sed 's/^/          /'
-    echo "        volumeMounts:"
-    echo "        - name: project"
-    echo "          mountPath: /project"
-    echo "          readOnly: true"
-    echo "        - name: reports"
-    echo "          mountPath: /reports$vmounts"
-    echo "      volumes:"
-    echo "      - name: project"
-    echo "        hostPath:"
-    echo "          path: \"$target\""
-    echo "          type: Directory"
-    echo "      - name: reports"
-    echo "        hostPath:"
-    echo "          path: \"$out\""
-    echo "          type: Directory$volumes"
-} > "$manifest"
-
-if ! kubectl apply -f "$manifest" >/dev/null 2>&1; then
-    echo "error: kubectl apply failed — is the k3s cluster running?" >&2
-    exit 2
-fi
-
-# Ожидание исхода Job'а: Complete или Failed; предел 1900s чуть больше дедлайна Job'а
-outcome="unknown"
-attempts=0
-while [ "$attempts" -lt 190 ]; do
-    if kubectl get job "$job" -o 'jsonpath={.status.conditions[?(@.type=="Complete")].status}' 2>/dev/null | grep -q True; then
-        outcome="complete"
-        break
-    fi
-    if kubectl get job "$job" -o 'jsonpath={.status.conditions[?(@.type=="Failed")].status}' 2>/dev/null | grep -q True; then
-        outcome="failed"
-        break
-    fi
-    attempts=$((attempts + 1))
-    sleep 10
-done
-
-kubectl logs "job/$job" 2>&1
-kubectl delete job "$job" --wait=false >/dev/null 2>&1
-
-case "$outcome" in
-    complete)
+case "$status" in
+    0)
         exit 0
         ;;
-    failed)
+    1)
         echo "see *.err next to failed reports" >&2
         exit 1
         ;;
+    124|137)
+        echo "error: scan container did not finish in 1800s" >&2
+        exit 2
+        ;;
     *)
-        echo "error: job $job did not finish in time" >&2
+        echo "error: scan container failed with exit code $status" >&2
         exit 2
         ;;
 esac
