@@ -82,3 +82,7 @@ run = 'EXCLUDE="$(printf "%s" "${TLDR_EXCLUDE:-vendor,public}" | tr "," " ") rep
 [tasks.tldr-scan-ext]
 description = "Просканировать сторонний проект по .tldr/scan-request.json (шлюз, корни TLDR_SCAN_ROOTS)"
 run = "python3 tools/tldr/gateway.py"
+
+[tasks.k3s-apply]
+description = "Применить зонтичный helm-чарт deploy/workspace в неймспейс WORKSPACE_NAMESPACE (умолчание workspace)"
+run = "helm upgrade --install workspace deploy/workspace -n \"${WORKSPACE_NAMESPACE:-workspace}\" --create-namespace"

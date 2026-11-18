@@ -1,0 +1,14 @@
+Зонтичный чарт workspace применён в неймспейс {{ .Release.Namespace }}.
+
+{{- if .Values.services }}
+Включённые сервисы общего набора:
+{{- range .Values.services }}
+  - {{ .name }} ({{ .image }})
+{{- end }}
+{{- else }}
+Сервисы общего набора не включены: services в values пуст — кластер остался без новых объектов.
+Включить сервис — добавить позицию в values (пример — values.yaml) и повторить mise run k3s-apply.
+{{- end }}
+
+Доступ к сервису — без публикации портов, через port-forward:
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-<имя-сервиса> <локальный-порт>:<порт-сервиса>

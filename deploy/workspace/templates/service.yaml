@@ -1,0 +1,59 @@
+{{- range .Values.services }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "workspace.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "workspace.labels" $ | nindent 4 }}
+spec:
+  replicas: {{ .replicas | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "workspace.selectorLabels" $ | nindent 6 }}
+      workspace.united.software.platform/service: {{ .name }}
+  template:
+    metadata:
+      labels:
+        {{- include "workspace.selectorLabels" $ | nindent 8 }}
+        workspace.united.software.platform/service: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: {{ .image }}
+          {{- with .ports }}
+          ports:
+            {{- range . }}
+            - name: {{ .name }}
+              containerPort: {{ .port }}
+            {{- end }}
+          {{- end }}
+          {{- with .env }}
+          env:
+            {{- range . }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+          {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "workspace.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "workspace.labels" $ | nindent 4 }}
+spec:
+  # Доступ без публикации портов — ENV-003: kubectl port-forward на время обращения
+  type: ClusterIP
+  {{- with .ports }}
+  ports:
+    {{- range . }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .name }}
+    {{- end }}
+  {{- end }}
+  selector:
+    {{- include "workspace.selectorLabels" $ | nindent 4 }}
+    workspace.united.software.platform/service: {{ .name }}
+{{- end }}
