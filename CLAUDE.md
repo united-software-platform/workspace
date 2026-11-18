@@ -20,21 +20,19 @@
 @rules/documentation-rules.md
 @rules/terminology.md
 @rules/reading-rules.md
-@rules/makefile-rules.md
+@rules/environment.md
 @rules/clean-architecture.md
 @rules/cqrs.md
 @rules/ddd.md
-@rules/docker.md
 @rules/project-docs-rules.md
 
 - [Документация](./rules/documentation-rules.md) — язык, формат Markdown, структура, версионирование документов.
 - [Терминология](./rules/terminology.md) — правила терминологии и аббревиатур.
 - [Чтение документов](./rules/reading-rules.md) — гейт чтения, запрещённые каталоги, границы контекста задачи.
-- [Makefile](./rules/makefile-rules.md) — норма объёма целей, дробление на под-цели, прогон линтера и храповик предела.
+- [Окружение](./rules/environment.md) — единый стандарт: mise для инструментов, k3s для сервисов, задачи mise, паттерн переменных.
 - [Чистая архитектура](./rules/clean-architecture.md) — направление зависимостей между слоями, состав слоёв, SOLID, модульная организация.
 - [CQRS](./rules/cqrs.md) — разделение контрактов чтения и записи, принадлежность контрактов слоям.
 - [Domain Driven Design](./rules/ddd.md) — единый язык, ограниченный контекст, агрегат, сущность, объект-значение, доменное событие.
-- [Docker](./rules/docker.md) — именование сервисов, сеть, переменные окружения, инициализация состояния в томах, публикация портов.
 - [Документы проекта](./rules/project-docs-rules.md) — роли, каркас и голос `README.md`, `CONTRIBUTING.md` и документа кейсов, блок бейджей `README.md`.
 
 ---
@@ -69,3 +67,4 @@
 | 1.0.5 | 2026-09-09 | OpenSpec change `add-makefile-target-rules` | Claude Code | Claude Opus 5 | В раздел «Правила кода» добавлен `@`-импорт `rules/makefile-rules.md` и строка списка со ссылкой на документ: норма объёма целей `Makefile` (30 строк), дробление на под-цели, обязательный прогон линтера и храповик предела в пайплайне применяются агентом без отдельного упоминания в запросе |
 | 1.0.6 | 2026-09-21 | OpenSpec change `adapt-rules-for-general-use` | Claude Code | Claude Opus 5 | В раздел «Правила кода» добавлены `@`-импорты `rules/clean-architecture.md`, `rules/cqrs.md`, `rules/ddd.md`, `rules/docker.md` и строки списка со ссылками на них: документы адаптированы под общее применение — примеры переведены на псевдокод, привязка к конкретным языку, фреймворкам и структуре каталогов снята — и с этого момента действуют наравне с остальными правилами набора |
 | 1.0.7 | 2026-10-21 | SDDT-024, OpenSpec change `add-project-docs-genre` | Claude Code | Claude Opus 5.5 | В раздел «Правила кода» добавлены `@`-импорт `rules/project-docs-rules.md` и строка списка со ссылкой на документ — той же правкой, что и в `AGENTS.md`: роли, каркас и голос `README.md`, `CONTRIBUTING.md` и документа кейсов применяются агентом без отдельного упоминания в запросе |
+| 1.0.8 | 2026-11-18 | WRSP-030, OpenSpec change `unify-environment` | ZCode | GLM-5.3 | В разделе «Правила кода» исключены `@`-импорты `rules/makefile-rules.md` и `rules/docker.md` вместе со строками списка (Makefile и Docker Compose удалены из окружения) и добавлены `@`-импорт `rules/environment.md` и строка списка — той же правкой, что и в `AGENTS.md`: перечень подключаемых правил в обеих точках входа остаётся одинаковым |

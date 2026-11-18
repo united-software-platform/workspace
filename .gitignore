@@ -15,14 +15,6 @@ export/
 .claude/settings.local.json
 __pycache__/
 
-# >>> liquibase-forge
-# Liquibase Forge: файлы обмена со шлюзом и окружение uv подпроекта CLI — локальные
-.forge/
-tools/forge/.venv/
-# Данные целевой БД lbfr-db: каталог создаёт make forge-env-up, остальной data/ — файлы проекта
-/data/lbfr-db/
-# <<< liquibase-forge
-
 # >>> tldr-scan
 # Отчёты сканирований tldr (tldr-scan, tldr-scan-ext) — результат прогона, а не исходники
 /reports/

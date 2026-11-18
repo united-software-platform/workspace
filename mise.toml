@@ -1,3 +1,84 @@
+# Инструментарий окружения: mise — единственный менеджер (rules/environment.md, ENV-001).
+# Харнессы (claude, codex, dsh) намеренно не закреплены: выбор агента остаётся за пользователем.
 [tools]
 node = "26"
-"npm:@deepseek-ai/dsh" = { version = "latest", trust_policy_excludes = ["encodeurl@2.0.2"] }
+python = "3.13"
+"npm:@fission-ai/openspec" = "2.1.0"
+
+# Секреты — в .env (git-ignored, шаблон .env.example); умолчания инструментов здесь не дублируются:
+# значения [env] перекрывают переменные process-окружения, а инструментам нужен приоритет окружения
+[env]
+_.file = ".env"
+
+[tasks.init]
+description = "Полная инициализация локального окружения (все init-* по порядку)"
+depends = ["init-env", "init-dirs", "init-gitignore", "init-ssh-key", "init-ssh-config"]
+
+[tasks.init-env]
+description = "Создать .env из шаблона .env.example; существующий не перезаписывается"
+run = """
+if [ -f .env ]; then
+    echo ".env существует — пропущено"
+else
+    cp .env.example .env && echo ".env создан из .env.example"
+fi
+"""
+
+[tasks.init-dirs]
+description = "Создать каталоги .ssh (права 700) и .claude-accounts"
+run = """
+mkdir -p .ssh && chmod 700 .ssh
+mkdir -p .claude-accounts
+"""
+
+[tasks.init-gitignore]
+description = "Дополнить .gitignore записями .env, .ssh/ и .claude-accounts/ идемпотентно"
+run = """
+for entry in '.env' '.ssh/' '.claude-accounts/'; do
+    grep -qxF "$entry" .gitignore 2>/dev/null || printf '%s\\n' "$entry" >> .gitignore
+done
+"""
+
+[tasks.init-ssh-key]
+description = "Создать SSH-ключ проекта ed25519 без passphrase; существующий не трогается"
+run = """
+command -v ssh-keygen >/dev/null 2>&1 || { echo "ошибка: ssh-keygen не найден в PATH" >&2; exit 2; }
+mkdir -p .ssh && chmod 700 .ssh
+if [ -f .ssh/id_ed25519 ]; then
+    echo "SSH-ключ существует — пропущено"
+else
+    ssh-keygen -t ed25519 -f .ssh/id_ed25519 -N "" -C workspace && echo "SSH-ключ создан: .ssh/id_ed25519"
+fi
+"""
+
+[tasks.init-ssh-config]
+description = "Создать .ssh/config для git-хоста из GIT_HOST/GIT_USER; использование: GIT_SSH_COMMAND='ssh -F .ssh/config'"
+run = """
+if [ -f .ssh/config ]; then echo ".ssh/config существует — пропущено"; exit 0; fi
+host="${GIT_HOST:-}"
+if [ -n "$host" ]; then
+    key="$(pwd)/.ssh/id_ed25519"
+    umask 077
+    {
+        echo "Host $host"
+        echo "    User ${GIT_USER:-git}"
+        echo "    IdentityFile $key"
+        echo "    IdentitiesOnly yes"
+    } > .ssh/config
+    echo ".ssh/config создан для $host"
+else
+    echo "GIT_HOST пуст — .ssh/config пропущено; заполните .env и выполните mise run init-ssh-config"
+fi
+"""
+
+[tasks.openspec-init]
+description = "Развернуть инструменты SDD: openspec init"
+run = "openspec init --tools claude --language ru"
+
+[tasks.tldr-scan]
+description = "Сканировать проект образом tldr (Job в k3s); отчёты — в reports/tldr"
+run = 'EXCLUDE="$(printf "%s" "${TLDR_EXCLUDE:-vendor,public}" | tr "," " ") reports" EXT="${TLDR_EXT:-}" TLDR_IMAGE="${TLDR_IMAGE:-}" sh tools/tldr/scan.sh . reports/tldr'
+
+[tasks.tldr-scan-ext]
+description = "Просканировать сторонний проект по .tldr/scan-request.json (шлюз, корни TLDR_SCAN_ROOTS)"
+run = "python3 tools/tldr/gateway.py"
