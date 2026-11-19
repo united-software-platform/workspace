@@ -23,14 +23,15 @@
 ### Requirement: Сервисы общего набора через демоны mise
 
 Долгоживущие сервисы окружения SHALL объявляться демонами mise в `mise.toml`. Общий набор —
-PostgreSQL, OpenSearch, MinIO — один экземпляр каждого: PostgreSQL — нативным пресетом демона
-без контейнерного рантайма, OpenSearch и MinIO — image-демонами под docker/podman. Локальный
-кластер k3s, helm и docker compose MUST NOT использоваться.
+PostgreSQL, OpenSearch с OpenSearch Dashboards, MinIO — один экземпляр каждого: PostgreSQL —
+нативным пресетом демона без контейнерного рантайма, OpenSearch, OpenSearch Dashboards
+и MinIO — image-демонами под docker/podman. Локальный кластер k3s, helm и docker compose
+MUST NOT использоваться.
 
 #### Scenario: Подъём общего набора
 
 - **WHEN** выполняется задача подъёма окружения
-- **THEN** три сервиса общего набора запускаются демонами и проходят проверку готовности
+- **THEN** четыре сервиса общего набора запускаются демонами и проходят проверку готовности
 
 #### Scenario: PostgreSQL без контейнерного рантайма
 
@@ -40,8 +41,8 @@ PostgreSQL, OpenSearch, MinIO — один экземпляр каждого: Po
 ### Requirement: Версии сервисов закреплены в декларациях
 
 Версия каждого сервиса общего набора MUST быть закреплена в его декларации демона: версией
-пресета для PostgreSQL и тегом образа для OpenSearch и MinIO. Закреплённые версии MUST
-переживать перезапуск демонов без изменений.
+пресета для PostgreSQL и тегом образа для OpenSearch, OpenSearch Dashboards и MinIO.
+Закреплённые версии MUST переживать перезапуск демонов без изменений.
 
 #### Scenario: Перезапуск не меняет версий
 
@@ -51,9 +52,9 @@ PostgreSQL, OpenSearch, MinIO — один экземпляр каждого: Po
 ### Requirement: Фиксированные локальные порты сервисов
 
 Демоны сервисов SHALL слушать фиксированные порты localhost, объявленные в декларациях
-демонов `mise.toml`: PostgreSQL — 5432, OpenSearch — 9200, MinIO — 9000. Доступ с хоста —
-прямым обращением по локальному адресу; `kubectl port-forward` и иная туннельная механика
-MUST NOT требоваться.
+демонов `mise.toml`: PostgreSQL — 5432, OpenSearch — 9200, OpenSearch Dashboards — 5601,
+MinIO — 9000. Доступ с хоста — прямым обращением по локальному адресу; `kubectl port-forward`
+и иная туннельная механика MUST NOT требоваться.
 
 #### Scenario: Обращение к сервису
 
@@ -68,9 +69,9 @@ MUST NOT требоваться.
 ### Requirement: Координаты подключения через секцию env
 
 Несекретные координаты подключения к общему набору SHALL объявляться переменными `PG_PORT`,
-`OPENSEARCH_PORT`, `MINIO_PORT` в секции `[env]` корневого `mise.toml`; значения MUST совпадать
-с портами в декларациях демонов. Каскад конфигураций mise SHALL доносить эти переменные до
-дочерних проектов.
+`OPENSEARCH_PORT`, `OPENSEARCH_DASHBOARDS_PORT`, `MINIO_PORT` в секции `[env]` корневого
+`mise.toml`; значения MUST совпадать с портами в декларациях демонов. Каскад конфигураций
+mise SHALL доносить эти переменные до дочерних проектов.
 
 #### Scenario: Задача видит координаты
 

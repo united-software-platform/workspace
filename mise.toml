@@ -18,11 +18,12 @@ experimental = true
 _.file = ".env"
 PG_PORT = "5432"
 OPENSEARCH_PORT = "9200"
+OPENSEARCH_DASHBOARDS_PORT = "5601"
 MINIO_PORT = "9000"
 
 # Общий набор сервисов (ENV-002, ENV-007): один экземпляр каждого, изоляция проектов — логическая.
 # PostgreSQL — нативный пресет демона, контейнерный рантайм не нужен.
-# OpenSearch и MinIO — run-форма docker: серверных бинарей в реестрах mise нет,
+# OpenSearch (+ Dashboards) и MinIO — run-форма docker: серверных бинарей в реестрах mise нет,
 # шаблоны {{ env.* }} подставляют секреты из .env и порты из [env] (рендерятся только в run).
 # Образ minio — собственная сборка форка united-software-platform/minio из исходников
 # upstream-тега: публичные образы MinIO закрыты (см. rules/environment.md, ограничения).
@@ -35,13 +36,19 @@ port = 5432
 run = 'exec docker run --rm --name workspace-opensearch -p "{{ env.OPENSEARCH_PORT }}:9200" -e "discovery.type=single-node" -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD={{ env.OPENSEARCH_ADMIN_PASSWORD }}" -e "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" -v "$PWD/.data/opensearch:/usr/share/opensearch/data" opensearchproject/opensearch:3.10.0'
 ready_port = 9200
 
+# Dashboards ходят в OpenSearch на localhost хоста: host-gateway пробрасывает
+# host.docker.internal внутрь контейнера (Linux)
+[daemons.dashboards]
+run = 'exec docker run --rm --name workspace-dashboards --add-host host.docker.internal:host-gateway -p "{{ env.OPENSEARCH_DASHBOARDS_PORT }}:5601" -e "OPENSEARCH_HOSTS=[\"https://host.docker.internal:9200\"]" opensearchproject/opensearch-dashboards:3.10.0'
+ready_port = 5601
+
 [daemons.minio]
 run = 'exec docker run --rm --name workspace-minio --user "$(id -u):$(id -g)" -p "{{ env.MINIO_PORT }}:9000" -p 9001:9001 -e "MINIO_ROOT_USER={{ env.MINIO_ROOT_USER }}" -e "MINIO_ROOT_PASSWORD={{ env.MINIO_ROOT_PASSWORD }}" -v "$PWD/.data/minio:/data" ghcr.io/united-software-platform/minio:RELEASE.2025-10-15T17-29-55Z server /data --console-address ":9001"'
 ready_port = 9000
 
 # Окружение общего набора (ENV-006): подъём/остановка/статус демонов.
 [tasks.env-up]
-description = "Поднять демоны общего набора (postgres, opensearch, minio) с ожиданием готовности"
+description = "Поднять демоны общего набора (postgres, opensearch, dashboards, minio) с ожиданием готовности"
 run = "mise daemons start"
 
 [tasks.env-down]
@@ -53,11 +60,11 @@ description = "Состояние демонов общего набора + д�
 run = """
 mise daemons status || exit 1
 echo
-echo "Порты подключения ([env]): PG_PORT=$PG_PORT OPENSEARCH_PORT=$OPENSEARCH_PORT MINIO_PORT=$MINIO_PORT"
+echo "Порты подключения ([env]): PG_PORT=$PG_PORT OPENSEARCH_PORT=$OPENSEARCH_PORT OPENSEARCH_DASHBOARDS_PORT=$OPENSEARCH_DASHBOARDS_PORT MINIO_PORT=$MINIO_PORT"
 python3 -c "
 import os, socket, sys
 ok = True
-for name, port in (('postgres', os.environ['PG_PORT']), ('opensearch', os.environ['OPENSEARCH_PORT']), ('minio', os.environ['MINIO_PORT'])):
+for name, port in (('postgres', os.environ['PG_PORT']), ('opensearch', os.environ['OPENSEARCH_PORT']), ('dashboards', os.environ['OPENSEARCH_DASHBOARDS_PORT']), ('minio', os.environ['MINIO_PORT'])):
     s = socket.socket()
     s.settimeout(2)
     try:
