@@ -1,5 +1,6 @@
 # Секреты: значения окружения, ключи доступа и профили аккаунтов (BOOT-006)
 .env
+.ssh/
 .claude-accounts/
 .codex-accounts/
 
@@ -13,6 +14,10 @@
 .idea/
 .claude/settings.local.json
 __pycache__/
+
+# Локальные данные интеграций: сессии ZCode, извлечения досок Miro
+.zcode/
+.miro/
 
 # >>> domain-classifier
 # Прогоны операции classify не коммитятся: карточка проекта содержит реальные данные,
