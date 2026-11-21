@@ -10,7 +10,7 @@
 - severity «error» (error: true, блокирующее) и «warn» (error: false);
 - в сообщении приводится фрагмент совпадения.
 
-Вызов в операции formular — по значениям полей карточки BR, по строке на поле:
+Вызов в операции requirement-add — по значениям полей карточки BR, по строке на поле:
   python3 -I tools/reqlint/reqlint.py --config tools/reqlint/rules.yml <файл полей>
 """
 import argparse
