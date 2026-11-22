@@ -3,8 +3,6 @@
 .ssh/
 .claude-accounts/
 .codex-accounts/
-import/
-export/
 
 # >>> daemons-services
 # Данные демонов общего набора (postgres, opensearch, minio) — локальное состояние,
@@ -12,21 +10,14 @@ export/
 .data/
 # <<< daemons-services
 
-# Сторонние репозитории, примонтированные в raw/<slug>: чужой код и его секреты
-# в этот репозиторий не попадают
-/raw/
-
 # Служебные файлы IDE и локальные настройки агента
 .idea/
 .claude/settings.local.json
 __pycache__/
 
-# >>> tldr-scan
-# Отчёты сканирований tldr (tldr-scan, tldr-scan-ext) — результат прогона, а не исходники
-/reports/
-# Файлы обмена со шлюзом tldr: запрос и результат сканирования сторонних проектов
-.tldr/
-# <<< tldr-scan
+# Локальные данные интеграций: сессии ZCode, извлечения досок Miro
+.zcode/
+.miro/
 
 # >>> domain-classifier
 # Прогоны операции classify не коммитятся: карточка проекта содержит реальные данные,
@@ -40,8 +31,7 @@ __pycache__/
 # реальные данные проектов (WRSP-029)
 /backlog/classify-card-auto/
 # Входной промпт пакетного прогона с реальными карточками проектов — коммиту не подлежит
-/prompts/batch-projects-for-cv-profile.md
-/projects/
+/docs/archive/prompts/batch-projects-for-cv-profile.md
 # Окружение uv подпроекта CLI
 tools/classifier/.venv/
 # Локальный корневой pyproject.toml — настройка IDE владельца, не проектный файл

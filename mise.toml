@@ -81,7 +81,7 @@ sys.exit(0 if ok else 1)
 
 [tasks.init]
 description = "Полная инициализация локального окружения (все init-* по порядку)"
-depends = ["init-env", "init-dirs", "init-gitignore", "init-ssh-key", "init-ssh-config"]
+depends = ["init-env", "init-dirs", "init-gitignore"]
 
 [tasks.init-env]
 description = "Создать .env из шаблона .env.example; существующий не перезаписывается"
@@ -94,60 +94,25 @@ fi
 """
 
 [tasks.init-dirs]
-description = "Создать каталоги .ssh (права 700) и .claude-accounts"
+description = "Создать каталог .claude-accounts"
 run = """
-mkdir -p .ssh && chmod 700 .ssh
 mkdir -p .claude-accounts
 """
 
 [tasks.init-gitignore]
-description = "Дополнить .gitignore записями .env, .ssh/ и .claude-accounts/ идемпотентно"
+description = "Дополнить .gitignore записями .env и .claude-accounts/ идемпотентно"
 run = """
-for entry in '.env' '.ssh/' '.claude-accounts/'; do
-    grep -qxF "$entry" .gitignore 2>/dev/null || printf '%s\\n' "$entry" >> .gitignore
+for entry in '.env' '.claude-accounts/'; do
+    grep -qxF "$entry" .gitignore 2>/dev/null || printf '%s\n' "$entry" >> .gitignore
 done
-"""
-
-[tasks.init-ssh-key]
-description = "Создать SSH-ключ проекта ed25519 без passphrase; существующий не трогается"
-run = """
-command -v ssh-keygen >/dev/null 2>&1 || { echo "ошибка: ssh-keygen не найден в PATH" >&2; exit 2; }
-mkdir -p .ssh && chmod 700 .ssh
-if [ -f .ssh/id_ed25519 ]; then
-    echo "SSH-ключ существует — пропущено"
-else
-    ssh-keygen -t ed25519 -f .ssh/id_ed25519 -N "" -C workspace && echo "SSH-ключ создан: .ssh/id_ed25519"
-fi
-"""
-
-[tasks.init-ssh-config]
-description = "Создать .ssh/config для git-хоста из GIT_HOST/GIT_USER; использование: GIT_SSH_COMMAND='ssh -F .ssh/config'"
-run = """
-if [ -f .ssh/config ]; then echo ".ssh/config существует — пропущено"; exit 0; fi
-host="${GIT_HOST:-}"
-if [ -n "$host" ]; then
-    key="$(pwd)/.ssh/id_ed25519"
-    umask 077
-    {
-        echo "Host $host"
-        echo "    User ${GIT_USER:-git}"
-        echo "    IdentityFile $key"
-        echo "    IdentitiesOnly yes"
-    } > .ssh/config
-    echo ".ssh/config создан для $host"
-else
-    echo "GIT_HOST пуст — .ssh/config пропущено; заполните .env и выполните mise run init-ssh-config"
-fi
 """
 
 [tasks.openspec-init]
 description = "Развернуть инструменты SDD: openspec init"
 run = "openspec init --tools claude --language ru"
 
-[tasks.tldr-scan]
-description = "Сканировать проект образом tldr (одноразовый контейнер docker); отчёты — в reports/tldr"
-run = 'EXCLUDE="$(printf "%s" "${TLDR_EXCLUDE:-vendor,public}" | tr "," " ") reports" EXT="${TLDR_EXT:-}" TLDR_IMAGE="${TLDR_IMAGE:-}" sh tools/tldr/scan.sh . reports/tldr'
-
-[tasks.tldr-scan-ext]
-description = "Просканировать сторонний проект по .tldr/scan-request.json (шлюз, корни TLDR_SCAN_ROOTS)"
-run = "python3 tools/tldr/gateway.py"
+# Контейнер формальной проверки требований (add-formal-validation, ENV-001: инструменты
+# хоста не растут — SPOT и Z3 живут в образе на Debian-пакетах). Сборка идемпотентна.
+[tasks.formal-image]
+description = "Собрать контейнер формальной проверки workspace-formal (python3-spot + python3-z3, Debian trixie)"
+run = "docker build -t workspace-formal:1 tools/reqlint"
