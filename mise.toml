@@ -110,3 +110,9 @@ done
 [tasks.openspec-init]
 description = "Развернуть инструменты SDD: openspec init"
 run = "openspec init --tools claude --language ru"
+
+# Контейнер формальной проверки требований (add-formal-validation, ENV-001: инструменты
+# хоста не растут — SPOT и Z3 живут в образе на Debian-пакетах). Сборка идемпотентна.
+[tasks.formal-image]
+description = "Собрать контейнер формальной проверки workspace-formal (python3-spot + python3-z3, Debian trixie)"
+run = "docker build -t workspace-formal:1 tools/reqlint"

@@ -1,0 +1,86 @@
+# English lint rules for BR wording (categories A–F) — mirror of the Russian rules.yml.
+# Format: rules: [{name, pattern (python regex), hint, error}].
+# Built-in reqlint.py rules already cover English weak modals, ambiguous words,
+# missing units and vague pronouns — this config adds the card categories.
+# Added by change add-formal-validation (2026-11-22).
+rules:
+  # === Category A: subject and scope ===
+  - name: "A1: indefinite subject"
+    pattern: '(?i)\b(the\s+)?(business|user)\s+(shall|must|should)\b'
+    hint: "Name the role: developer / team lead / architect. 'Business' is not a system role."
+    error: false
+
+  - name: "A2: possessive without antecedent"
+    pattern: '(?i)\b(his|her|their)\s+(projects?|work|teams?)\b'
+    hint: "Specify: personal space or corporate?"
+    error: false
+
+  - name: "A3: unbounded scope"
+    pattern: '(?i)\b(any\s+period|all\s+(the\s+|my\s+)?projects|always|forever)\b'
+    hint: "Set boundaries: which projects are indexed, which period is available."
+    error: true
+
+  # === Category B: undefined notions ===
+  - name: "B1: key notion without definition"
+    pattern: '(?i)\b(gathered\s+context|full\s+context|complete\s+picture)\b'
+    hint: "Define in description: project + period + essence + files + commits + flow + sources."
+    error: true
+
+  - name: "B2: evaluative adjectives"
+    pattern: '(?i)\b(full(y)?|complete(ly)?|reasonable|convenient|fast|efficient|seamless|optimal|robust|user-friendly|quality)\b'
+    hint: "Replace with a measurable criterion (number + unit + verification procedure)."
+    error: false
+
+  - name: "B3: abstract verb"
+    pattern: '(?i)\b(find|collect|gather|get)\s+(work|context|information)\b'
+    hint: "Define the object: what exactly counts as 'work' (commit? PR? review?)."
+    error: false
+
+  # === Category C: level mixing ===
+  - name: "C1: retrieval + synthesis in one requirement"
+    pattern: '(?i)\b(find|return).{0,200}(how\s+it\s+was|explain|reconstruct|way\s+it\s+was\s+done)\b'
+    hint: "Split into two BRs: artifact search (Must) and flow reconstruction (Should)."
+    error: true
+
+  # === Category D: unmeasurable criteria ===
+  - name: "D1: small sample"
+    pattern: '(?i)\bon\s+(three|five|3|5)\s+(known\s+|past\s+)*(works?|cases?|examples?)\b'
+    hint: "Justify representativeness or increase the sample (stratify by stacks/periods)."
+    error: true
+
+  - name: "D2: no verification procedure"
+    pattern: '(?i)check:\s*(?!.*(checklist|reviewer|threshold|metric))'
+    hint: "Add: who checks, against which checklist, what threshold."
+    error: false
+
+  - name: "D3: criterion without measurable threshold"
+    pattern: '(?i)^(?=.*(?:criterion|check|success))(?!.*\d)(?!.*(?:checklist|threshold|metric)).*$'
+    hint: "A criterion without a number and threshold is unmeasurable: state number, unit and check procedure."
+    error: false
+
+  - name: "D4: untestable outcome"
+    pattern: '(?i)\b(never\s+lost|over\s+time|in\s+the\s+long\s+run)\b'
+    hint: "This is an outcome hypothesis, not an acceptance criterion. Move it out of success_criteria."
+    error: false
+
+  # === Category E: constraints and risks ===
+  - name: "E1: no source scope"
+    pattern: '(?i)\b(source|git|\bPR\b|ticket|ADR)\b'
+    hint: "List sources explicitly: git + code + configs (+ PR). No ADRs/tickets/owner."
+    error: false
+
+  - name: "E3: no anti-hallucination clause"
+    pattern: '(?i)\b(reference|quote|primary\s+source)\b'
+    hint: "Add: every claim references a primary source — 100%."
+    error: false
+
+  # === Category F: implementation recipe ===
+  - name: "F1: solution verb"
+    pattern: '(?i)\b(implement\b.{0,40}?\b(via|using|on\s+top\s+of)|build\s+on\s+(top\s+of)?|use\s+(postgres|redis|opensearch|minio|docker|kubernetes|k8s|grpc)|write\s+(it\s+)?in\s+(go|python|rust|typescript)|create\s+(a\s+)?(table|service|microservice|queue|index|bucket)|run\s+(postgres|redis))\b'
+    hint: "The wording dictates the solution — move it to design; the requirement states the need."
+    error: false
+
+  - name: "F2: explicit technology"
+    pattern: '(?i)\b(postgres(ql)?|redis|opensearch|elasticsearch|minio|kafka|rabbitmq|docker|kubernetes|k8s|react|vue|grpc|graphql)\b'
+    hint: "A technology inside a requirement is a likely implementation recipe; its role is assessed by the semantic check."
+    error: false
