@@ -20,11 +20,17 @@
 @rules/documentation-rules.md
 @rules/reading-rules.md
 @rules/environment.md
+@rules/clean-architecture.md
+@rules/cqrs.md
+@rules/ddd.md
 @rules/project-docs-rules.md
 
 - [Документация](./rules/documentation-rules.md) — язык, формат Markdown, структура, версионирование документов.
 - [Чтение документов](./rules/reading-rules.md) — гейт чтения, запрещённые каталоги, границы контекста задачи.
 - [Окружение](./rules/environment.md) — единый стандарт: mise — единственный менеджер (инструменты, задачи, демоны сервисов), фиксированные порты и паттерн переменных.
+- [Чистая архитектура](./rules/clean-architecture.md) — направление зависимостей между слоями, состав слоёв, SOLID, модульная организация.
+- [CQRS](./rules/cqrs.md) — разделение контрактов чтения и записи, принадлежность контрактов слоям.
+- [Domain Driven Design](./rules/ddd.md) — единый язык, ограниченный контекст, агрегат, сущность, объект-значение, доменное событие.
 - [Документы проекта](./rules/project-docs-rules.md) — роли, каркас и голос `README.md`, `CONTRIBUTING.md` и документа кейсов, блок бейджей `README.md`.
 
 ---
@@ -62,3 +68,4 @@
 | 1.0.8 | 2026-11-18 | WRSP-030, OpenSpec change `unify-environment` | ZCode | GLM-5.3 | В разделе «Правила кода» исключены `@`-импорты `rules/makefile-rules.md` и `rules/docker.md` вместе со строками списка (Makefile и Docker Compose удалены из окружения) и добавлены `@`-импорт `rules/environment.md` и строка списка — той же правкой, что и в `AGENTS.md`: перечень подключаемых правил в обеих точках входа остаётся одинаковым |
 | 1.0.9 | 2026-11-19 | WRSP-030, OpenSpec change `replace-k3s-with-mise-daemons` | ZCode | GLM-5.3 | Строка списка «Окружение» синхронизирована с новым стандартом: mise — единственный менеджер (инструменты, задачи, демоны сервисов), k3s исключён — той же правкой, что и в `AGENTS.md`; состав подключаемых правил не менялся |
 | 1.0.10 | 2026-11-22 | OpenSpec change `trim-rules-to-core` | ZCode | GLM-5.3 | Из раздела «Правила кода» удалены `@`-импорты и строки списка четырёх документов (`rules/terminology.md`, `rules/clean-architecture.md`, `rules/cqrs.md`, `rules/ddd.md`) — документы удалены из набора — той же правкой, что и в `AGENTS.md`: перечень подключаемых правил в обеих точках входа остаётся одинаковым |
+| 1.0.11 | 2026-11-22 | OpenSpec change `restore-architecture-rules` | ZCode | GLM-5.3 | В раздел «Правила кода» возвращены `@`-импорты и строки списка трёх документов (`rules/clean-architecture.md`, `rules/cqrs.md`, `rules/ddd.md`) — документы восстановлены в наборе побайтово в версиях на момент удаления `trim-rules-to-core`; `rules/terminology.md` не возвращается — той же правкой, что и в `AGENTS.md`: перечень подключаемых правил в обеих точках входа остаётся одинаковым |
