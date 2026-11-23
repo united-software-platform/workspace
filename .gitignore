@@ -37,3 +37,14 @@ tools/classifier/.venv/
 # Локальный корневой pyproject.toml — настройка IDE владельца, не проектный файл
 /pyproject.toml
 # <<< domain-classifier
+
+# >>> domain-layout
+# Дерево доменной раскладки проектов: каталогы создаются из принятых прогонов classify
+# утилитой tools/layout, реестр происхождения — в корне дерева (WRSP-038)
+/projects/
+# Окружение uv и кеши прогонов подпроекта раскладки
+tools/layout/.venv/
+tools/layout/.mypy_cache/
+tools/layout/.pytest_cache/
+tools/layout/.ruff_cache/
+# <<< domain-layout
