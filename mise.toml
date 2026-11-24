@@ -1,4 +1,4 @@
-# Инструментарий окружения: mise — единственный менеджер (rules/environment.md, ENV-001).
+# Инструментарий окружения: mise — единственный менеджер (.tessera/rules/environment.md, ENV-001).
 # Харнессы (claude, codex, dsh) намеренно не закреплены: выбор агента остаётся за пользователем.
 # pitchfork — supervisor демонов общего набора сервисов (ENV-002).
 [tools]
@@ -26,7 +26,7 @@ MINIO_PORT = "9000"
 # OpenSearch (+ Dashboards) и MinIO — run-форма docker: серверных бинарей в реестрах mise нет,
 # шаблоны {{ env.* }} подставляют секреты из .env и порты из [env] (рендерятся только в run).
 # Образ minio — собственная сборка форка united-software-platform/minio из исходников
-# upstream-тега: публичные образы MinIO закрыты (см. rules/environment.md, ограничения).
+# upstream-тега: публичные образы MinIO закрыты (см. .tessera/rules/environment.md, ограничения).
 [daemons.postgres]
 preset = "postgres"
 version = "18"
@@ -81,7 +81,7 @@ sys.exit(0 if ok else 1)
 
 [tasks.init]
 description = "Полная инициализация локального окружения (все init-* по порядку)"
-depends = ["init-env", "init-dirs", "init-gitignore"]
+depends = ["init-env", "init-dirs", "init-gitignore", "init-tessera"]
 
 [tasks.init-env]
 description = "Создать .env из шаблона .env.example; существующий не перезаписывается"
@@ -106,6 +106,10 @@ for entry in '.env' '.claude-accounts/'; do
     grep -qxF "$entry" .gitignore 2>/dev/null || printf '%s\n' "$entry" >> .gitignore
 done
 """
+
+[tasks.init-tessera]
+description = "Установить поставку tessera в проект: навыки, правила, точку входа AGENTS.md"
+run = "curl -fsSL https://raw.githubusercontent.com/united-software-platform/tessera/main/scripts/install.sh | bash -s -- --project --profile full --rules all --yes"
 
 [tasks.openspec-init]
 description = "Развернуть инструменты SDD: openspec init"
