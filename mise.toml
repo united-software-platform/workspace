@@ -81,7 +81,7 @@ sys.exit(0 if ok else 1)
 
 [tasks.init]
 description = "Полная инициализация локального окружения (все init-* по порядку)"
-depends = ["init-env", "init-dirs", "init-gitignore", "init-tessera"]
+depends = ["init-env", "init-gitignore", "init-tessera"]
 
 [tasks.init-env]
 description = "Создать .env из шаблона .env.example; существующий не перезаписывается"
@@ -93,16 +93,10 @@ else
 fi
 """
 
-[tasks.init-dirs]
-description = "Создать каталог .claude-accounts"
-run = """
-mkdir -p .claude-accounts
-"""
-
 [tasks.init-gitignore]
-description = "Дополнить .gitignore записями .env и .claude-accounts/ идемпотентно"
+description = "Дополнить .gitignore записью .env идемпотентно"
 run = """
-for entry in '.env' '.claude-accounts/'; do
+for entry in '.env'; do
     grep -qxF "$entry" .gitignore 2>/dev/null || printf '%s\n' "$entry" >> .gitignore
 done
 """
