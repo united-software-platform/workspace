@@ -39,7 +39,7 @@ tools/classifier/.venv/
 # <<< domain-classifier
 
 # >>> domain-layout
-# Дерево доменной раскладки проектов: каталогы создаются из принятых прогонов classify
+# Дерево доменной раскладки проектов: каталоги создаются из принятых прогонов classify
 # утилитой tools/layout, реестр происхождения — в корне дерева (WRSP-038)
 /projects/
 # Окружение uv и кеши прогонов подпроекта раскладки
@@ -48,3 +48,23 @@ tools/layout/.mypy_cache/
 tools/layout/.pytest_cache/
 tools/layout/.ruff_cache/
 # <<< domain-layout
+
+# >>> tessera-supply
+# Поставка tessera (WRSP-039): навыки ставятся ссылками установщика (mise run init-tessera)
+# в хранилище машины, правила — копиями в .tessera/rules/ (копии коммитятся, реестр — метка машины)
+.agents/
+.tessera/registry.json
+# В .claude/skills/ отслеживаются только собственные навыки проекта
+.claude/skills/*
+!.claude/skills/classify
+!.claude/skills/classify-batch
+!.claude/skills/classify-batch-enrich
+!.claude/skills/domain-layout
+!.claude/skills/openspec-apply-change
+!.claude/skills/openspec-archive-change
+!.claude/skills/openspec-explore
+!.claude/skills/openspec-propose
+!.claude/skills/openspec-sync-specs
+!.claude/skills/openspec-update-change
+!.claude/skills/requirement-add
+# <<< tessera-supply
