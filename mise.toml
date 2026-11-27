@@ -102,8 +102,17 @@ done
 """
 
 [tasks.init-tessera]
-description = "Установить поставку tessera в проект: навыки, правила, точку входа AGENTS.md"
-run = "curl -fsSL https://raw.githubusercontent.com/united-software-platform/tessera/main/scripts/install.sh | bash -s -- --components tessera --scope project --rules all --yes"
+description = "Установить поставку tessera: навыки, правила, точку входа AGENTS.md; --scope project|user (умолчание project)"
+run = """
+scope=project
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --scope) scope="$2"; shift 2 ;;
+        *) shift ;;
+    esac
+done
+curl -fsSL https://raw.githubusercontent.com/united-software-platform/tessera/main/scripts/install.sh | bash -s -- --scope "$scope" --rules all --yes
+"""
 
 [tasks.openspec-init]
 description = "Развернуть инструменты SDD: openspec init"
