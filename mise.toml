@@ -103,7 +103,7 @@ done
 
 [tasks.init-tessera]
 description = "Установить поставку tessera в проект: навыки, правила, точку входа AGENTS.md"
-run = "curl -fsSL https://raw.githubusercontent.com/united-software-platform/tessera/main/scripts/install.sh | bash -s -- --project --profile full --rules all --yes"
+run = "curl -fsSL https://raw.githubusercontent.com/united-software-platform/tessera/main/scripts/install.sh | bash -s -- --components tessera --scope project --rules all --harness zcode --yes"
 
 [tasks.openspec-init]
 description = "Развернуть инструменты SDD: openspec init"
