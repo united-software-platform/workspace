@@ -65,4 +65,5 @@ tools/layout/.ruff_cache/
 !.claude/skills/openspec-sync-specs
 !.claude/skills/openspec-update-change
 !.claude/skills/requirement-add
+!.claude/skills/solution-extract
 # <<< tessera-supply
